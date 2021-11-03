@@ -24,7 +24,9 @@ Step 2 : INSTALLED APACHE AND UPDATED THE FIREWALL
 ![Capture Apache installation](https://user-images.githubusercontent.com/92916632/139822864-54cfc33b-947d-4521-bd79-0fe74433f0dd.PNG)
 
         
-        .   Added a rule to EC2 configuration to open inbound connection through port 80:
+      
+      
+      .   Added a rule to EC2 configuration to open inbound connection through port 80:
             Screenshot below 
             
             
@@ -37,34 +39,38 @@ Step 2 : INSTALLED APACHE AND UPDATED THE FIREWALL
  ![port80](https://user-images.githubusercontent.com/92916632/139844549-61c7f1b8-c307-45e3-a075-9645a3883ee5.png)
  
  
-       .  Verified that my web server is now correctly installed and accessible through my firewall. Opened my EC2 virtual machine
-           public IP Address URL on my computer browser. 
+      
+      
+      
+         Verified that my web server is now correctly installed and accessible through my firewall. Opened my EC2 virtual machine
          
-         Screen shot of the default page below.
-          
-          
-          
+          public IP Address URL on my computer browser.
+           
+           
+           
+           
           
           
           
         
-       
-       
-       
-  ![Capture ubuntu test page](https://user-images.githubusercontent.com/92916632/139849097-9ee438c4-3f7a-4ae0-9f0e-7f9dd9f371f6.PNG)
+ 
+ 
+ ![Capture ubuntu test page](https://user-images.githubusercontent.com/92916632/140178180-2a8ec386-b437-4bf2-838e-1b4fd0d3e8c9.PNG)
+            
+ 
   
   
   Step 3: INSTALLED MYSQL
           
-  . To install mysql,i ran the command sudo apt install mysql-server. When prompted, i confirmed installation by typing Y, and then ENTER.
+  To install mysql,i ran the command sudo apt install mysql-server. When prompted, i confirmed installation by typing Y, and then ENTER.
    
-  . I ran the command sudo mysql_secure_installation to secure the installation, and to also remove some insecure default settings.
+   I ran the command sudo mysql_secure_installation to secure the installation, and to also remove some insecure default settings.
   
- . I was prompted to configure the VALIDATE PASSWORD PLUGIN. I left validation disabled. Answered Y for yes to continue without enabling.
+   I was prompted to configure the VALIDATE PASSWORD PLUGIN. I left validation disabled. Answered Y for yes to continue without enabling.
   
-  . I was prompted to select and confirm a password for the MySQL root user.
+   I was prompted to select and confirm a password for the MySQL root user.
    
-  . Tested connection to MySQL server by running sudo mysql
+    Tested connection to MySQL server by running sudo mysql
              
     Screenshot below 
            
@@ -87,20 +93,25 @@ Step 2 : INSTALLED APACHE AND UPDATED THE FIREWALL
    
    ![Capture tested connection to myqsl server](https://user-images.githubusercontent.com/92916632/139918785-38bfdb69-520c-43d6-be9c-053d7b7cbe88.PNG)
             
-     . Exit the MySQL console by typing mysql> exit
+       Exit the MySQL console by typing mysql> exit
        
   
-    Step 4: Installed PHP
-     
-  . PHP is the component of our setup that will process code to display dynamic content to the end user. In addition to the php package, 
+  
+  
+    
+    
    
-  . we need php-mysql, a PHP module that allows PHP to communicate with MySQL-based databases. we also need libapache2-mod-php 
+  Step 4: Installed PHP
+     
+  PHP is the component of our setup that will process code to display dynamic content to the end user. In addition to the php package, 
+   
+  we need php-mysql, a PHP module that allows PHP to communicate with MySQL-based databases. we also need libapache2-mod-php 
   
   to enable Apache to handle PHP files. Core PHP packages will automatically be installed as dependencies.
    
-   . To install the 3 above-mentioned package at once,i ran the coomand: sudo apt install php libapache2-mod-php php-mysql 
+  To install the 3 above-mentioned package at once,i ran the coomand: sudo apt install php libapache2-mod-php php-mysql 
    
-   . To confirm php version I ran the command : php -v
+  To confirm php version I ran the command : php -v
    
    
   
@@ -115,17 +126,17 @@ Step 2 : INSTALLED APACHE AND UPDATED THE FIREWALL
  
  STEP 5 : CREATED A VIRTUAL HOST FOR MY WEBSITE USING APACHE
  
- . The objective is to setup a domain called ‘projectlamp’
+   The objective is to setup a domain called ‘projectlamp’
 
-.  Apache on Ubuntu 20.04 has one server block enabled by default that is configured to serve documents from the /var/www/html directory.
+  Apache on Ubuntu 20.04 has one server block enabled by default that is configured to serve documents from the /var/www/html directory.
 
- . I created a directory for project LAMP using the command : sudo mkdir /var/www/projectlamp
+   I created a directory for project LAMP using the command : sudo mkdir /var/www/projectlamp
 
-.  Assigned ownership of the directory with  current system user using command: sudo chown -R $USER:$USER /var/www/projectlamp
+   Assigned ownership of the directory with  current system user using command: sudo chown -R $USER:$USER /var/www/projectlamp
 
-. created and opened a new configuration file in Apache’s sites-available directory : sudo vi /etc/apache2/sites-available/projectlamp.conf
+  Created and opened a new configuration file in Apache’s sites-available directory : sudo vi /etc/apache2/sites-available/projectlamp.conf
 
-. This created a new blank file. Pasted the following configuration by hitting the i key on my keyboard. Entered the insert mode, and pasted the text:
+  This created a new blank file. Pasted the following configuration by hitting the i key on my keyboard. Entered the insert mode, and pasted the text:
    
     
     <VirtualHost *:80>
@@ -170,20 +181,20 @@ Screen shot showing the new file in the site-available directory
 
 
 
-  .I disabled the default website that comes installed with Apache. This is required if you’re not using a custom domain name, 
+   I disabled the default website that comes installed with Apache. This is required if you’re not using a custom domain name, 
   
   because in this case Apache’s default configuration would overwrite your virtual host. 
   
-  .To disable Apache’s default website i used a2dissite command. I ran the command: sudo a2dissite 000-default
+   To disable Apache’s default website i used a2dissite command. I ran the command: sudo a2dissite 000-default
   
-  .Screen shot below showing Apache default website disabled
+   Screen shot below showing Apache default website disabled
   
   
   
   ![Capture disabled the default website that came with apache](https://user-images.githubusercontent.com/92916632/139964421-9c9cb9db-4a8c-408e-86e0-3d75a6b78fce.PNG)
   
   
-  .To ensure my configuration file doesn’t contain syntax errors,i entered the command below:
+   To ensure my configuration file doesn’t contain syntax errors,i entered the command below:
   
   sudo apache2ctl configtest
   
@@ -192,7 +203,7 @@ Screen shot showing the new file in the site-available directory
 ![SS to ensure config doesnt have errer  syntax ok](https://user-images.githubusercontent.com/92916632/139964873-4a4acad7-f90f-4b71-9c8e-c484f75c08b3.PNG)
 
 
-.Reloaded Apache so these changes take effect. I ran the command: sudo systemctl reload apache2
+ Reloaded Apache so these changes take effect. I ran the command: sudo systemctl reload apache2
 
 
 Created an index.html file in that location so that i can test that the virtual host works as expected, by typing this command:
@@ -208,35 +219,41 @@ i ran the command cd /var/www/projectlamp/ clicked enter
   
   STEP 6:  ENABLE PHP ON THE WEBSITE 
   
-  I need to edit the /etc/apache2/mods-enabled/dir.conf file and change the order in which the index.php file is listed within the DirectoryIndex directive
+  I need to edit the /etc/apache2/mods-enabled/dir.conf file and change the order in which the index.php file is listed within the Directory Index directive:
   
-  I entered the following command: sudo vim /etc/apache2/mods-enabled/dir.conf
+  I entered the following command:
   
-  Pasted the following command into the vim editor: 
+  sudo vim /etc/apache2/mods-enabled/dir.conf
   
- <IfModule mod_dir.c>
+  Pasted the following command into the vim editor:
+    
+    <IfModule mod_dir.c>
         #Change this:
         #DirectoryIndex index.html index.cgi index.pl index.php index.xhtml index.htm
         #To this:
         DirectoryIndex index.php index.html index.cgi index.pl index.xhtml index.htm
-</IfModule>
+    </IfModule>
+
 
 I saved and closed the file using vim editor
 
-I Reloaded apache2 so change can take effect. Ran the command : sudo systemctl reload apache2
+I Reloaded apache2 so that change can take effect. Ran the command : sudo systemctl reload apache2
 
 Created a PHP test script file known as ‘index.php’ to confirm that Apache is able to handle and process requests for PHP files.
 
 Ran the command : vim /var/www/projectlamp/index.php
 
-A blank file was opened.  I added the text below inside the file:
+A blank file was opened. I added the text below inside the file :
 
-<?php
-phpinfo();
+    <?php
 
-I saved and closed the file
+     phpinfo();  
 
-Refreshed my EC2 public ip address url page and a PHP default page came up
+   Saved and closed file by typing esc : wq and enter
+   
+   Refreshed my EC2 public ip address url page
+  
+   PHP default page screenshot 
 
 
 
