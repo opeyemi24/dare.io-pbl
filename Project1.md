@@ -26,8 +26,8 @@ Step 2 : INSTALLED APACHE AND UPDATED THE FIREWALL
         
       
       
-      .   Added a rule to EC2 configuration to open inbound connection through port 80:
-            Screenshot below 
+   Added a rule to EC2 configuration to open inbound connection through port 80:
+   Screenshot below 
             
             
             
@@ -42,9 +42,9 @@ Step 2 : INSTALLED APACHE AND UPDATED THE FIREWALL
       
       
       
-         Verified that my web server is now correctly installed and accessible through my firewall. Opened my EC2 virtual machine
+  Verified that my web server is now correctly installed and accessible through my firewall. Opened my EC2 virtual machine
          
-          public IP Address URL on my computer browser.
+  public IP Address URL on my computer browser.
            
            
            
@@ -70,9 +70,9 @@ Step 2 : INSTALLED APACHE AND UPDATED THE FIREWALL
   
    I was prompted to select and confirm a password for the MySQL root user.
    
-    Tested connection to MySQL server by running sudo mysql
+   Tested connection to MySQL server by running sudo mysql
              
-    Screenshot below 
+   Screenshot below 
            
   
   
@@ -93,7 +93,7 @@ Step 2 : INSTALLED APACHE AND UPDATED THE FIREWALL
    
    ![Capture tested connection to myqsl server](https://user-images.githubusercontent.com/92916632/139918785-38bfdb69-520c-43d6-be9c-053d7b7cbe88.PNG)
             
-       Exit the MySQL console by typing mysql> exit
+   Exit the MySQL console by typing mysql> exit
        
   
   
@@ -140,19 +140,12 @@ Step 2 : INSTALLED APACHE AND UPDATED THE FIREWALL
    
     
     <VirtualHost *:80>
-    
-    ServerName projectlamp
-    
+     ServerName projectlamp
     ServerAlias www.projectlamp 
-    
     ServerAdmin webmaster@localhost
-   
-     DocumentRoot /var/www/projectlamp
-    
+    DocumentRoot /var/www/projectlamp
     ErrorLog ${APACHE_LOG_DIR}/error.log
-    
     CustomLog ${APACHE_LOG_DIR}/access.log combined
-
     </VirtualHost>
 
 Saved and closed the file with the following steps:
@@ -245,10 +238,9 @@ Ran the command : vim /var/www/projectlamp/index.php
 
 A blank file was opened. I added the text below inside the file :
 
-    <?php
-
-     phpinfo();  
-
+        <?php
+        phpinfo();
+    
    Saved and closed file by typing esc : wq and enter
    
    Refreshed my EC2 public ip address url page
