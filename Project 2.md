@@ -56,4 +56,105 @@
   
   Tested to see if i was able to log in to the MqSQL console by typing : sudo mysql
   ![Capture 7 tested to see if i can log in to msql](https://user-images.githubusercontent.com/92916632/140962059-5fc3567b-518b-4c71-b6a6-a360a58022df.PNG)
+  
+  Typed exit to exit mysql
+  
+  
+  Step 4 : Installing PHP 
+  
+  I installed PHP and other dependencies with the following command: sudo apt install php-fpm php-mysql
+  ![Capture 8 installed PHP](https://user-images.githubusercontent.com/92916632/140984235-0693510d-7623-457c-97bd-15d151434fb8.PNG)
+  
+  When prompted, i typed Y and pressed ENTER to confirm installation.
+  
+  Step 5 : Configuring Nginx to Use PHP Processor
+  
+  Created the root web directory for my domain as follows: sudo mkdir /var/www/projectLEMP
+  
+  Assigned ownership of the directory with the $USER environment variable, which will reference current system user:
+  
+  sudo chown -R $USER:$USER /var/www/projectLEMP
+  
+  Opened a new configuration file in Nginx’s sites-available directory using nano editor: sudo nano /etc/nginx/sites-available/projectLEMP
+ 
+ This created a new blank file. Pasted in the following bare-bones configuration:
+ 
+#/etc/nginx/sites-available/projectLEMP
+
+server {
+    listen 80;
+    server_name projectLEMP www.projectLEMP;
+    root /var/www/projectLEMP;
+
+    index index.html index.htm index.php;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;
+     }
+
+    location ~ /\.ht {
+        deny all;
+    }
+
+}
+  
+Saved and closed the file by typing control x and then y and enter to confirm.
+
+Activated my configuration by linking to the config file from Nginx’s sites-enabled directory with the following command:
+
+sudo ln -s /etc/nginx/sites-available/projectLEMP /etc/nginx/sites-enabled/
+
+Tested my configuration for syntax errors by typing: sudo nginx -t
+![Capture 9 Tested my config for syntax error](https://user-images.githubusercontent.com/92916632/140992862-3b6d56d2-dbc7-4a8f-8e2e-c954694f0bf4.PNG)
+
+
+
+Disabled default Nginx host that is currently configured to listen on port 80. I ran the following command: 
+
+sudo unlink /etc/nginx/sites-enabled/default
+
+Reloaded Nginx to apply changes. Ran the command : sudo systemctl reload nginx
+
+Created an index html file in that location so that i can test that my new server block works as expected: 
+
+sudo echo 'Hello LEMP from hostname' $(curl -s http://169.254.169.254/latest/meta-data/public-hostname) 'with public IP' $(curl -s http://169.254.169.254/latest/meta-data/public-ipv4) > /var/www/projectLEMP/index.html
+
+Step 6: Testing PHP with nginx
+
+Tested to validate that nginx can correctly hand .phpfiles off to my processor 
+
+Did this by creating a test PHP file in my document root. Opened a new file called info.php within my document root in my text editor:
+
+sudo nano /var/www/projectLEMP/info.php
+
+pasted the following lines into the new file :
+
+  
+     <?php
+      phpinfo();
+      
+   Saved and closed the file by typing ctrl x and then y and then enter
+      
+   I accessed the page in my web browser by visiting the public IP address i set up in my nginx config file, followed by /info.php
+      
+   i.e http:// ip address/info.php
+      
+   I saw a web page containing information about my server
+      
+   ![Capture 10 PHP test page](https://user-images.githubusercontent.com/92916632/141013343-774d53d2-358a-497e-873a-470cd49b2dcc.PNG)
+   
+   I removed the file that i created because it contains sensitive info about my php environment & my Ubuntu server:
+   
+   I ran the command: sudo rm /var/www/projectLEMP/info.php 
+   
+   
+
+
+
+  
 
