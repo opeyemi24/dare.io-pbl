@@ -200,7 +200,7 @@ pasted the following lines into the new file :
  nano /var/www/projectLEMP/todo_list.php
  
  
- Copied the follwoing content into my  todo_list.php script:
+ Copied the following content into my todo_list.php script:
  
    
       <?php
