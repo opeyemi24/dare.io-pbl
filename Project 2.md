@@ -152,6 +152,91 @@ pasted the following lines into the new file :
    
    I ran the command: sudo rm /var/www/projectLEMP/info.php 
    
+   Step 7: Retrieving data from MySQL database with PHP
+   
+   Connected to the Mysql console using the root account : sudo mysql
+   
+   Created a new database named example_database. Ran the following command: CREATE DATABASE `example_database`;   
+   
+![Capture 11 created a new database](https://user-images.githubusercontent.com/92916632/141261981-6c24ce12-dda7-4882-acca-951e84b296fd.PNG)
+
+  Created a new user named example_user and granted full priviledges on the database that i have created
+  
+  For the new user named example_user, i used mysql_native_password as default authentication method. we are 
+  
+  defining this user's password as password. Ran the command: CREATE USER 'example_user'@'%' IDENTIFIED WITH mysql_native_password BY 'password';
+  
+  I gave this user permission over the example_database  database: GRANT ALL ON example_database.* TO 'example_user'@'%';
+  
+  Exited MySQL shell by typing exit
+  
+  Tested if the new user has the proper permissions by logging in to the MySQL console again, this time using the custom credentials:
+  
+  mysql -u example_user -p
+  
+  requested for password & i typed: password
+  
+  After logging into the MySQL console, i confirmed that i have access to the example_database by running the command:
+  
+  SHOW DATABASES;
+  
+  This gave me the following ouput in a tabular form; output, database, example_database, information_schema
+  
+  Created a test table named todo_list, ran the following statement from the MySQL console:
+  
+  CREATE TABLE example_database.todo_list (item_id INT AUTO_INCREMENT, content VARCHAR(255), PRIMARY KEY(item_id));
+  
+  Inserted a few rows of content in the test table: INSERT INTO example_database.todo_list (content) VALUES ("My first important item");
+  
+  To confirm that the data was successfully saved to my table i ran : SELECT * FROM example_database.todo_list;
+  
+![Capture 13 inserted row and confimed data was saved](https://user-images.githubusercontent.com/92916632/141281914-bbcb1687-49de-4ad4-9b34-2653c142d3cc.PNG) 
+
+ Exited Mysql console
+ 
+ 
+ Created a PHP script that will connect to MySQL & query for my content. Created a new php file in my custom root directory by using: 
+ 
+ nano /var/www/projectLEMP/todo_list.php
+ 
+ 
+ Copied the follwoing content into my  todo_list.php script:
+ 
+   
+      <?php
+      $user = "example_user";
+      $password = "password";
+      $database = "example_database";
+      $table = "todo_list";
+      
+      try {
+        $db = new PDO("mysql:host=localhost;dbname=$database", $user, $password);
+        echo "<h2>TODO</h2><ol>";
+        foreach($db->query("SELECT content FROM $table") as $row) {
+          echo "<li>" . $row['content'] . "</li>";
+        }
+       echo "</ol>";
+     } catch (PDOException $e) {
+         print "Error!: " . $e->getMessage() . "<br/>";
+         die();
+     }
+     
+     
+ Saved and closed the file by typing ctrl x, then y, and enter
+ 
+
+Accessed this page in my web browser by visiting then copying and pasting  the public IP address configured for my website, followed by /todo_list.php: 
+ 
+    http://<IP>/todo_list.php
+    
+    
+ 
+ ![Capture 14  to do list](https://user-images.githubusercontent.com/92916632/141343838-6d2b0249-8e9a-424f-82dd-068ab28b56c8.PNG)  
+
+  
+  
+  
+   
    
 
 
