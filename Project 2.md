@@ -33,7 +33,7 @@
    my firewall.  Ran the command : curl http://localhost:80  
    ![Capture 5a checked if my nginx web server was accebile](https://user-images.githubusercontent.com/92916632/140955182-f2a06612-d173-464e-a475-383511805d78.PNG)
    
-   Tested how Nginx server can respond to requests from the Internet. I copied my AWS public piv4 address & 
+   Tested how Nginx server can respond to requests from the Internet. I copied my AWS public ipv4 address & 
    pasted it on my web browser.
    ![Capture 5b  checked my nginx server on my web browser](https://user-images.githubusercontent.com/92916632/140954450-d5bb5010-6938-4100-9573-794aef2aa762.PNG)
    
