@@ -156,7 +156,7 @@ pasted the following lines into the new file :
    
    Connected to the Mysql console using the root account : sudo mysql
    
-   Created a new database named example_database. Ran the following command: CREATE DATABASE `example_database`;   
+   Created a new database named example_database. Ran the following command: mysql> CREATE DATABASE `example_database`; 
    
 ![Capture 11 created a new database](https://user-images.githubusercontent.com/92916632/141261981-6c24ce12-dda7-4882-acca-951e84b296fd.PNG)
 
