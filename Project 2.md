@@ -229,9 +229,9 @@ Accessed this page in my web browser by visiting then copying and pasting  the p
  
     http://<IP>/todo_list.php
     
-    
  
- ![Capture 14  to do list](https://user-images.githubusercontent.com/92916632/141343838-6d2b0249-8e9a-424f-82dd-068ab28b56c8.PNG)  
+ 
+ ![Capture 14  to do list](https://user-images.githubusercontent.com/92916632/141343838-6d2b0249-8e9a-424f-82dd-068ab28b56c8.PNG)
 
   
   
