@@ -13,6 +13,7 @@
    ssh -i "ope-ec2.pem" ubuntu@ec2-3-136-236-105.us-east-2.compute.amazonaws.com
                   
         
+ 
   Step 2 :  Installing the Nginx Web Server
   
    updated the server package with the command : sudo apt update
