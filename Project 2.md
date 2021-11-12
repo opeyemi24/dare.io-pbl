@@ -4,13 +4,13 @@
       
    Step 1 : Downloaded and installed gitbash
                   
-            Launched gitbash 
+   Launched gitbash 
                   
-            Connected to my EC2 instance through Gitbash with the following command:
+   Connected to my EC2 instance through Gitbash with the following command:
                   
-            cd Downloads
+   cd Downloads
                   
-            ssh -i "ope-ec2.pem" ubuntu@ec2-3-136-236-105.us-east-2.compute.amazonaws.com
+   ssh -i "ope-ec2.pem" ubuntu@ec2-3-136-236-105.us-east-2.compute.amazonaws.com
                   
         
   Step 2 :  Installing the Nginx Web Server
