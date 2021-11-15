@@ -76,7 +76,7 @@ Installed the dotenv module using : npm install dotenv
 
 Opened the index.js file with the command: vim index.js
 
-Pasted the following code into the index.js file : 
+Pasted the following code into the index.js file :
 
 const express = require('express');
 require('dotenv').config();
@@ -166,6 +166,94 @@ Typed : wq and enter to save and exit
 Ran the command cat api.js to check if the code has been saved in the file 
 
 ![Capture 15  created a new route and file](https://user-images.githubusercontent.com/92916632/141644894-37ba5701-61f5-4a28-94e7-988f92f3d082.PNG)
+
+
+
+
+
+ MODELS
+ 
+ To create a schema and a model, installed mongoose which is a Node.js package that makes working with Mongodb easier.
+ 
+ To install Monoose, i changed back to Todo folder with cd .. 
+  
+ Intalled Mongoose with : npm install mongoose
+ 
+ Created a new folder called models with : mkdir models
+ 
+ Changed directory into the newly created ‘models’ folder with : cd models
+ 
+ Inside the models folder, created a file and named it todo.js : touch todo.js
+ 
+ Alternatively, all the 3 command above can be defined in one line & concurently with the help of && operator, like this:
+ 
+ mkdir models && cd models && touch todo.js
+ 
+ Opened the file created(todo.js) with : vim todo.js ,copied & pasted the follwoing code inside :
+ 
+ const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+
+//create schema for todo
+const TodoSchema = new Schema({
+action: {
+type: String,
+required: [true, 'The todo text field is required']
+}
+})
+
+//create model for todo
+const Todo = mongoose.model('todo', TodoSchema);
+
+module.exports = Todo;
+
+I need to to update my routes from the file api.js in 'routes' directory' to make use of the new model. Took the ff steps:
+
+Ran the command : cd .. to go back to Todo directory, changed directory to routes by running the command : cd routes
+
+Typed ls to confirm the api.js file
+
+In routes directory, opened the api.js file with : vim api.js , deleted the code inside with : %d and enter
+
+Copied and pasted the code below into it, saved and exited using :wq and enter
+
+const express = require ('express');
+const router = express.Router();
+const Todo = require('../models/todo');
+
+router.get('/todos', (req, res, next) => {
+
+//this will return all the data, exposing only the id and action field to the client
+Todo.find({}, 'action')
+.then(data => res.json(data))
+.catch(next)
+});
+
+router.post('/todos', (req, res, next) => {
+if(req.body.action){
+Todo.create(req.body)
+.then(data => res.json(data))
+.catch(next)
+}else {
+res.json({
+error: "The input field is empty"
+})
+}
+});
+
+router.delete('/todos/:id', (req, res, next) => {
+Todo.findOneAndDelete({"_id": req.params.id})
+.then(data => res.json(data))
+.catch(next)
+})
+
+module.exports = router;
+ 
+To confirm that the code was saved, i ran the command: cat api.js
+
+![Capture 18a  to be merged](https://user-images.githubusercontent.com/92916632/141745919-0fda7344-3a02-4802-8c51-91570f35a00e.PNG)
+![Capture 18b](https://user-images.githubusercontent.com/92916632/141746035-146d8abf-44bd-4422-91eb-f8a7443229f1.PNG)
+  
 
 
         
