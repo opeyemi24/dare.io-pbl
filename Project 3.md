@@ -189,7 +189,7 @@ Ran the command cat api.js to check if the code has been saved in the file
  
  mkdir models && cd models && touch todo.js
  
- Opened the file created(todo.js) with : vim todo.js ,copied & pasted the follwoing code inside :
+ Opened the file created(todo.js) with : vim todo.js ,copied & pasted the following code inside :
  
  const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
