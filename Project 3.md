@@ -349,6 +349,8 @@ Started my server using the command: node index.js
 
 ![Capture get request](https://user-images.githubusercontent.com/92916632/142031876-d4fe92bc-3b79-449f-ae5a-4d667470a4da.PNG)
 
+
+
   
 
 
