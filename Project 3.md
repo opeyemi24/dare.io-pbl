@@ -38,7 +38,7 @@
 
 
 
-APPLICATION CODE SET UP
+.APPLICATION CODE SET UP
 
 Created a new directory for my To-Do project: mkdir Todo 
 
@@ -62,7 +62,7 @@ Ran the ls command to confirm that package.json file has been created
 
 
 
-INSTALLED EXPRESSJS
+.INSTALLED EXPRESSJS
 
 Intalled expressjs using : npm install express
 
@@ -171,7 +171,7 @@ Ran the command cat api.js to check if the code has been saved in the file
 
 
 
- MODELS
+ .MODELS
  
  To create a schema and a model, installed mongoose which is a Node.js package that makes working with Mongodb easier.
  
@@ -254,6 +254,100 @@ To confirm that the code was saved, i ran the command: cat api.js
 ![Capture 18a  to be merged](https://user-images.githubusercontent.com/92916632/141745919-0fda7344-3a02-4802-8c51-91570f35a00e.PNG)
 ![Capture 18b](https://user-images.githubusercontent.com/92916632/141746035-146d8abf-44bd-4422-91eb-f8a7443229f1.PNG)
 
+
+.MONGODB DATABASE
+
+signed up on MLAB and created a mongodb database and collection
+
+Created a file in my Todo directory & named it .env with : touch .env
+
+Opened up the file with : vi .env
+
+
+Added the connection string to access the database in it just as below :
+
+    DB = 'mongodb+srv://<username>:<password>@<network-address>/<dbname>?retryWrites=true&w=majority'
+    
+    Updated <username>, <password>, <network-address> and <database> according to  my setup on Mlab
+
+ Ran the the command cat .env to check if the connection string was added into the env file
+ 
+ Updated the the index.js file to reflect the use of .env so that node can connect to the database. I did that by deleting 
+ 
+ the existing content in the file and replacing with the the code below. To do that i took the following steps:
+ 
+ 1. Open the file with vim index.js 
+ 2. Press esc 
+ 3. Type :
+ 4. Type %d
+ 5. Hit ‘Enter’
+
+The entire content was deleted, then,
+
+ 6. Press i to enter the insert mode in vim
+ 7. Now, pasted the entire code below in the file.
+
+const express = require('express');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const routes = require('./routes/api');
+const path = require('path');
+require('dotenv').config();
+
+const app = express();
+
+const port = process.env.PORT || 5000;
+
+//connect to the database
+mongoose.connect(process.env.DB, { useNewUrlParser: true, useUnifiedTopology: true })
+.then(() => console.log(`Database connected successfully`))
+.catch(err => console.log(err));
+
+//since mongoose promise is depreciated, we overide it with node's promise
+mongoose.Promise = global.Promise;
+
+app.use((req, res, next) => {
+res.header("Access-Control-Allow-Origin", "\*");
+res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+next();
+});
+
+app.use(bodyParser.json());
+
+app.use('/api', routes);
+
+app.use((err, req, res, next) => {
+console.log(err);
+next();
+});
+
+app.listen(port, () => {
+console.log(`Server running on port ${port}`)
+});
+
+Saved and exited with :wq and enter
+
+Ran the command : cat index.js to confirm that code was copied
+
+![Capture 21 env file with cat](https://user-images.githubusercontent.com/92916632/142028940-1a9e29d3-2ab8-4472-b93c-48c2d5d9f37d.PNG)
+
+Started my server using the command: node index.js
+
+![Capture 22 Database connected successfully](https://user-images.githubusercontent.com/92916632/142030723-03fbd22c-5ad7-478e-b9e6-dc0daf128354.PNG)
+
+
+    
+ .Used postman to test API
+ 
+ Created a POST reqest to the API
+ 
+ ![Capture Post request](https://user-images.githubusercontent.com/92916632/142032298-c59c9436-e5d8-4093-94d7-a67da6ca7cdd.PNG)
+ 
+
+ 
+ Created a  GET request to the API
+
+![Capture get request](https://user-images.githubusercontent.com/92916632/142031876-d4fe92bc-3b79-449f-ae5a-4d667470a4da.PNG)
 
   
 
