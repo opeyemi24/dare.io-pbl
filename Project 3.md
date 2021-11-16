@@ -272,9 +272,9 @@ Added the connection string to access the database in it just as below :
 
  Ran the the command cat .env to check if the connection string was added into the env file
  
- Updated the the index.js file to reflect the use of .env so that node can connect to the database. I did that by deleting 
+ Updated the index.js file to reflect the use of .env so that node can connect to the database. I did that by deleting 
  
- the existing content in the file and replacing with the the code below. To do that i took the following steps:
+ the existing content in the file and replacing with the the code below. To delete the existing content i took the following steps:
  
  1. Open the file with vim index.js 
  2. Press esc 
