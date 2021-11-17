@@ -1,7 +1,9 @@
 ## MERN STACK IMPLEMENTATION
 
+## SIMPLE TO-DO APPLICATION ON MERN WEB STACK
 
-   STEP 1 : Connected to the server through mobaxterm SSH client by taking the following steps: 
+
+   Connected to the server through mobaxterm SSH client by taking the following steps: 
         
    Created a new session by clicking session
         
@@ -13,7 +15,7 @@
         
         
 
- STEP 2 : BACKEND CONFIGURATION 
+ STEP 1 : BACKEND CONFIGURATION 
 
  Updated ubuntu OS by running the command : sudo apt update
           
@@ -348,6 +350,16 @@ Started my server using the command: node index.js
  Created a  GET request to the API
 
 ![Capture get request](https://user-images.githubusercontent.com/92916632/142031876-d4fe92bc-3b79-449f-ae5a-4d667470a4da.PNG)
+
+
+
+ STEP 2 : FRONT END CREATION
+ 
+ In the same root directory as my backend code which is Todo directory, i ran:  npx create-react-app client
+
+
+
+
 
 
 
