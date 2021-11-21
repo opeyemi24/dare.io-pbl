@@ -356,6 +356,165 @@ Started my server using the command: node index.js
  STEP 2 : FRONT END CREATION
  
  In the same root directory as my backend code which is Todo directory, i ran:  npx create-react-app client
+ 
+ This created a new folder called client which is where i added all the react code.
+ 
+   Running a react app
+   
+  1. Installed concurrently, a dependency which is used to run more than one command simultenously from the same terminal window
+   
+   npm install concurrently --save-dev
+   
+   2. Installed Nodemon, a dependency which is used to run and monitor the server
+   
+   npm install nodemon --save-dev
+   
+   
+  ![Capture 23 install concurently   nodemon](https://user-images.githubusercontent.com/92916632/142781204-dd5cecfc-bdc5-4cbf-8392-f5d835a980e8.PNG)
+
+   
+  3.  In the Todo folder, i opened the package.json file using : vi package.json
+   
+   I deleted the line containing : 
+   
+                                   scripts     
+                                   test 
+                                   }
+   
+   Replaced with the following code :   
+   
+   "scripts": {
+   
+   "start": "node index.js",
+   
+   "start-watch": "nodemon index.js",
+   
+   "dev": "concurrently \"npm run start-watch\" \"cd client && npm start\""
+  
+   },
+   
+   ![Capture 24 replacing code](https://user-images.githubusercontent.com/92916632/142781450-2008ccf6-2e08-4b57-8fbf-1d94956d8a19.PNG)
+
+  
+   
+   Configure proxy in package.json 
+   
+   1. Changed directory to 'client' : cd client
+
+   2. Opened the package.json file : vi package.json
+
+   3. Added the key value pair in the package.json file using: "proxy": "http://localhost:5000"
+
+  
+   ![Capture 25 added key pair value](https://user-images.githubusercontent.com/92916632/142781580-c5b21c3c-9c9d-4b26-ad1b-951ff93169f0.PNG)
+
+  
+  Saved and exited.
+      
+  Cd back to todo directory & ran : npm run dev
+  
+  ![Capture 26 ran npm run dev](https://user-images.githubusercontent.com/92916632/142781715-7e4a46ca-fa61-4701-8eb1-cc94f65ee22e.PNG)
+      
+  Opened TCP port 3000 on EC2  by adding a new security group
+      
+  Copied and pasted my public Ip address, added :3000
+  
+  ![Capture 27 react app](https://user-images.githubusercontent.com/92916632/142781805-48d26108-da31-457f-ad67-a53cca38afd6.PNG)
+  
+  
+  
+  Creating react components
+  
+   From Todo directory, i changed to client directory : cd client
+   
+   Moved to src directory : cd src
+   
+   Inside src folder, created another folder called components : mkdir components
+   
+   Typed ls to confirm that the folder 'components' was created
+   
+   Changed directory into the components folder : cd components
+   
+   Inside the components directory, created 3 files Input.js, ListTodo.js and Todo.js.  : touch Input.js ListTodo.js Todo.js
+   
+   Typed ls to confirm that the 3 files were successfully created
+   
+   Opened the Input.js file : vi Input.js
+   
+   Copied and pasted the following code: 
+   
+import React, { Component } from 'react';
+
+import axios from 'axios';
+
+class Input extends Component {
+
+state = {
+action: ""
+}
+
+addTodo = () => {
+const task = {action: this.state.action}
+
+    if(task.action && task.action.length > 0){
+      axios.post('/api/todos', task)
+        .then(res => {
+          if(res.data){
+            this.props.getTodos();
+            this.setState({action: ""})
+          }
+        })
+        .catch(err => console.log(err))
+    }else {
+      console.log('input field required')
+    }
+
+}
+
+handleChange = (e) => {
+this.setState({
+action: e.target.value
+})
+}
+
+render() {
+let { action } = this.state;
+return (
+<div>
+<input type="text" onChange={this.handleChange} value={action} />
+<button onClick={this.addTodo}>add todo</button>
+</div>
+)
+}
+}
+
+export default Input
+
+Typed :wq! and enter to save and exit vim editor
+
+Ran : cat Input.js to confirm that code was copied and successfully saved.
+
+
+![Capture 28b creating a react component](https://user-images.githubusercontent.com/92916632/142782535-c02bd934-6584-42f7-b446-199866044772.PNG)
+
+
+To make use of Axios, i took the following steps : 
+
+Moved to the src folder  :  cd ..
+
+Moved to the clients folder  : cd .. 
+
+From the client's folder i installed Axios : npm install axios
+
+![Capture 29 installed Axios](https://user-images.githubusercontent.com/92916632/142782995-693971c2-efab-435b-8687-b93845fbd193.PNG)
+
+   
+
+   
+   
+   
+   
+   
 
 
 
