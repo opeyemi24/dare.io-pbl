@@ -508,7 +508,273 @@ From the client's folder i installed Axios : npm install axios
 
 ![Capture 29 installed Axios](https://user-images.githubusercontent.com/92916632/142782995-693971c2-efab-435b-8687-b93845fbd193.PNG)
 
-   
+
+I changed directory into components directory : cd src/components
+
+After that i opened ListTodojs : vi ListTodo.js
+
+In the ListTodo.js copied and pasted the following code :    
+
+    import React from 'react';
+
+    const ListTodo = ({ todos, deleteTodo }) => {
+
+    return (
+    <ul>
+    {
+    todos &&
+    todos.length > 0 ?
+    (
+    todos.map(todo => {
+    return (
+    <li key={todo._id} onClick={() => deleteTodo(todo._id)}>{todo.action}</li>
+    )
+    })
+    )
+    :
+    (
+    <li>No todo(s) left</li>
+    )
+    }
+    </ul>
+    )
+    }
+
+    export default ListTodo
+    
+ Saved and exit by typing :wq! and enter
+ 
+ 
+ Opened the todo.js : vi todo.js
+ 
+ copied & pasted the following code : 
+ 
+import React, {Component} from 'react';
+import axios from 'axios';
+
+import Input from './Input';
+import ListTodo from './ListTodo';
+
+class Todo extends Component {
+
+state = {
+todos: []
+}
+
+componentDidMount(){
+this.getTodos();
+}
+
+getTodos = () => {
+axios.get('/api/todos')
+.then(res => {
+if(res.data){
+this.setState({
+todos: res.data
+})
+}
+})
+.catch(err => console.log(err))
+}
+
+deleteTodo = (id) => {
+
+    axios.delete(`/api/todos/${id}`)
+      .then(res => {
+        if(res.data){
+          this.getTodos()
+        }
+      })
+      .catch(err => console.log(err))
+
+}
+
+render() {
+let { todos } = this.state;
+
+    return(
+      <div>
+        <h1>My Todo(s)</h1>
+        <Input getTodos={this.getTodos}/>
+        <ListTodo todos={todos} deleteTodo={this.deleteTodo}/>
+      </div>
+    )
+
+}
+}
+
+export default Todo;
+
+
+Saved and exited by typing : wq and enter
+
+
+I need to make little adjustment to the react code. Delete the logo and adjust the App.js
+
+ Moved to the src folder : cd ..
+ 
+ From the src folder ran the command : vi App.js
+ 
+ deleted the contents by typing : %d & enter
+ 
+ Copied & pasted the following code : 
+ 
+     import React from 'react';
+
+     import Todo from './components/Todo';
+     import './App.css';
+
+     const App = () => {
+     return (
+     <div className="App">
+     <Todo />
+     </div>
+     );
+     }
+
+     export default App;
+     
+ saved and exited vim editor by typing : wq! and enter
+     
+     
+ In the src directory, opened the App.css : vi App.css
+     
+ deleted the contents with : %d and enter
+     
+ pasted the following code: 
+     
+    .App {
+    text-align: center;
+    font-size: calc(10px + 2vmin);
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    }
+
+    input {
+    height: 40px;
+    width: 50%;
+    border: none;
+    border-bottom: 2px #101113 solid;
+    background: none;
+    font-size: 1.5rem;
+    color: #787a80;
+    }
+
+    input:focus {
+    outline: none;
+    }
+
+    button {
+    width: 25%;
+    height: 45px;
+    border: none;
+    margin-left: 10px;
+    font-size: 25px;
+    background: #101113;
+    border-radius: 5px;
+    color: #787a80;
+    cursor: pointer;
+    }
+
+    button:focus {
+    outline: none;
+    }
+
+    ul {
+    list-style: none;
+    text-align: left;
+    padding: 15px;
+    background: #171a1f;
+    border-radius: 5px;
+    }
+
+    li {
+    padding: 15px;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    background: #282c34;
+    border-radius: 5px;
+    overflow-wrap: break-word;
+    cursor: pointer;
+    }
+
+    @media only screen and (min-width: 300px) {
+    .App {
+    width: 80%;
+    }
+
+    input {
+    width: 100%
+    }
+
+    button {
+    width: 100%;
+    margin-top: 15px;
+    margin-left: 0;
+    }
+    }
+
+    @media only screen and (min-width: 640px) {
+    .App {
+    width: 60%;
+    }
+
+    input {
+    width: 50%;
+    }
+
+    button {
+    width: 30%;
+    margin-left: 10px;
+    margin-top: 0;
+    }
+    }
+    
+  Saved and exited using : wq! and enter
+    
+  In the src directory, opened the index.css : vim index.css
+    
+  deleted the contents with : %d and enter
+    
+  copied and pasted the code below : 
+    
+    body {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    box-sizing: border-box;
+    background-color: #282c34;
+    color: #787a80;
+    }
+
+    code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+    }
+    
+ saved and exited with : wq! and enter
+    
+ Went back to todo directory :  cd ../..
+    
+ from Todo directory, i ran : npm run dev
+    
+    
+![Capture 31](https://user-images.githubusercontent.com/92916632/142865667-e9d19d17-52c0-4267-99de-0fcb4618979c.PNG)
+
+
+To test the functionality of my To-Do app, i opened my webpage, copied and pasted my public IP address :3000
+
+![Capture 32 tested my todo app](https://user-images.githubusercontent.com/92916632/142866748-0145c5eb-ec03-4673-9a42-8c3423b476cf.PNG)
+    
+    
+
+
+           
 
    
    
