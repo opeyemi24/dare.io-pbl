@@ -1,6 +1,12 @@
 ## MERN STACK IMPLEMENTATION
 
-## SIMPLE TO-DO APPLICATION ON MERN WEB STACK
+## In this project,i created a simple To-Do application and deployed it to MERN STACK. 
+
+## I wrote a front end application using React.js that communicates with a backend application written using Expressjs. 
+
+## I also created a Mongodb backend for storing tasks in a  database
+
+   
 
 
    Connected to the server through mobaxterm SSH client by taking the following steps: 
@@ -383,15 +389,11 @@ Started my server using the command: node index.js
    
    Replaced with the following code :   
    
-   "scripts": {
-   
-   "start": "node index.js",
-   
-   "start-watch": "nodemon index.js",
-   
-   "dev": "concurrently \"npm run start-watch\" \"cd client && npm start\""
-  
-   },
+                                   "scripts": {
+                                   "start": "node index.js",
+                                   "start-watch": "nodemon index.js",
+                                   "dev": "concurrently \"npm run start-watch\" \"cd client && npm start\""
+                                   },
    
    ![Capture 24 replacing code](https://user-images.githubusercontent.com/92916632/142781450-2008ccf6-2e08-4b57-8fbf-1d94956d8a19.PNG)
 
@@ -557,7 +559,8 @@ import ListTodo from './ListTodo';
 
 class Todo extends Component {
 
-state = {
+state = 
+{
 todos: []
 }
 
