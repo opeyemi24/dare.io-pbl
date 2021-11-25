@@ -123,7 +123,18 @@ Reloaded Nginx to apply changes. Ran the command : sudo systemctl reload nginx
 
 Created an index html file in that location so that i can test that my new server block works as expected: 
 
-sudo echo 'Hello LEMP from hostname' $(curl -s http://169.254.169.254/latest/meta-data/public-hostname) 'with public IP' $(curl -s http://169.254.169.254/latest/meta-data/public-ipv4) > /var/www/projectLEMP/index.html
+sudo echo 'Hello LEMP from hostname' $(curl -s http://169.254.169.254/latest/meta-
+data/public-hostname) 'with public IP' $(curl -s http://169.254.169.254/latest/meta-
+data/public-ipv4) > /var/www/projectLEMP/index.html
+
+ opened my website URL using IP address:
+ 
+    http://<Public-IP-Address>:80
+ 
+ 
+
+![Capture 9b Hello LEMP](https://user-images.githubusercontent.com/92916632/143406137-cf8aaa68-e3a3-41a5-8b1e-b0550c7cb23b.PNG)
+
 
 Step 6: Testing PHP with nginx
 
