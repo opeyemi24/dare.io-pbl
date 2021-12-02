@@ -45,7 +45,45 @@ curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
  ![Capture 3 installed Nodejs](https://user-images.githubusercontent.com/92916632/144459108-d3adfdfe-e7df-49ee-b406-090727a9d411.PNG)
  
  
- Step 2: Install MongoDB 
+ Step 2: INSTALLED MONGODB
+ 
+ Added MongoDB key to the key server by pasting the following command : 
+ 
+ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 0C49F3730359A14518585931BC711F9BA15703C6
+ 
+ 
+ Added a repository for MongoDB with the following command : 
+  
+echo "deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.4.list
+
+
+![Capture 4 Added Mongodb to kerserver   added a repository for Mogodb](https://user-images.githubusercontent.com/92916632/144470512-29f1a322-fcd5-46db-a4f9-c421e3d224b5.PNG)
+
+
+Installed MongoDB with the following command :
+
+sudo apt install -y mongodb
+
+![Capture 5 installed Mongodb](https://user-images.githubusercontent.com/92916632/144470954-13a41933-cac1-4589-aff8-038165f09686.PNG)
+
+Started the server : sudo service mongodb start
+
+Verified that server is up and running : sudo systemctl status mongodb
+
+![Capture 6 started server and verified that service is up and running](https://user-images.githubusercontent.com/92916632/144471269-2f0c5888-7b91-4eac-a145-ef2ec746e910.PNG)
+
+
+Installed npm-Node package manager with the command below :
+
+                                     sudo apt install aptitude
+                                     
+                                     sudo aptitude install -y npm
+                                     
+![Capture 7 installed npm](https://user-images.githubusercontent.com/92916632/144471833-8e4dbe68-a2f9-42ea-b887-5fdb5af4a02f.PNG)
+
+
+ 
+ 
 
 
  
