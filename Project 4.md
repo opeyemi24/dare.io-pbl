@@ -133,7 +133,7 @@ In 'Books' folder, i created a folder named apps : mkdir apps && cd apps
 
 Created a file named routes.js : touch routes.js
 
-Opened the file routes.js      : vi  routes.js
+Opened the routes.js file      : vi  routes.js
 
 Copied and pasted the following code into the routes.js file :
 
@@ -176,6 +176,168 @@ module.exports = function(app) {
 };
 
 Typed esc, : wq! enter to save and exit
+
+In the 'apps' folder created a folder named models : mkdir models && cd models
+
+In the models folder, created a file named book.js : touch book.js
+
+Opened the book.js file using : vi book.js
+
+Typed i (insert)
+
+Copied and pasted the following code : 
+
+var mongoose = require('mongoose');
+var dbHost = 'mongodb://localhost:27017/test';
+mongoose.connect(dbHost);
+mongoose.connection;
+mongoose.set('debug', true);
+var bookSchema = mongoose.Schema( {
+  name: String,
+  isbn: {type: String, index: true},
+  author: String,
+  pages: Number
+});
+var Book = mongoose.model('Book', bookSchema);
+module.exports = mongoose.model('Book', bookSchema);
+
+
+Typed esc, : wq! enter to save and exit vim editor
+
+
+![Capture 11](https://user-images.githubusercontent.com/92916632/144601061-2509ed08-a12d-4070-96ca-80d671c7dbe3.PNG)
+
+
+
+STEP 4 : Access the routes with AngularJS
+
+Changed the directory back to 'Books' : cd ../..
+
+Created a folder named 'public' and cd into the public folder : mkdir public && cd public
+
+From the 'public folder', created a file named script.js : vi script.js
+
+Typed i (insert)
+
+Copied and pasted the code below into the script.js file 
+
+
+
+var app = angular.module('myApp', []);
+app.controller('myCtrl', function($scope, $http) {
+  $http( {
+    method: 'GET',
+    url: '/book'
+  }).then(function successCallback(response) {
+    $scope.books = response.data;
+  }, function errorCallback(response) {
+    console.log('Error: ' + response);
+  });
+  $scope.del_book = function(book) {
+    $http( {
+      method: 'DELETE',
+      url: '/book/:isbn',
+      params: {'isbn': book.isbn}
+    }).then(function successCallback(response) {
+      console.log(response);
+    }, function errorCallback(response) {
+      console.log('Error: ' + response);
+    });
+  };
+  $scope.add_book = function() {
+    var body = '{ "name": "' + $scope.Name + 
+    '", "isbn": "' + $scope.Isbn +
+    '", "author": "' + $scope.Author + 
+    '", "pages": "' + $scope.Pages + '" }';
+    $http({
+      method: 'POST',
+      url: '/book',
+      data: body
+    }).then(function successCallback(response) {
+      console.log(response);
+    }, function errorCallback(response) {
+      console.log('Error: ' + response);
+    });
+  };
+});
+
+
+Typed esc, :wq! enter to save and exit vim editor
+
+In the public folder, created a file named index.html : vi index.html  
+
+The command above created and opened the index.html file on vim editor
+
+Typed i (insert)
+
+Copied and pasted the front end code below into the index.html file
+
+
+<!doctype html>
+<html ng-app="myApp" ng-controller="myCtrl">
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script src="script.js"></script>
+  </head>
+  <body>
+    <div>
+      <table>
+        <tr>
+          <td>Name:</td>
+          <td><input type="text" ng-model="Name"></td>
+        </tr>
+        <tr>
+          <td>Isbn:</td>
+          <td><input type="text" ng-model="Isbn"></td>
+        </tr>
+        <tr>
+          <td>Author:</td>
+          <td><input type="text" ng-model="Author"></td>
+        </tr>
+        <tr>
+          <td>Pages:</td>
+          <td><input type="number" ng-model="Pages"></td>
+        </tr>
+      </table>
+      <button ng-click="add_book()">Add</button>
+    </div>
+    <hr>
+    <div>
+      <table>
+        <tr>
+          <th>Name</th>
+          <th>Isbn</th>
+          <th>Author</th>
+          <th>Pages</th>
+
+        </tr>
+        <tr ng-repeat="book in books">
+          <td>{{book.name}}</td>
+          <td>{{book.isbn}}</td>
+          <td>{{book.author}}</td>
+          <td>{{book.pages}}</td>
+
+          <td><input type="button" value="Delete" data-ng-click="del_book(book)"></td>
+        </tr>
+      </table>
+    </div>
+  </body>
+</html>
+
+
+Typed esc, : wq! enter to save and exit vim editor
+
+Ran the command cat index.html to confirm that code was copied & saved successfully
+
+
+
+![Capture 12](https://user-images.githubusercontent.com/92916632/144607073-b0dfa40c-55c0-4e2e-8a07-097b0875f5fb.PNG)
+
+
+
+
+
+
 
 
 
