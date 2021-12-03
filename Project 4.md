@@ -320,11 +320,56 @@ Copied and pasted the front end code below into the index.html file
 
           <td><input type="button" value="Delete" data-ng-click="del_book(book)"></td>
         </tr>
-       </table>
-      </div>
-     </body>
-     </html>
+      </table>
+    </div>
+  </body>
+</html>
 
+
+Typed esc, :wq enter to save and exit
+
+Ran the command cat index.html to confirm that code was copied and saved successfully
+
+
+
+![Capture 12](https://user-images.githubusercontent.com/92916632/144676065-b0851ca8-8d93-4da2-bed5-c167291b1404.PNG)
+
+
+
+Changed the directory back to 'books' : cd ..
+
+Started the server by running this command : node server.js
+
+![Capture 13  started the server   server up](https://user-images.githubusercontent.com/92916632/144678708-0bc29fc9-77cc-49a7-8622-375f74fff1e7.PNG)
+
+
+Launched a seperate SSH console to test what curl command returns locally : curl -s http://localhost:3300
+
+It returned the html page below: 
+
+![Capture 14 Tested loccaly using curl command](https://user-images.githubusercontent.com/92916632/144679794-1b52edff-9628-4697-b16b-d3ed3634bd7a.PNG)
+
+
+Opened TCP port 3300 in my AWS web console 
+
+
+![Capture 15 opened port 3300](https://user-images.githubusercontent.com/92916632/144680035-4325af11-7dd7-42d3-8edc-e2085141ac56.PNG)
+
+
+Accessed my Book register web application from the internet by pasting my public IP address :3300 into a browser
+
+![Capture 16 Accessed my book register web application](https://user-images.githubusercontent.com/92916632/144680736-f45e232c-ae9b-4f01-a1da-9a8475a65de3.PNG)
+
+
+
+
+
+
+
+
+
+
+                                                   
 
 
 
