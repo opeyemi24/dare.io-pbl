@@ -273,6 +273,7 @@ Typed i (insert)
 Copied and pasted the front end code below into the index.html file
 
 
+
 <!doctype html>
 <html ng-app="myApp" ng-controller="myCtrl">
   <head>
@@ -319,19 +320,38 @@ Copied and pasted the front end code below into the index.html file
 
           <td><input type="button" value="Delete" data-ng-click="del_book(book)"></td>
         </tr>
-      </table>
-    </div>
-  </body>
-</html>
-
-
-Typed esc, : wq! enter to save and exit vim editor
-
-Ran the command cat index.html to confirm that code was copied & saved successfully
+       </table>
+      </div>
+     </body>
+     </html>
 
 
 
-![Capture 12](https://user-images.githubusercontent.com/92916632/144607073-b0dfa40c-55c0-4e2e-8a07-097b0875f5fb.PNG)
+
+
+     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
