@@ -11,7 +11,7 @@ Screenshot showing the 2 instances created
 
 ![Capture instances](https://user-images.githubusercontent.com/92916632/145488233-956b3c76-1365-4ab4-9358-5c0e2979560d.PNG)
 
-STEP 2 : On mysql server linux server, i installed myqsl server software with the command : sudo apt update -y
+STEP 2 : On mysql server, i installed myqsl server software with the command : sudo apt update -y
  
                                                                                sudo apt install myqsl-server -y
  Screenshot showing the installation of myqsl server software
@@ -51,6 +51,43 @@ run the command : ip addr show
 
 ![Capture 7 show ip address](https://user-images.githubusercontent.com/92916632/145630927-0809d825-34fe-4032-bb2e-31e07c75a9ab.PNG)
 
+
+STEP 5 : Created a user and database for mysql server
+
+To secure the installation of mysql server i ran the security script : sudo mysql_secure_installation
+
+I entered NO when asked to set up validate password component. In production environment, it is adviced that we set 
+
+up validate password component for security purposes.
+
+
+Set the password for root : password
+
+![Capture 8 secure installation](https://user-images.githubusercontent.com/92916632/145674407-4a1eee03-a74a-452b-938f-133b74c7ab25.PNG)
+
+
+Remove anonymous users : Y
+
+Disallow root login remotely : Y 
+
+Remove test database and access to it : Y
+
+Reload priviledge tables now : Y
+
+![Capture 9](https://user-images.githubusercontent.com/92916632/145674523-4bbb9008-090b-47a8-931b-cc714374654f.PNG)
+
+Ran : sudo mysql 
+
+Created a user named remote_user : CREATE USER 'remote_user'@'%' IDENTIFIED WITH mysql_native_password BY 'password' ;
+
+Created the database : CREATE DATABASE test_db ;
+
+Granted privileges : GRANT ALL ON test_db. * TO 'remote_user'@'%' WITH GRANT OPTION;
+
+ mysql> FLUSH PRIVILEGES;
+ 
+ ![Capture 10d](https://user-images.githubusercontent.com/92916632/145674660-f3738816-684c-4e03-80ef-d08e9212246b.PNG) 
+ ![Capture 10 c  flush privileges](https://user-images.githubusercontent.com/92916632/145674616-2f1f83c6-8adc-469b-97d0-9b22042d716d.PNG)
 
  
  
