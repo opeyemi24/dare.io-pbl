@@ -119,6 +119,21 @@
   Verified that my VG has been created successfully by running : sudo vgs
   ![Capture 17 verified that volume group has been created](https://user-images.githubusercontent.com/92916632/146274109-f8a261e5-d5e9-40bf-b824-0befa7dcbaf5.PNG)
   
+  Used lvcreate utility to create 2 logical volumes app-lv(i used half of the physical volume size) and log-lv( i used the remaining space of the pv size)
+  
+  app-lv will be used to store data for the website, while log-lv will be used to store data for logs
+  
+  sudo lvcreate -n apps-lv -L 14G webdata-vg
+  
+  sudo lvcreate -n logs-lv -L 14G webdata-vg
+  
+  Verified that my logical volume has been created by running : sudo lvs
+  
+  
+  Verified the entire set up 
+  
+  
+  
   
 
 
