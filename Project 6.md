@@ -81,18 +81,52 @@
   ![Capture capture 10](https://user-images.githubusercontent.com/92916632/146240112-d016c1ab-0f0d-4ceb-9de4-5a0cb79d0812.PNG)
   
   Followed the above named procedure for the creation of partition of the second disk
-  
-  ![Capture 11](https://user-images.githubusercontent.com/92916632/146241325-7b03585a-994b-47df-8a76-e805a1aa685d.PNG)
+   ![Capture 11](https://user-images.githubusercontent.com/92916632/146241325-7b03585a-994b-47df-8a76-e805a1aa685d.PNG)
   
   Followed the above named procedure for the creation of partion of the third disk
+   ![Capture 12](https://user-images.githubusercontent.com/92916632/146241861-9cc04cd9-a78a-4f17-aa69-23f76f5ebc47.PNG)
   
-  ![Capture 12](https://user-images.githubusercontent.com/92916632/146241861-9cc04cd9-a78a-4f17-aa69-23f76f5ebc47.PNG)
+  To view the newly configured partition on each of the 3 disks. i ran : lsblk
+   ![Capture 13 to confirm configuration](https://user-images.githubusercontent.com/92916632/146242086-275cf978-2993-4028-b985-365d7c06a9fa.PNG)
+   
+ 
+  Physical volumes will be created on these partitons.
   
-  To confirm my configurations i ran : lsblk
+  Installed lvm2 package using : sudo yum install lvm2 -y
+  ![Capture 14 install lvm2 package](https://user-images.githubusercontent.com/92916632/146272224-357405da-8669-4147-b1c1-1c28c6c95502.PNG)
   
-   Screenshot showing the newly created partions 
   
-  ![Capture 13 to confirm configuration](https://user-images.githubusercontent.com/92916632/146242086-275cf978-2993-4028-b985-365d7c06a9fa.PNG)
+  I marked each of the 3 disks as physical volume with the command :   
+  
+  sudo pvcreate /dev/xvdf1
+ 
+  sudo pvcreate /dev/xvdg1
+  
+  sudo pvcreate /dev/xvdh1
+  
+ ![Capture 18](https://user-images.githubusercontent.com/92916632/146274626-b07ea3da-3ca2-4dce-b6ee-f87391a8de71.PNG)
+  
+  Verified that my physical volume has been created by running : sudo pvs
+  ![Capture 15 confirm physical volume](https://user-images.githubusercontent.com/92916632/146273030-c5181b09-9c28-4bc9-8d5b-a2bb60d2d0b3.PNG)
+  
+ 
+  Used vgcreate utility to add all 3 PVs to a volume group (VG).  I Named the VG webdata-vg 
+  
+  sudo vgcreate webdata-vg /dev/xvdh1 /dev/xvdg1 /dev/xvdf1
+  
+  ![Capture 16 creation of volume group](https://user-images.githubusercontent.com/92916632/146273540-04c40c55-0df9-4645-986e-67a6e6dc5733.PNG)
+  
+  Verified that my VG has been created successfully by running : sudo vgs
+  ![Capture 17 verified that volume group has been created](https://user-images.githubusercontent.com/92916632/146274109-f8a261e5-d5e9-40bf-b824-0befa7dcbaf5.PNG)
+  
+  
+
+
+
+  
+  
+   
+   
   
   
   
