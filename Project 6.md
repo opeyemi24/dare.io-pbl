@@ -98,11 +98,11 @@
   
   I marked each of the 3 disks as physical volume with the command :   
   
-  sudo pvcreate /dev/xvdf1
+        sudo pvcreate /dev/xvdf1
  
-  sudo pvcreate /dev/xvdg1
+        sudo pvcreate /dev/xvdg1
   
-  sudo pvcreate /dev/xvdh1
+        sudo pvcreate /dev/xvdh1
   
  ![Capture 18](https://user-images.githubusercontent.com/92916632/146274626-b07ea3da-3ca2-4dce-b6ee-f87391a8de71.PNG)
   
@@ -112,7 +112,7 @@
  
   Used vgcreate utility to add all 3 PVs to a volume group (VG).  I Named the VG webdata-vg 
   
-  sudo vgcreate webdata-vg /dev/xvdh1 /dev/xvdg1 /dev/xvdf1
+          sudo vgcreate webdata-vg /dev/xvdh1 /dev/xvdg1 /dev/xvdf1
   
   ![Capture 16 creation of volume group](https://user-images.githubusercontent.com/92916632/146273540-04c40c55-0df9-4645-986e-67a6e6dc5733.PNG)
   
@@ -124,15 +124,90 @@
   
   app-lv will be used to store data for the website, while log-lv will be used to store data for logs
   
-  sudo lvcreate -n apps-lv -L 14G webdata-vg
+          sudo lvcreate -n apps-lv -L 14G webdata-vg
   
-  sudo lvcreate -n logs-lv -L 14G webdata-vg
+          sudo lvcreate -n logs-lv -L 14G webdata-vg
+  
+  ![Capture 18 create logical volume](https://user-images.githubusercontent.com/92916632/146404757-c50429d9-725f-49d4-a079-9e93066936cc.PNG)
   
   Verified that my logical volume has been created by running : sudo lvs
+  ![Capture 19 verify creation of logical volume](https://user-images.githubusercontent.com/92916632/146405492-fd81f5ff-15f3-4ef0-bd94-14544dcc593f.PNG)
   
   
   Verified the entire set up 
   
+         sudo lsblk
+  
+  ![Capture 20 verify the entire set up](https://user-images.githubusercontent.com/92916632/146406561-dfcdc2ae-880d-4dd8-a864-6dd7efa1325f.PNG)
+  
+  I used mkfs.ext4 to format the logical volumes with ext4 filesystem
+  
+       sudo mkfs -t ext4 /dev/webdata-vg/apps-lv
+  
+       sudo mkfs -t ext4 /dev/webdata-vg/logs-lv
+  
+  ![Capture 23 combination of 2 file system](https://user-images.githubusercontent.com/92916632/146411537-d881ae6c-53dc-4ebd-9c0e-4405c020c4f7.PNG)
+
+
+   Created  /var/www/html directory to store website files
+    
+       sudo mkdir -p /var/www/html
+   ![Capture 24](https://user-images.githubusercontent.com/92916632/146422196-61d5021e-e51f-42fe-9f8f-95d5940d9062.PNG)
+   
+   Created /home/recovery/logs to store backup of log data
+   
+       sudo mkdir -p /home/recovery/logs
+   ![Capture 25](https://user-images.githubusercontent.com/92916632/146422430-ece1e3cb-f301-47cb-9fe1-9aae598a9235.PNG)
+   
+   Mounted /var/www/html on apps-lv logical volume
+   
+       sudo mount /dev/webdata-vg/apps-lv /var/www/html/
+   ![Capture 27](https://user-images.githubusercontent.com/92916632/146423741-2f0e5fd4-fdee-427e-92bd-568028ebbaec.PNG)
+   
+   Used rsync utility to backup all the files in the log directory /var/log into /home/recovery/logs (This is required before mounting the file system)
+   
+       sudo rsync -av /var/log/. /home/recovery/logs/
+   
+   ![Capture 28](https://user-images.githubusercontent.com/92916632/146424483-5aed6f32-ca7b-472e-8609-b1ad42bc0c1c.PNG) 
+   
+   Mounted /var/log on logs-lv logical volume. (All the existing data on /var/log will be deleted. That is why step 18 above is very important)
+   
+      sudo mount /dev/webdata-vg/logs-lv /var/log
+   
+  ![Capture 29](https://user-images.githubusercontent.com/92916632/146425235-884a873c-1f1c-43a7-bb4f-c99be6f84a9b.PNG)
+  
+  Restored the log files back into /var/log directory
+  
+     sudo rsync -av /home/recovery/logs/. /var/log
+   ![Capture 30](https://user-images.githubusercontent.com/92916632/146426466-9176b450-cb11-411e-9b6d-26f62ca5e3d9.PNG)
+   
+  
+Updated /etc/fstab file so that the mount configuration will persist after restart of the server.
+   
+    sudo vi /etc/fstab
+    
+Updated /etc/fstab in the format below using my own UUID. I also removed the leading quotes and edited the ending quotes as shown in the screenshot below.
+    
+![Capture 32](https://user-images.githubusercontent.com/92916632/146442533-4d1a4e12-4e59-45bd-b4a7-81897ec52828.PNG)
+
+Tested the configuration and reloaded the daemon
+
+      sudo mount -a
+  
+      sudo systemctl daemon-reload
+  
+  ![Capture 34](https://user-images.githubusercontent.com/92916632/146445651-06e8c0b7-8231-46b0-936b-3180cb9a290b.PNG)
+  
+  
+   Verified my setup by running : df -h
+   ![Capture 33 ii df-h](https://user-images.githubusercontent.com/92916632/146446176-89cab909-bec7-4182-8f4a-24931832cf8e.PNG)
+  
+
+  
+ 
+  
+  
+ 
   
   
   
