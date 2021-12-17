@@ -9,11 +9,11 @@
  
  STEP 1 : Prepared a webserver
  
- Launched 2 EC2 instances that will serve as 'webserver' and 'database server' using Redhat OS
+ Launched an EC2 instances that will serve as 'webserver' using Redhat OS
  
- Screenshot showing the creation of EC2 instances
- 
- ![Capture 1 ec2 instances](https://user-images.githubusercontent.com/92916632/146087488-3333bb1a-ed86-47e3-9294-988377be8bbf.PNG)
+ Screenshot showing the creation of EC2 instance
+ ![Capture 1b](https://user-images.githubusercontent.com/92916632/146448622-190d94aa-e332-403f-857d-66ae084f22b3.PNG)
+
 
  
  Created 3 volumes in the same availability zone as my webserver EC2, each of 10G
@@ -53,11 +53,12 @@
   ![Capture 9](https://user-images.githubusercontent.com/92916632/146231757-f7ebeba3-f6b0-4c71-8926-d2c141cd42ab.PNG)
   
   
-  I used gdisk utility to create a single partition on each of the 3 disks
+  I used gdisk utility to create a single partition on each of the 3 disks. To create partition on the first disk, i ran the command below:
   
-  I followed the following steps :
   
-  Ran the command : sudo gdisk /dev/xvdf
+     sudo gdisk /dev/xvdf
+  
+   Took the following steps : 
   
   Typed n for new partition 
   
@@ -77,13 +78,22 @@
   Do you want to proceed (Y/N) : Yes
   
   
-   Screenshot showing the creation of partition of disk xvdf
+   Screenshot showing the creation of partition on disk xdvf
   ![Capture capture 10](https://user-images.githubusercontent.com/92916632/146240112-d016c1ab-0f0d-4ceb-9de4-5a0cb79d0812.PNG)
   
-  Followed the above named procedure for the creation of partition of the second disk
-   ![Capture 11](https://user-images.githubusercontent.com/92916632/146241325-7b03585a-994b-47df-8a76-e805a1aa685d.PNG)
   
-  Followed the above named procedure for the creation of partion of the third disk
+  For the creation of partition on the second disk, i ran the follwoing command:
+  
+     sudo gdisk /dev/xvdg 
+  
+  Followed the above named procedure which is also illustrated in the screenshot below
+   ![Capture 11](https://user-images.githubusercontent.com/92916632/146241325-7b03585a-994b-47df-8a76-e805a1aa685d.PNG)
+   
+   For the creation of partition on the third disk, i ran the command :
+   
+     sudo gdisk /dev/xdgf
+  
+  Followed the above named procedure which is also illustrated in the screenshot below
    ![Capture 12](https://user-images.githubusercontent.com/92916632/146241861-9cc04cd9-a78a-4f17-aa69-23f76f5ebc47.PNG)
   
   To view the newly configured partition on each of the 3 disks. i ran : lsblk
@@ -201,6 +211,72 @@ Tested the configuration and reloaded the daemon
   
    Verified my setup by running : df -h
    ![Capture 33 ii df-h](https://user-images.githubusercontent.com/92916632/146446176-89cab909-bec7-4182-8f4a-24931832cf8e.PNG)
+   
+   
+  
+  Step 2- Prepared the Database Server
+   
+  
+  Launched a second RedHat EC2 instance that will have a role – ‘DB Server’
+ 
+ 
+  ![Capture 1](https://user-images.githubusercontent.com/92916632/146450850-e39d758c-f0b7-472e-bb53-8b9197fe6ce8.PNG)
+   
+   Created 3 volumes in the same availability zone as my webserver EC2, each of 10G
+   
+   Attached the 3 volumes one by one to my webserver EC2 instance
+   
+   To confirm that the newly created devices have been attached, i ran the command : lsblk
+   
+   The names of the the newly created block devices are xvdf, xvdg, xvdh as shown in the screenshot below
+   ![Capture 2 lsblk](https://user-images.githubusercontent.com/92916632/146539898-7f16a412-96fc-4e29-9a82-c1b45fb3ea42.PNG)
+   
+   Used the follwing command to see all mounts and free space on my server :
+   
+      df -h
+      
+  Used gdisk utility to create a single partition on each of the 3 disks. For creation of partition on the first disk, i ran the command below:
+ 
+    
+      sudo gdisk /dev/xvdf
+      
+  Took the following steps :
+    
+  Typed n for new partition 
+  
+  Partition number : 1
+  
+  First sector (size which i want the disk used for) : clicked enter to use the entire disk
+  
+  Last sector : clicked enter to use entire disk
+  
+  Hex code or Guid = 8e00 to change partition type to Linux LVM 
+  
+  
+  Command ( ? for help) : Typed p to check check the configuration
+  
+  Command ( ? for help) : Typed w to write 
+  
+  Do you want to proceed (Y/N) : Yes
+  
+  
+  Screenshot showing the creation of partition on disk xvdf
+  ![Capture 3 gdisk](https://user-images.githubusercontent.com/92916632/146545394-48c23429-c30a-452a-a4bd-1acb92ac18dc.PNG)
+  
+ 
+ For the creation of partition on the second disk, i ran the following command :
+  
+      sudo gdisk /dev/xvdg
+  
+   Followed the above named procedure which is also illustrated in the screenshot below
+  ![Capture 4](https://user-images.githubusercontent.com/92916632/146545572-0a805947-2adf-4254-a236-e5afc2f91add.PNG)
+  
+   For the creation of partition on the third disk, i ran the following command :
+   
+      sudo gdisk /dev/xvdh
+  
+  Followed the above named procedure which is also illustrated in the screenshot below
+  ![Capture 5](https://user-images.githubusercontent.com/92916632/146546075-e067fdd7-c0e1-4166-8869-0733485edf38.PNG)
   
 
   
