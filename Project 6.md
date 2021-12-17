@@ -82,14 +82,14 @@
   ![Capture capture 10](https://user-images.githubusercontent.com/92916632/146240112-d016c1ab-0f0d-4ceb-9de4-5a0cb79d0812.PNG)
   
   
-  For the creation of partition on the second disk, i ran the follwoing command:
+  For the creation of partition on the second disk, i ran the following command:
   
      sudo gdisk /dev/xvdg 
   
   Followed the above named procedure which is also illustrated in the screenshot below
    ![Capture 11](https://user-images.githubusercontent.com/92916632/146241325-7b03585a-994b-47df-8a76-e805a1aa685d.PNG)
    
-   For the creation of partition on the third disk, i ran the command :
+   For the creation of partition on the third disk, i ran the following command :
    
      sudo gdisk /dev/xdgf
   
@@ -102,7 +102,9 @@
  
   Physical volumes will be created on these partitons.
   
-  Installed lvm2 package using : sudo yum install lvm2 -y
+  Installed lvm2 package by running the following command : 
+  
+      sudo yum install lvm2 -y
   ![Capture 14 install lvm2 package](https://user-images.githubusercontent.com/92916632/146272224-357405da-8669-4147-b1c1-1c28c6c95502.PNG)
   
   
@@ -116,7 +118,9 @@
   
  ![Capture 18](https://user-images.githubusercontent.com/92916632/146274626-b07ea3da-3ca2-4dce-b6ee-f87391a8de71.PNG)
   
-  Verified that my physical volume has been created by running : sudo pvs
+  Verified that my physical volume has been created by running the following command  : 
+  
+        sudo pvs
   ![Capture 15 confirm physical volume](https://user-images.githubusercontent.com/92916632/146273030-c5181b09-9c28-4bc9-8d5b-a2bb60d2d0b3.PNG)
   
  
@@ -126,7 +130,9 @@
   
   ![Capture 16 creation of volume group](https://user-images.githubusercontent.com/92916632/146273540-04c40c55-0df9-4645-986e-67a6e6dc5733.PNG)
   
-  Verified that my VG has been created successfully by running : sudo vgs
+  Verified that my Volume group has been created successfully by running the following command  : 
+  
+          sudo vgs
   ![Capture 17 verified that volume group has been created](https://user-images.githubusercontent.com/92916632/146274109-f8a261e5-d5e9-40bf-b824-0befa7dcbaf5.PNG)
   
   Used lvcreate utility to create 2 logical volumes.  app-lv(i used half of the physical volume size) and log-lv( i used the remaining space of the pv size). 
@@ -191,12 +197,29 @@
      sudo rsync -av /home/recovery/logs/. /var/log
    ![Capture 30](https://user-images.githubusercontent.com/92916632/146426466-9176b450-cb11-411e-9b6d-26f62ca5e3d9.PNG)
    
-  
-Updated /etc/fstab file so that the mount configuration will persist after restart of the server.
+ Updated the /etc/fstab file so that mount configuration will persist after the restart of server
    
-    sudo vi /etc/fstab
+ The UUID of the device will be used to update the /etc/fstab file 
     
-Updated /etc/fstab in the format below using my own UUID. I also removed the leading quotes and edited the ending quotes as shown in the screenshot below.
+ Opened the blkid with the following command : 
+    
+      sudo blkid
+     
+![Capture 31](https://user-images.githubusercontent.com/92916632/146573591-c09c52b3-2090-43ef-8cb5-e3ab77cf3e98.PNG)
+      
+      
+Copied the UUID of the device
+   
+![InkedCapture 31_LI](https://user-images.githubusercontent.com/92916632/146574056-91dae0ed-456b-41ce-ba70-7e80638e631a.jpg)
+
+Edited the UUID by removing the leading quotes and editing the ending quotes
+![Capture 35 editing UUID](https://user-images.githubusercontent.com/92916632/146582988-5663a25a-e321-488d-ba68-3558296e4dc1.PNG)
+  
+  
+    
+Updated /etc/fstab in the format below using the device UUID 
+
+    sudo vi /etc/stab
     
 ![Capture 32](https://user-images.githubusercontent.com/92916632/146442533-4d1a4e12-4e59-45bd-b4a7-81897ec52828.PNG)
 
@@ -235,7 +258,7 @@ Tested the configuration and reloaded the daemon
    
       df -h
       
-  Used gdisk utility to create a single partition on each of the 3 disks. For creation of partition on the first disk, i ran the command below:
+  Used gdisk utility to create a single partition on each of the 3 disks. For the creation of partition on the first disk, i ran the command below:
  
     
       sudo gdisk /dev/xvdf
@@ -277,6 +300,37 @@ Tested the configuration and reloaded the daemon
   
   Followed the above named procedure which is also illustrated in the screenshot below
   ![Capture 5](https://user-images.githubusercontent.com/92916632/146546075-e067fdd7-c0e1-4166-8869-0733485edf38.PNG)
+  
+  
+  To view the newly configured partition on each of the 3 disks. i ran : 
+  
+    lsblk
+    
+ ![Capture 6](https://user-images.githubusercontent.com/92916632/146560084-cf005d1c-bb7a-4a93-8ee1-5d3d42ec105c.PNG)
+ 
+ Installed lvm2 package by running the command : 
+ 
+    sudo yum install lvm2 -y
+    
+ I marked each of the 3 disks as physical volume with the command :   
+ 
+     sudo pvcreate /dev/xvdf1
+     
+     sudo pvcreate /dev/xvdg1
+     
+      sudo pvcreate /dev/xvdh1
+      
+  Verified that my physical volume has been created by running the command :
+  
+       sudo pvs
+       
+  Used vgcreate utility to add all 3 PVs to a volume group (VG).  I Named the VG webdata-vg 
+  
+        sudo vgcreate webdata-vg /dev/xvdh1 /dev/xvdg1 /dev/xvdf1
+        
+  Verified that my volume group has been created successfully by running the command : 
+  
+         sudo vgs
   
 
   
