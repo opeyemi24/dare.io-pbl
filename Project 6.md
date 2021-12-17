@@ -310,7 +310,7 @@ Tested the configuration and reloaded the daemon
  
  Installed lvm2 package by running the command : 
  
-    sudo yum install lvm2 -y
+     sudo yum install lvm2 -y
     
  I marked each of the 3 disks as physical volume with the command :   
  
@@ -324,13 +324,74 @@ Tested the configuration and reloaded the daemon
   
        sudo pvs
        
-  Used vgcreate utility to add all 3 PVs to a volume group (VG).  I Named the VG webdata-vg 
+  Used vgcreate utility to add all 3 PVs to a volume group (VG).  I Named the Volume group vg-database
   
-        sudo vgcreate webdata-vg /dev/xvdh1 /dev/xvdg1 /dev/xvdf1
+        sudo vgcreate vg-database /dev/xvdh1 /dev/xvdg1 /dev/xvdf1
         
   Verified that my volume group has been created successfully by running the command : 
   
          sudo vgs
+         
+   Used lvcreate utility to create 1 logical volume
+   
+        sudo lvcreate -n db-lv -L 20G vg-database
+   
+   Verified that my Lv has been created by running : 
+   
+        sudo lvs
+        
+  Created /db directory which is the database directory which also serves as the mounting point
+  
+      sudo mkdir /db
+      
+  Use mkfs.ext4 to format the logical volume with ext4 filesystem
+  
+      sudo mkfs -t ext4 /dev/vg-database/db-lv
+  
+      
+  Mounted /vg-database/db-lv on /db
+  
+      sudo mount /dev/vg-database/db-lv /db
+      
+      
+ Updated the /etc/fstab file so that mount configuration will persist after the restart of server
+ 
+  The UUID of the device will be used to update the /etc/fstab file 
+  
+  Opened the blkid with the following command : 
+  
+       sudo blkid
+     
+ Copied the UUID of the device
+ 
+ 
+ Edited the UUID by removing the leading quotes and editing the ending quotes
+ 
+ 
+ Updated /etc/fstab in the format below using the device UUID 
+ 
+       sudo vi /etc/fstab
+      
+
+![Capture 18](https://user-images.githubusercontent.com/92916632/146615065-c7c829db-e94c-49fa-b908-fd674c2a52cb.PNG)
+  
+  
+  Tested the configuration and reloaded the daemon
+  
+      sudo mount -a
+      
+      sudo systemctl daemon-reload
+      
+      
+ Verified my setup by running : df -h
+     
+     
+  
+     
+  
+  
+  
+  
   
 
   
