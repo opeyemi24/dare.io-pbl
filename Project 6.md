@@ -320,38 +320,58 @@ Tested the configuration and reloaded the daemon
      
       sudo pvcreate /dev/xvdh1
       
+ ![Capture 8](https://user-images.githubusercontent.com/92916632/146641276-4bd03f04-646c-42ca-9a88-754bab37a539.PNG)
+      
   Verified that my physical volume has been created by running the command :
   
        sudo pvs
+       
+ ![Capture 9](https://user-images.githubusercontent.com/92916632/146641318-a5478684-b7e8-4f45-b480-091419d56f1f.PNG)
        
   Used vgcreate utility to add all 3 PVs to a volume group (VG).  I Named the Volume group vg-database
   
         sudo vgcreate vg-database /dev/xvdh1 /dev/xvdg1 /dev/xvdf1
         
+![Capture 10](https://user-images.githubusercontent.com/92916632/146641342-2a965fe0-399e-49dc-93d9-d37870fd118b.PNG) 
+        
   Verified that my volume group has been created successfully by running the command : 
   
          sudo vgs
+ 
+![Capture 11](https://user-images.githubusercontent.com/92916632/146641419-53c879b0-995a-46d0-b352-6a3a69312e9f.PNG)
+         
+ 
          
    Used lvcreate utility to create 1 logical volume
    
         sudo lvcreate -n db-lv -L 20G vg-database
+        
+![Capture 12](https://user-images.githubusercontent.com/92916632/146641505-445d556e-cb3c-4128-938b-d17fd8c85e46.PNG)
+   
    
    Verified that my Lv has been created by running : 
    
         sudo lvs
         
-  Created /db directory which is the database directory which also serves as the mounting point
+ ![Capture 13](https://user-images.githubusercontent.com/92916632/146644046-b977733c-1c4c-4711-94fa-d7d92376cc1a.PNG)
+        
+ 
+ Created /db directory which is the database directory which also serves as the mounting point
   
       sudo mkdir /db
       
-  Use mkfs.ext4 to format the logical volume with ext4 filesystem
+  Used mkfs.ext4 to format the logical volume with ext4 filesystem
   
       sudo mkfs -t ext4 /dev/vg-database/db-lv
-  
+      
+  ![Capture 15](https://user-images.githubusercontent.com/92916632/146642202-673d6081-1e21-49fd-8493-17706ba6587a.PNG)
+
       
   Mounted /vg-database/db-lv on /db
   
       sudo mount /dev/vg-database/db-lv /db
+      
+  ![Capture 16](https://user-images.githubusercontent.com/92916632/146642216-b41db444-52d4-4d66-9190-5f09ace60409.PNG)
       
       
  Updated the /etc/fstab file so that mount configuration will persist after the restart of server
@@ -361,16 +381,22 @@ Tested the configuration and reloaded the daemon
   Opened the blkid with the following command : 
   
        sudo blkid
+       
+  ![Capture 17](https://user-images.githubusercontent.com/92916632/146642273-6ff5e5e8-d2a3-4058-8a8a-4863b5ae06d3.PNG)
+
      
- Copied the UUID of the device
+ Copied the UUID of the device on a notepad. Removed the leading quotes and edited the ending quotes of the UUID
+ 
+ ![Capture 21 notepad](https://user-images.githubusercontent.com/92916632/146643697-84fba381-3ec6-4764-85f9-c3bb06dc4b9a.PNG)
  
  
- Edited the UUID by removing the leading quotes and editing the ending quotes
+
+ Opened the fstab file and pasted the edited UUID
  
- 
- Updated /etc/fstab in the format below using the device UUID 
  
        sudo vi /etc/fstab
+       
+ saved and exited using : wq! enter
       
 
 ![Capture 18](https://user-images.githubusercontent.com/92916632/146615065-c7c829db-e94c-49fa-b908-fd674c2a52cb.PNG)
@@ -382,8 +408,13 @@ Tested the configuration and reloaded the daemon
       
       sudo systemctl daemon-reload
       
+ ![Capture 19](https://user-images.githubusercontent.com/92916632/146643754-c1ec0c5b-2a44-43b9-8e2d-20ebfa944b39.PNG)
+
+      
       
  Verified my setup by running : df -h
+ 
+ ![Capture 20](https://user-images.githubusercontent.com/92916632/146643796-b9495d46-df71-4fa3-bb74-8584515bf46b.PNG)
      
      
   
