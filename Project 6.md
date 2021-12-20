@@ -9,14 +9,14 @@
  
  STEP 1 : Prepared a webserver
  
- Launched an EC2 instances that will serve as 'webserver' using Redhat OS
+ 1.  Launched an EC2 instances that will serve as 'webserver' using Redhat OS
  
  Screenshot showing the creation of EC2 instance
  ![Capture 1b](https://user-images.githubusercontent.com/92916632/146448622-190d94aa-e332-403f-857d-66ae084f22b3.PNG)
 
 
  
- Created 3 volumes in the same availability zone as my webserver EC2, each of 10G
+2.   Created 3 volumes in the same availability zone as my webserver EC2, each of 10G
  
  Screenshot showing the creation of volumes 
  
@@ -24,7 +24,7 @@
 
  
  
- Attached the 3 volumes one by one to my webserver EC2 instance
+ 3.  Attached the 3 volumes one by one to my webserver EC2 instance
  
   Screenshot showing the attachment of volumes to webserver EC2 instance
  
@@ -34,8 +34,8 @@
  
  ![Capture 3d attach vol 3](https://user-images.githubusercontent.com/92916632/146151917-c0a7e6ca-95be-473c-802f-648fe0cbe818.PNG) 
  
- 
- To confirm that the newly created devices have been attached, i ran the command : lsblk
+
+4.  To confirm that the newly created devices have been attached, i ran the command : lsblk
  
  The names of the the newly created block devices are xvdf, xvdg, xvdh as shown in the screenshot below 
  
@@ -47,16 +47,16 @@
   ![Capture 8](https://user-images.githubusercontent.com/92916632/146231535-4350eb20-ce8f-464c-8392-ddee2c1306fd.PNG)
   
   
-  To see all mounts and free space on my server, i ran df -h 
+5. To see all mounts and free space on my server, i ran df -h 
   
    Screenshot showing that the 3 newly added devices have not been mounted
   ![Capture 9](https://user-images.githubusercontent.com/92916632/146231757-f7ebeba3-f6b0-4c71-8926-d2c141cd42ab.PNG)
   
   
-  I used gdisk utility to create a single partition on each of the 3 disks. To create partition on the first disk, i ran the command below:
+6. I used gdisk utility to create a single partition on each of the 3 disks. To create partition on the first disk, i ran the command below:
   
   
-     sudo gdisk /dev/xvdf
+       sudo gdisk /dev/xvdf
   
    Took the following steps : 
   
@@ -82,60 +82,61 @@
   ![Capture capture 10](https://user-images.githubusercontent.com/92916632/146240112-d016c1ab-0f0d-4ceb-9de4-5a0cb79d0812.PNG)
   
   
-  For the creation of partition on the second disk, i ran the following command:
+ 7. For the creation of partition on the second disk, i ran the following command:
   
-     sudo gdisk /dev/xvdg 
+         sudo gdisk /dev/xvdg 
   
   Followed the above named procedure which is also illustrated in the screenshot below
    ![Capture 11](https://user-images.githubusercontent.com/92916632/146241325-7b03585a-994b-47df-8a76-e805a1aa685d.PNG)
    
-   For the creation of partition on the third disk, i ran the following command :
+ 8. For the creation of partition on the third disk, i ran the following command :
    
-     sudo gdisk /dev/xdgf
+         sudo gdisk /dev/xdgf
   
   Followed the above named procedure which is also illustrated in the screenshot below
    ![Capture 12](https://user-images.githubusercontent.com/92916632/146241861-9cc04cd9-a78a-4f17-aa69-23f76f5ebc47.PNG)
   
-  To view the newly configured partition on each of the 3 disks. i ran : lsblk
+  9. To view the newly configured partition on each of the 3 disks. i ran : lsblk
    ![Capture 13 to confirm configuration](https://user-images.githubusercontent.com/92916632/146242086-275cf978-2993-4028-b985-365d7c06a9fa.PNG)
    
  
   Physical volumes will be created on these partitons.
   
-  Installed lvm2 package by running the following command : 
+ 10. Installed lvm2 package by running the following command : 
   
-      sudo yum install lvm2 -y
+         sudo yum install lvm2 -y
   ![Capture 14 install lvm2 package](https://user-images.githubusercontent.com/92916632/146272224-357405da-8669-4147-b1c1-1c28c6c95502.PNG)
   
   
-  I marked each of the 3 disks as physical volume with the command :   
+ 11.  I marked each of the 3 disks as physical volume with the command :   
   
-        sudo pvcreate /dev/xvdf1
+          sudo pvcreate /dev/xvdf1
  
-        sudo pvcreate /dev/xvdg1
+          sudo pvcreate /dev/xvdg1
   
-        sudo pvcreate /dev/xvdh1
+          sudo pvcreate /dev/xvdh1
   
  ![Capture 18](https://user-images.githubusercontent.com/92916632/146274626-b07ea3da-3ca2-4dce-b6ee-f87391a8de71.PNG)
   
-  Verified that my physical volume has been created by running the following command  : 
+ 12.  Verified that my physical volume has been created by running the following command  : 
   
         sudo pvs
   ![Capture 15 confirm physical volume](https://user-images.githubusercontent.com/92916632/146273030-c5181b09-9c28-4bc9-8d5b-a2bb60d2d0b3.PNG)
   
  
-  Used vgcreate utility to add all 3 PVs to a volume group (VG).  I Named the VG webdata-vg 
+ 13.  Used vgcreate utility to add all 3 PVs to a volume group (VG).  I Named the VG webdata-vg 
   
           sudo vgcreate webdata-vg /dev/xvdh1 /dev/xvdg1 /dev/xvdf1
   
   ![Capture 16 creation of volume group](https://user-images.githubusercontent.com/92916632/146273540-04c40c55-0df9-4645-986e-67a6e6dc5733.PNG)
   
-  Verified that my Volume group has been created successfully by running the following command  : 
+ 14. Verified that my Volume group has been created successfully by running the following command  : 
   
           sudo vgs
   ![Capture 17 verified that volume group has been created](https://user-images.githubusercontent.com/92916632/146274109-f8a261e5-d5e9-40bf-b824-0befa7dcbaf5.PNG)
   
-  Used lvcreate utility to create 2 logical volumes.  app-lv(i used half of the physical volume size) and log-lv( i used the remaining space of the pv size). 
+ 15.  Used lvcreate utility to create 2 logical volumes.  app-lv(i used half of the physical volume size) and log-lv( i used the remaining space of the pv size). 
+  
   These logical volumes are the actual disks to be allocated to the servers.
   
   app-lv will be used to store data for the website, while log-lv will be used to store data for logs
@@ -146,93 +147,103 @@
   
   ![Capture 18 create logical volume](https://user-images.githubusercontent.com/92916632/146404757-c50429d9-725f-49d4-a079-9e93066936cc.PNG)
   
-  Verified that my logical volume has been created by running : sudo lvs
+ 16. Verified that my logical volume has been created by running : sudo lvs
   ![Capture 19 verify creation of logical volume](https://user-images.githubusercontent.com/92916632/146405492-fd81f5ff-15f3-4ef0-bd94-14544dcc593f.PNG)
   
   
-  Verified the entire set up 
+ 17.  Verified the entire set up 
   
-         sudo lsblk
+           sudo lsblk
   
   ![Capture 20 verify the entire set up](https://user-images.githubusercontent.com/92916632/146406561-dfcdc2ae-880d-4dd8-a864-6dd7efa1325f.PNG)
   
-  I used mkfs.ext4 to format the logical volumes with ext4 filesystem
+ 18.  I used mkfs.ext4 to format the logical volumes with ext4 filesystem
   
-       sudo mkfs -t ext4 /dev/webdata-vg/apps-lv
+           sudo mkfs -t ext4 /dev/webdata-vg/apps-lv
   
-       sudo mkfs -t ext4 /dev/webdata-vg/logs-lv
+           sudo mkfs -t ext4 /dev/webdata-vg/logs-lv
   
   ![Capture 23 combination of 2 file system](https://user-images.githubusercontent.com/92916632/146411537-d881ae6c-53dc-4ebd-9c0e-4405c020c4f7.PNG)
 
 
-   Created  /var/www/html directory to store website files
+ 19.  Created  /var/www/html directory to store website files
     
-       sudo mkdir -p /var/www/html
+           sudo mkdir -p /var/www/html
    ![Capture 24](https://user-images.githubusercontent.com/92916632/146422196-61d5021e-e51f-42fe-9f8f-95d5940d9062.PNG)
    
-   Created /home/recovery/logs to store backup of log data
+ 20.  Created /home/recovery/logs to store backup of log data
    
-       sudo mkdir -p /home/recovery/logs
+          sudo mkdir -p /home/recovery/logs
    ![Capture 25](https://user-images.githubusercontent.com/92916632/146422430-ece1e3cb-f301-47cb-9fe1-9aae598a9235.PNG)
    
-   Mounted /var/www/html on apps-lv logical volume
+ 21.  Mounted /var/www/html on apps-lv logical volume
    
-       sudo mount /dev/webdata-vg/apps-lv /var/www/html/
+          sudo mount /dev/webdata-vg/apps-lv /var/www/html/
    ![Capture 27](https://user-images.githubusercontent.com/92916632/146423741-2f0e5fd4-fdee-427e-92bd-568028ebbaec.PNG)
    
-   Used rsync utility to backup all the files in the log directory /var/log into /home/recovery/logs (This is required before mounting the file system)
+ 22.  Used rsync utility to backup all the files in the log directory /var/log into /home/recovery/logs (This is required before mounting the file system)
    
-       sudo rsync -av /var/log/. /home/recovery/logs/
+          sudo rsync -av /var/log/. /home/recovery/logs/
    
    ![Capture 28](https://user-images.githubusercontent.com/92916632/146424483-5aed6f32-ca7b-472e-8609-b1ad42bc0c1c.PNG) 
    
-   Mounted /var/log on logs-lv logical volume. (All the existing data on /var/log will be deleted. That is why step 18 above is very important)
+ 23.  Mounted /var/log on logs-lv logical volume. (All the existing data on /var/log will be deleted. That is why step 22 above is very important)
    
-      sudo mount /dev/webdata-vg/logs-lv /var/log
+          sudo mount /dev/webdata-vg/logs-lv /var/log
    
   ![Capture 29](https://user-images.githubusercontent.com/92916632/146425235-884a873c-1f1c-43a7-bb4f-c99be6f84a9b.PNG)
   
-  Restored the log files back into /var/log directory
+ 24. Restored the log files back into /var/log directory
   
-     sudo rsync -av /home/recovery/logs/. /var/log
+          sudo rsync -av /home/recovery/logs/. /var/log
    ![Capture 30](https://user-images.githubusercontent.com/92916632/146426466-9176b450-cb11-411e-9b6d-26f62ca5e3d9.PNG)
    
- Updated the /etc/fstab file so that mount configuration will persist after the restart of server
+ 25.  Updated the /etc/fstab file so that mount configuration will persist after the restart of server
    
- The UUID of the device will be used to update the /etc/fstab file 
+ - The UUID of the device will be used to update the /etc/fstab file 
     
- Opened the blkid with the following command : 
+ - Opened the blkid with the following command : 
     
-      sudo blkid
+        sudo blkid
      
 ![Capture 31](https://user-images.githubusercontent.com/92916632/146573591-c09c52b3-2090-43ef-8cb5-e3ab77cf3e98.PNG)
       
       
-Copied the UUID of the device
+- Copied the UUID of the device. 
+
+- Pasted on a notepad. 
+
+- Removed the leading quotes & edited the ending quotes of the UUID 
    
 ![InkedCapture 31_LI](https://user-images.githubusercontent.com/92916632/146574056-91dae0ed-456b-41ce-ba70-7e80638e631a.jpg)
 
-Edited the UUID by removing the leading quotes and editing the ending quotes
+
 ![Capture 35 editing UUID](https://user-images.githubusercontent.com/92916632/146582988-5663a25a-e321-488d-ba68-3558296e4dc1.PNG)
   
   
     
-Updated /etc/fstab in the format below using the device UUID 
+ - Opened the fstab file
 
-    sudo vi /etc/stab
+        sudo vi /etc/fstab
     
-![Capture 32](https://user-images.githubusercontent.com/92916632/146442533-4d1a4e12-4e59-45bd-b4a7-81897ec52828.PNG)
 
-Tested the configuration and reloaded the daemon
+ - Pasted the edited UUID in the fstab file
+ 
+ - Saved and exited using :wq! enter 
+ 
+ ![Capture 32](https://user-images.githubusercontent.com/92916632/146442533-4d1a4e12-4e59-45bd-b4a7-81897ec52828.PNG)
 
-      sudo mount -a
+
+26. Tested the configuration and reloaded the daemon
+
+         sudo mount -a
   
-      sudo systemctl daemon-reload
+         sudo systemctl daemon-reload
   
   ![Capture 34](https://user-images.githubusercontent.com/92916632/146445651-06e8c0b7-8231-46b0-936b-3180cb9a290b.PNG)
   
   
-   Verified my setup by running : df -h
+ 27.  Verified my setup by running : df -h
    ![Capture 33 ii df-h](https://user-images.githubusercontent.com/92916632/146446176-89cab909-bec7-4182-8f4a-24931832cf8e.PNG)
    
    
@@ -240,30 +251,30 @@ Tested the configuration and reloaded the daemon
   Step 2- Prepared the Database Server
    
   
-  Launched a second RedHat EC2 instance that will have a role – ‘DB Server’
+  1. Launched a second RedHat EC2 instance that will have a role – ‘DB Server’
  
  
   ![Capture 1](https://user-images.githubusercontent.com/92916632/146450850-e39d758c-f0b7-472e-bb53-8b9197fe6ce8.PNG)
    
-   Created 3 volumes in the same availability zone as my webserver EC2, each of 10G
+  2. Created 3 volumes in the same availability zone as my webserver EC2, each of 10G
    
-   Attached the 3 volumes one by one to my webserver EC2 instance
+  3.  Attached the 3 volumes one by one to my webserver EC2 instance
    
-   To confirm that the newly created devices have been attached, i ran the command : lsblk
+  4.  To confirm that the newly created devices have been attached, i ran the command : lsblk
    
    The names of the the newly created block devices are xvdf, xvdg, xvdh as shown in the screenshot below
    ![Capture 2 lsblk](https://user-images.githubusercontent.com/92916632/146539898-7f16a412-96fc-4e29-9a82-c1b45fb3ea42.PNG)
    
-   Used the follwing command to see all mounts and free space on my server :
+  5. Used the follwing command to see all mounts and free space on my server :
    
-      df -h
+         df -h
       
-  Used gdisk utility to create a single partition on each of the 3 disks. For the creation of partition on the first disk, i ran the command below:
+ 6. Used gdisk utility to create a single partition on each of the 3 disks. For the creation of partition on the first disk, i ran the command below:
  
     
-      sudo gdisk /dev/xvdf
+         sudo gdisk /dev/xvdf
       
-  Took the following steps :
+ 7.  Took the following steps :
     
   Typed n for new partition 
   
@@ -287,116 +298,121 @@ Tested the configuration and reloaded the daemon
   ![Capture 3 gdisk](https://user-images.githubusercontent.com/92916632/146545394-48c23429-c30a-452a-a4bd-1acb92ac18dc.PNG)
   
  
- For the creation of partition on the second disk, i ran the following command :
+ 8. For the creation of partition on the second disk, i ran the following command :
   
-      sudo gdisk /dev/xvdg
+        sudo gdisk /dev/xvdg
   
    Followed the above named procedure which is also illustrated in the screenshot below
   ![Capture 4](https://user-images.githubusercontent.com/92916632/146545572-0a805947-2adf-4254-a236-e5afc2f91add.PNG)
   
-   For the creation of partition on the third disk, i ran the following command :
+ 9.  For the creation of partition on the third disk, i ran the following command :
    
-      sudo gdisk /dev/xvdh
+        sudo gdisk /dev/xvdh
   
   Followed the above named procedure which is also illustrated in the screenshot below
   ![Capture 5](https://user-images.githubusercontent.com/92916632/146546075-e067fdd7-c0e1-4166-8869-0733485edf38.PNG)
   
   
-  To view the newly configured partition on each of the 3 disks. i ran : 
+10.  To view the newly configured partition on each of the 3 disks. i ran : 
   
-    lsblk
+          lsblk
     
  ![Capture 6](https://user-images.githubusercontent.com/92916632/146560084-cf005d1c-bb7a-4a93-8ee1-5d3d42ec105c.PNG)
  
- Installed lvm2 package by running the command : 
  
-     sudo yum install lvm2 -y
+ 11. Installed lvm2 package by running the command : 
+ 
+         sudo yum install lvm2 -y
     
- I marked each of the 3 disks as physical volume with the command :   
+ 12.  I marked each of the 3 disks as physical volume with the command :   
  
-     sudo pvcreate /dev/xvdf1
+           sudo pvcreate /dev/xvdf1
      
-     sudo pvcreate /dev/xvdg1
+           sudo pvcreate /dev/xvdg1
      
-      sudo pvcreate /dev/xvdh1
+           sudo pvcreate /dev/xvdh1
       
  ![Capture 8](https://user-images.githubusercontent.com/92916632/146641276-4bd03f04-646c-42ca-9a88-754bab37a539.PNG)
       
-  Verified that my physical volume has been created by running the command :
+ 13.  Verified that my physical volume has been created by running the command :
   
-       sudo pvs
+            sudo pvs
        
  ![Capture 9](https://user-images.githubusercontent.com/92916632/146641318-a5478684-b7e8-4f45-b480-091419d56f1f.PNG)
        
-  Used vgcreate utility to add all 3 PVs to a volume group (VG).  I Named the Volume group vg-database
+ 14.  Used vgcreate utility to add all 3 PVs to a volume group (VG).  I Named the Volume group vg-database
   
-        sudo vgcreate vg-database /dev/xvdh1 /dev/xvdg1 /dev/xvdf1
+           sudo vgcreate vg-database /dev/xvdh1 /dev/xvdg1 /dev/xvdf1
         
 ![Capture 10](https://user-images.githubusercontent.com/92916632/146641342-2a965fe0-399e-49dc-93d9-d37870fd118b.PNG) 
         
-  Verified that my volume group has been created successfully by running the command : 
+ 15. Verified that my volume group has been created successfully by running the command : 
   
-         sudo vgs
+           sudo vgs
  
 ![Capture 11](https://user-images.githubusercontent.com/92916632/146641419-53c879b0-995a-46d0-b352-6a3a69312e9f.PNG)
          
  
          
-   Used lvcreate utility to create 1 logical volume
+  16. Used lvcreate utility to create 1 logical volume
    
-        sudo lvcreate -n db-lv -L 20G vg-database
+           sudo lvcreate -n db-lv -L 20G vg-database
         
 ![Capture 12](https://user-images.githubusercontent.com/92916632/146641505-445d556e-cb3c-4128-938b-d17fd8c85e46.PNG)
    
    
-   Verified that my Lv has been created by running : 
+  17.  Verified that my Lv has been created by running : 
    
-        sudo lvs
+           sudo lvs
         
  ![Capture 13](https://user-images.githubusercontent.com/92916632/146644046-b977733c-1c4c-4711-94fa-d7d92376cc1a.PNG)
         
  
- Created /db directory which is the database directory which also serves as the mounting point
+ 18. Created /db directory which is the database directory which also serves as the mounting point
   
-      sudo mkdir /db
+            sudo mkdir /db
       
-  Used mkfs.ext4 to format the logical volume with ext4 filesystem
+ 19.  Used mkfs.ext4 to format the logical volume with ext4 filesystem
   
-      sudo mkfs -t ext4 /dev/vg-database/db-lv
+            sudo mkfs -t ext4 /dev/vg-database/db-lv
       
   ![Capture 15](https://user-images.githubusercontent.com/92916632/146642202-673d6081-1e21-49fd-8493-17706ba6587a.PNG)
 
       
-  Mounted /vg-database/db-lv on /db
+ 20.   Mounted /vg-database/db-lv on /db
   
-      sudo mount /dev/vg-database/db-lv /db
+           sudo mount /dev/vg-database/db-lv /db
       
   ![Capture 16](https://user-images.githubusercontent.com/92916632/146642216-b41db444-52d4-4d66-9190-5f09ace60409.PNG)
       
       
- Updated the /etc/fstab file so that mount configuration will persist after the restart of server
+21.   Updated the /etc/fstab file so that mount configuration will persist after the restart of server
  
-  The UUID of the device will be used to update the /etc/fstab file 
+  -  The UUID of the device will be used to update the /etc/fstab file 
   
-  Opened the blkid with the following command : 
+  -  Opened the blkid with the following command : 
   
-       sudo blkid
+           sudo blkid
        
   ![Capture 17](https://user-images.githubusercontent.com/92916632/146642273-6ff5e5e8-d2a3-4058-8a8a-4863b5ae06d3.PNG)
 
      
- Copied the UUID of the device on a notepad. Removed the leading quotes and edited the ending quotes of the UUID
+  -  Copied and pasted the UUID of the device on a notepad
+  
+  
+  -  Removed the leading quotes and edited the ending quotes of the UUID
  
  ![Capture 21 notepad](https://user-images.githubusercontent.com/92916632/146643697-84fba381-3ec6-4764-85f9-c3bb06dc4b9a.PNG)
  
  
 
- Opened the fstab file and pasted the edited UUID
+  -  Opened the fstab file 
  
- 
-       sudo vi /etc/fstab
+          sudo vi /etc/fstab
+      
+ - Pasted the edited UUID in the fstab file
        
- saved and exited using : wq! enter
+ - Saved and exited using : wq! enter
       
 
 ![Capture 18](https://user-images.githubusercontent.com/92916632/146615065-c7c829db-e94c-49fa-b908-fd674c2a52cb.PNG)
@@ -404,9 +420,9 @@ Tested the configuration and reloaded the daemon
   
   Tested the configuration and reloaded the daemon
   
-      sudo mount -a
+        sudo mount -a
       
-      sudo systemctl daemon-reload
+        sudo systemctl daemon-reload
       
  ![Capture 19](https://user-images.githubusercontent.com/92916632/146643754-c1ec0c5b-2a44-43b9-8e2d-20ebfa944b39.PNG)
 
