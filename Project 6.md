@@ -418,7 +418,7 @@
 ![Capture 18](https://user-images.githubusercontent.com/92916632/146615065-c7c829db-e94c-49fa-b908-fd674c2a52cb.PNG)
   
   
-  Tested the configuration and reloaded the daemon
+22.  Tested the configuration and reloaded the daemon
   
         sudo mount -a
       
@@ -428,9 +428,95 @@
 
       
       
- Verified my setup by running : df -h
+23.  Verified my setup by running : df -h
  
  ![Capture 20](https://user-images.githubusercontent.com/92916632/146643796-b9495d46-df71-4fa3-bb74-8584515bf46b.PNG)
+ 
+ 
+     
+ Step 3 - Installed wordpress on my web server EC2 
+     
+  1.  Updated the repository
+
+           sudo yum -y update
+       
+  2.   Installed wget, Apache and its dependecies 
+  
+           sudo yum -y install wget httpd php php-mysqlnd php-fpm php-json
+           
+  3.    Started Apache
+
+            sudo systemctl enable httpd
+
+            sudo systemctl start httpd
+            
+ 4.   Installed PHP and its dependencies
+
+            sudo yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+            
+            sudo yum install yum-utils http://rpms.remirepo.net/enterprise/remi-release-8.rpm
+            
+            sudo yum module list php
+            
+            sudo yum module reset php
+            
+            sudo yum module enable php:remi-7.4
+            
+            sudo yum install php php-opcache php-gd php-curl php-mysqlnd
+            
+            sudo systemctl start php-fpm
+            
+            sudo systemctl enable php-fpm
+            
+            setsebool -P httpd_execmem 1
+            
+          
+ 5.   Restarted Apache
+
+           sudo systemctl restart httpd
+           
+        
+ 6.   Downloaded wordpress and copied wordpress to var/www/html
+
+           mkdir wordpress
+           
+           cd   wordpress
+           
+           sudo wget http://wordpress.org/latest.tar.gz
+           
+           sudo tar xzvf latest.tar.gz 
+           
+           cp wordpress/wp-config-sample.php wordpress/wp-config.php
+           
+            cp -R wordpress /var/www/html/
+            
+ 7.   Configured SELinux Policies
+
+           sudo chown -R apache:apache /var/www/html/wordpress
+           
+           sudo chcon -t httpd_sys_rw_content_t /var/www/html/wordpress -R
+           
+           sudo setsebool -P httpd_can_network_connect=1
+           
+           
+   Step 4-  Installed mysql on my DB server EC2
+   
+               sudo yum update
+            
+               sudo yum install mysql-server
+               
+   Verified that the service is up and running by using : sudo systemctl status mysqld
+   
+   Service was not running, so i restarted the device and enabled it so it will be running after reboot: 
+   
+              sudo systemctl restart mysqld
+              
+              sudo systemctl enable mysqld
+
+
+        
+
+
      
      
   
