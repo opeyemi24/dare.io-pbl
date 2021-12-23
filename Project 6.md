@@ -468,7 +468,7 @@
             
             sudo systemctl enable php-fpm
             
-            setsebool -P httpd_execmem 1
+             sudo setsebool -P httpd_execmem 1
             
           
  5.   Restarted Apache
