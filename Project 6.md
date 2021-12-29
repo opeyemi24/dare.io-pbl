@@ -151,7 +151,7 @@
   ![Capture 19 verify creation of logical volume](https://user-images.githubusercontent.com/92916632/146405492-fd81f5ff-15f3-4ef0-bd94-14544dcc593f.PNG)
   
   
- 17.  Verified the entire set up 
+ 17.  Verified entire set up 
   
            sudo lsblk
   
