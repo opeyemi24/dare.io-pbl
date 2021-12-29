@@ -91,7 +91,7 @@
    
  8. For the creation of partition on the third disk, i ran the following command :
    
-         sudo gdisk /dev/xdgh
+         sudo gdisk /dev/xvdh
   
   Followed the above named procedure which is also illustrated in the screenshot below
    ![Capture 12](https://user-images.githubusercontent.com/92916632/146241861-9cc04cd9-a78a-4f17-aa69-23f76f5ebc47.PNG)
