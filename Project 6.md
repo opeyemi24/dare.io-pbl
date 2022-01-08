@@ -256,9 +256,9 @@
  
   ![Capture 1](https://user-images.githubusercontent.com/92916632/146450850-e39d758c-f0b7-472e-bb53-8b9197fe6ce8.PNG)
    
-  2. Created 3 volumes in the same availability zone as my webserver EC2, each of 10G
+  2. Created 3 volumes in the same availability zone as my database server EC2, each of 10G
    
-  3.  Attached the 3 volumes one by one to my webserver EC2 instance
+  3.  Attached the 3 volumes one by one to my database server EC2 instance
    
   4.  To confirm that the newly created devices have been attached, i ran the command : lsblk
    
@@ -444,11 +444,15 @@
   
            sudo yum -y install wget httpd php php-mysqlnd php-fpm php-json
            
+ ![Capture 2](https://user-images.githubusercontent.com/92916632/148656024-58934f4e-53de-4e1e-9111-affc441d7982.PNG)
+           
   3.    Started Apache
 
             sudo systemctl enable httpd
 
             sudo systemctl start httpd
+            
+![Capture 3  started apache](https://user-images.githubusercontent.com/92916632/148656110-6fa278bf-811b-46dd-b791-70cc4398e244.PNG)
             
  4.   Installed PHP and its dependencies
 
@@ -469,6 +473,25 @@
             sudo systemctl enable php-fpm
             
              sudo setsebool -P httpd_execmem 1
+             
+ ![Capture 5  fedora](https://user-images.githubusercontent.com/92916632/148656411-0b2e1683-27a6-41e2-884a-82a92cc84867.PNG)
+
+ ![Capture 6](https://user-images.githubusercontent.com/92916632/148656438-06d486ce-5337-47c4-881b-412d34de306c.PNG)
+ 
+ ![Capture 7 module list](https://user-images.githubusercontent.com/92916632/148656503-4459b2aa-8a4f-44aa-95fb-8b02865e26b7.PNG)
+ 
+ ![Capture 8 module reset](https://user-images.githubusercontent.com/92916632/148656534-e31112be-af8a-4fb6-876b-0b1455c9d245.PNG)
+ 
+![Capture 10 php opache](https://user-images.githubusercontent.com/92916632/148656583-14e050e5-b628-420b-bb6f-f00af601a445.PNG)
+
+![Capture 11 php version](https://user-images.githubusercontent.com/92916632/148656664-08c9f2dc-94e6-4b19-ad8b-6b55438e6a51.PNG)
+
+![Capture 12](https://user-images.githubusercontent.com/92916632/148656681-38585b03-58be-4b5a-8943-d8b4857e7db1.PNG)
+
+![Capture 13 status of php-fpm](https://user-images.githubusercontent.com/92916632/148657347-9635e8a4-e1ad-4b78-8335-5e3d8fc5fbb7.PNG)
+
+![Capture 14 setbool](https://user-images.githubusercontent.com/92916632/148657068-1be24080-921e-48bd-bec1-f84e364c9236.PNG)
+
             
           
  5.   Restarted Apache
@@ -478,17 +501,57 @@
         
  6.   Downloaded wordpress and copied wordpress to var/www/html
 
-           mkdir wordpress
+      Created wordpress directory
+
+             mkdir wordpress
            
-           cd   wordpress
+      Changed directory into wordpress directory
+            
+             cd wordpress
+             
+      Downloaded wordpress
            
            sudo wget http://wordpress.org/latest.tar.gz
            
+      ![Capture 15](https://user-images.githubusercontent.com/92916632/148658031-81b6d9ca-3b9a-43ab-898a-b959ea4a524f.PNG)
+           
+           
+      Extracted the file 
+           
            sudo tar xzvf latest.tar.gz 
            
-           cp wordpress/wp-config-sample.php wordpress/wp-config.php
+    
+![Capture 17 extracted the zip file](https://user-images.githubusercontent.com/92916632/148658090-b67525db-56bd-4903-ab21-ce453b06e87e.PNG)
            
-            cp -R wordpress /var/www/html/
+          
+  After extraction, an exta folder called wordpress was created
+  
+  ![Capture  extra folder](https://user-images.githubusercontent.com/92916632/148658730-e74b8e85-363c-47c8-b138-abc9a91be962.PNG)
+ 
+ 
+  changed directory to wordpress, checked the contents of wordpress to confirm that it was extracted successfully 
+    
+           cd wordpress
+          
+           ls-l
+          
+   ![Capture cd wordpress and check the contents](https://user-images.githubusercontent.com/92916632/148659240-126a3aed-1259-46dc-81c2-014b4d629fdc.PNG)
+          
+         
+  Copied the contents of wp-config-sample.php to wp-config.php 
+         
+            sudo cp -R wp-config-sample.php wp-config.php
+           
+            
+  Copied the contents of wordpress into /var/www/html directory 
+           
+            sudo cp -R wordpress/. /var/www/html/
+            
+   ![Capture copy wordpress to var](https://user-images.githubusercontent.com/92916632/148661932-c23d7fdb-4378-4d4e-bf2f-0f0a3daf3dfc.PNG)
+   
+   ![Capture checked the contents of html](https://user-images.githubusercontent.com/92916632/148662047-d2bbbc96-b93b-4861-863a-99d28c55917b.PNG)
+   
+   
             
  7.   Configured SELinux Policies
 
@@ -499,19 +562,50 @@
            sudo setsebool -P httpd_can_network_connect=1
            
            
-   Step 4-  Installed mysql on my DB server EC2
+   
+    Step 4-   updated wp-config.php 
+   
+   
+   Step 5-    Installed mysql on webserver EC2
+   
+               sudo yum install mysql-server 
+               
+  Re-started the service and enabled it so it will run after reboot:
+          
+               sudo systemctl restart mysqld
+               
+               sudo systemctl enable mysqld
+   
+             
+           
+           
+   Step 6-  Installed mysql on my DB server EC2
    
                sudo yum update
             
                sudo yum install mysql-server
                
-   Verified that the service is up and running by using : sudo systemctl status mysqld
+   Verified that the service is up and running by using : 
+   
+               sudo systemctl status mysqld
    
    Service was not running, so i restarted the device and enabled it so it will be running after reboot: 
    
               sudo systemctl restart mysqld
               
               sudo systemctl enable mysqld
+              
+              sudo systemctl status mysqld
+              
+ ![Capture mysql status](https://user-images.githubusercontent.com/92916632/148533042-ebb58c00-b608-46c5-a012-8fce1e8a6a2d.PNG) 
+ 
+ 
+ Step 7-  Configured Database to work with WordPress
+ 
+           sudo mysql_secure installation 
+              
+              
+  
 
 
         
