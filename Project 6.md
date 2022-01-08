@@ -566,7 +566,7 @@
     Step 4-   updated wp-config.php 
    
    
-   Step 5-    Installed mysql on webserver EC2
+    Step 5-    Installed mysql on webserver EC2
    
                sudo yum install mysql-server 
                
