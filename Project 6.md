@@ -671,7 +671,14 @@ entered the password : password
  
   inbound Rule configuration, i specified source as : webserver private IP address /32
  
- ![Capture inbound rules](https://user-images.githubusercontent.com/92916632/148705033-2a144956-0c02-4ce6-b149-f322ee33ad76.PNG) 
+ ![Capture inbound rules](https://user-images.githubusercontent.com/92916632/148705033-2a144956-0c02-4ce6-b149-f322ee33ad76.PNG)
+ 
+ 
+ Step 11- Tested to see if i can connect from my Web Server to my DB server
+ 
+           sudo mysql -h <DB-Server-Private-IP-address> -u myuser -p
+           
+          
             
               
               
