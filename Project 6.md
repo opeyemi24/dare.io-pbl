@@ -563,10 +563,22 @@
            
            
    
-    Step 4-   updated wp-config.php 
+  Step 4-  updated wp-config.php file on webserver 
+  
+  From the html directory, i ran the command below
+  
+                sudo vi wp-config.php
+                
+  ![Capture 20 open config php](https://user-images.githubusercontent.com/92916632/148697146-c3af68e5-3cf3-4bd7-83a0-4dd595b1a235.PNG)
+                
+  edited the DB_name - 'wordpress' ,  DB_user - 'myuser' ,  DB_password - 'mypass' ,  DB_host - 'Private IP address of the database server' 
+       
+   saved and exited    
+      
+![Capture  sc wp config php](https://user-images.githubusercontent.com/92916632/148696862-eac99103-a283-44d1-83c0-5b66a6f3e264.PNG)
    
    
-    Step 5-    Installed mysql on webserver EC2
+  Step 5-   Installed mysql on webserver EC2
    
                sudo yum install mysql-server 
                
@@ -603,6 +615,41 @@
  Step 7-  Configured Database to work with WordPress
  
            sudo mysql_secure installation 
+           
+ Logged in as mysql root user using password 
+        
+          sudo mysql -u root -p 
+          
+entered the password : password
+          
+          CREATE DATABASE wordpress;
+          
+          CREATE USER `myuser`@`<Web-Server-Private-IP-Address>` IDENTIFIED BY 'mypass';
+          
+         GRANT ALL ON wordpress.* TO 'myuser'@'<Web-Server-Private-IP-Address>';
+         
+         FLUSH PRIVILEGES; 
+         
+         SHOW DATABASES;
+         
+      
+  checked if my user has been created 
+  
+          select user, host from mysql.user;
+          
+   ![Capture create mysql database](https://user-images.githubusercontent.com/92916632/148698417-e21d2efc-2b1f-4b78-af94-9293e6873b68.PNG)
+   
+   ![Capture show mysql database](https://user-images.githubusercontent.com/92916632/148698471-64a3975a-5ae3-4d27-9d78-a588898060b0.PNG)
+   
+   
+  
+  Step 8-  Set bind address for mysql database by adding the I.P address of the webserver
+  
+                 sudo vi /etc/my.cnf
+                 
+ ![Capture bind address 2](https://user-images.githubusercontent.com/92916632/148698835-31dbb0bc-3420-446a-8be8-3cbe4431cc0c.PNG) 
+  
+            
               
               
   
