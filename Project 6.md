@@ -555,12 +555,14 @@
             
  7.   Configured SELinux Policies
 
-           sudo chown -R apache:apache /var/www/html/wordpress
+            sudo chown -R apache:apache /var/www/html/
+            
+            sudo chcon -t httpd_sys_rw_content_t /var/www/html/ -R
            
-           sudo chcon -t httpd_sys_rw_content_t /var/www/html/wordpress -R
+            sudo setsebool -P httpd_can_network_connect=1
            
-           sudo setsebool -P httpd_can_network_connect=1
-           
+            sudo setsebool -P httpd_can_network_connect_db 1
+            
            
  
    
@@ -638,7 +640,7 @@ entered the password : password
   ![Capture bind address 2](https://user-images.githubusercontent.com/92916632/148698835-31dbb0bc-3420-446a-8be8-3cbe4431cc0c.PNG) 
  
  
- Step 8-    updated wp-config.php file on webserver 
+ Step 8-    Updated wp-config.php file on webserver 
  
    From the html directory, i ran the command below : 
    
@@ -651,9 +653,25 @@ entered the password : password
   saved and exited
   
   ![Capture  sc wp config php](https://user-images.githubusercontent.com/92916632/148696862-eac99103-a283-44d1-83c0-5b66a6f3e264.PNG)
-   
- 
   
+   
+  Re-started httpd
+   
+               sudo systemctl restart httpd
+               
+               
+  Step 9-  Disabled the default page of Apache
+   
+               sudo mv /etc/httpd/conf.d/welcome.conf /etc/httpd/conf.d/welcome.conf_backup
+               
+   
+ Step 10-  Configured WordPress to connect to remote database.
+ 
+ Opened MySQL port 3306 on DB Server EC2. This allows access to the DB server ONLY from my Web Server’s IP address, so in the 
+ 
+  inbound Rule configuration, i specified source as : webserver private IP address /32
+ 
+ ![Capture inbound rules](https://user-images.githubusercontent.com/92916632/148705033-2a144956-0c02-4ce6-b149-f322ee33ad76.PNG) 
             
               
               
