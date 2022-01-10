@@ -13,9 +13,9 @@ Screenshot showing the 2 instances created
 
 STEP 2 : On mysql server, i installed myqsl server software with the command : 
 
-       sudo apt update -y
+           sudo apt update -y
  
-       sudo apt install myqsl-server -y
+           sudo apt install myqsl-server -y
  
  Screenshot showing the installation of myqsl server software
  
@@ -27,18 +27,18 @@ STEP 2 : On mysql server, i installed myqsl server software with the command :
                                                                                   
  
                                                                   
-  Enabled the service with the command : sudo systemctl enable mysql
+  Enabled the service with the command : 
+  
+               sudo systemctl enable mysql
   
   ![Capture 3 enabled the service](https://user-images.githubusercontent.com/92916632/145608560-57c04012-a2b6-4153-b87e-afe51bc58747.PNG)
 
   
  STEP 3 : On mysql client linux server, i installed mysql client software with the command :  
  
-         sudo apt update -y
+                sudo apt update -y
   
-        sudo apt install mysql-client -y
- 
- Screenshot showing the installation of mysql client software
+                sudo apt install mysql-client -y
  
  ![Capture 4 update ubuntu client](https://user-images.githubusercontent.com/92916632/145609668-e5df6641-19bc-497d-b361-f3994f3f16d9.PNG)
  
@@ -49,20 +49,21 @@ STEP 2 : On mysql server, i installed myqsl server software with the command :
  
  I also added the private IP address of mysql client  into  mysql server's inbound rule
  
- Screenshot showing the creation of new inbound rule
- 
 ![Capture 6 edit inbound rule](https://user-images.githubusercontent.com/92916632/145629904-932ca6f6-cc45-4469-9341-d8471ef2b171.PNG) 
 
-To obtain the client's private IP address, we can either copy directly from the AWS console or 
 
-run the command : ip addr show  
+To obtain the client's private IP address, we can either copy directly from the AWS console or run the command:
+
+           ip addr show  
 
 ![Capture 7 show ip address](https://user-images.githubusercontent.com/92916632/145630927-0809d825-34fe-4032-bb2e-31e07c75a9ab.PNG)
 
 
 STEP 5 : Created a user and database for mysql server
 
-Firstly, i had to secure the installation of mysql server by running the security script : sudo mysql_secure_installation
+Firstly, i had to secure the installation of mysql server by running the security script : 
+
+            sudo mysql_secure_installation
 
 I entered n for No when asked to set up validate password component. In production environment, it is adviced that we set 
 
@@ -84,27 +85,37 @@ Remove test database and access to it : Y
 
 Reload priviledge tables now : Y
 
-
 ![Capture 9](https://user-images.githubusercontent.com/92916632/145674523-4bbb9008-090b-47a8-931b-cc714374654f.PNG)
 
-Ran : sudo mysql 
-
-Created a user named remote_user : CREATE USER 'remote_user'@'%' IDENTIFIED WITH mysql_native_password BY 'password' ;
-
-Created the database : CREATE DATABASE test_db ;
-
-Granted privileges : GRANT ALL ON test_db. * TO 'remote_user'@'%' WITH GRANT OPTION;
-
- mysql> FLUSH PRIVILEGES;
+ Ran the follwing command :      
  
- Screenshot showing the creation of user, creation of database, granting privileges, flush privileges
+                sudo mysql 
+
+Created a user named remote_user : 
+
+               CREATE USER 'remote_user'@'%' IDENTIFIED WITH mysql_native_password BY 'password' ;
+
+Created the database :      
+
+               CREATE DATABASE test_db ;
+
+Granted privileges : 
+
+                GRANT ALL ON test_db. * TO 'remote_user'@'%' WITH GRANT OPTION;
+
+Flush privileges:
+                
+                 FLUSH PRIVILEGES;
+ 
+ 
  ![Capture 10d](https://user-images.githubusercontent.com/92916632/145674660-f3738816-684c-4e03-80ef-d08e9212246b.PNG) 
  ![Capture 10 c  flush privileges](https://user-images.githubusercontent.com/92916632/145674616-2f1f83c6-8adc-469b-97d0-9b22042d716d.PNG)
  
  
  STEP 6: Configured mysql server to allow connections from remote host
  
- Ran the command : sudo vi /etc/mysql/mysql.conf.d/mysqld.cnf
+ 
+                 sudo vi /etc/mysql/mysql.conf.d/mysqld.cnf
  
  I replaced '127.0.0.1' with '0.0.0.0' on the bind address. I did that by pressing esc, deleting the 127.0.0.1 on bind address, 
  
@@ -120,7 +131,7 @@ Granted privileges : GRANT ALL ON test_db. * TO 'remote_user'@'%' WITH GRANT OPT
  
  From mysql client, i connected remotely to mysql server database by running the command ;
  
- sudo mysql  -u remote_user -h private ip address of mysql server  -p 
+             sudo mysql  -u remote_user -h private ip address of mysql server  -p 
  
  -u signifies user i.e username for mysql server, -h signifies host, -p signifies password prompt
  
@@ -132,9 +143,9 @@ Granted privileges : GRANT ALL ON test_db. * TO 'remote_user'@'%' WITH GRANT OPT
  
  Checked that i have successfully connected to the remote mysql server and can perform SQL queries from mysql client.
  
- Ran the following command from mysql client : Show databases;
+ Ran the following command from mysql client : 
  
- Screenshot below showing databases
+          Show databases; 
  
  ![Capture 14](https://user-images.githubusercontent.com/92916632/145786965-c01bde21-42c6-4d95-b61f-fa3e789877cd.PNG)
 
