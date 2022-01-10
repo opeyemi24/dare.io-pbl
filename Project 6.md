@@ -674,12 +674,32 @@ entered the password : password
  ![Capture inbound rules](https://user-images.githubusercontent.com/92916632/148705033-2a144956-0c02-4ce6-b149-f322ee33ad76.PNG)
  
  
- Step 11- Tested to see if i can connect from my Web Server to my DB server
+  Tested to see if i can connect from my Web Server to my DB server . From my webserver, i ran the command below :
  
            sudo mysql -h <DB-Server-Private-IP-address> -u myuser -p
            
+ requested for password, and i entered the password : mypass
+ 
+ successfully connected remotely as shown in the screenshot below
+  
+![Capture log into mysql](https://user-images.githubusercontent.com/92916632/148781451-f8026c1f-6d0d-4fe2-9ce1-63821c308b79.PNG)
+
+
+Successfully executed SHOW DATABASES;
+
+           show databases;
+           
+![Capture show databases](https://user-images.githubusercontent.com/92916632/148782260-641e358d-45dd-44ce-b67c-87a2f5274367.PNG)
           
-            
+          
+
+Step 11-  From my browser, i accessed the link to my wordress
+
+         http://<Web-Server-Public-IP-Address>
+         
+ ![Capture wordpress page 1](https://user-images.githubusercontent.com/92916632/148790770-01163805-ffa7-446c-a345-87c33ca8b4a7.PNG)  
+ 
+![Capture wordpress page 2](https://user-images.githubusercontent.com/92916632/148791437-85b3b59e-f22a-40a5-afd7-99d4304eaa9f.PNG) 
               
               
   
