@@ -25,7 +25,6 @@ STEP 2 : On mysql server, i installed myqsl server software with the command :
 
                                                                                 
                                                                                   
- 
                                                                   
   Enabled the service with the command : 
   
