@@ -292,7 +292,7 @@ Followed the above named procedure which is also illustrated in the screenshot b
   
   4.  Granted permission to webaccess user on tooling database to do anything only from the webservers subnet cidr
 
-              grant all privileges on tooling.* to 'webacess'@'webserver subnet cidr'
+              grant all privileges on tooling.* to 'webaccess'@'webserver subnet cidr'
      
    
    ![Capture 35 granted privileges](https://user-images.githubusercontent.com/92916632/147887018-ca0dd663-3cb1-42a2-8af2-9f1403fbbd84.PNG) 
@@ -344,18 +344,33 @@ Followed the above named procedure which is also illustrated in the screenshot b
 
            sudo mount -t nfs -o rw,nosuid <NFS-Server-Private-IP-Address>:/mnt/apps /var/www
            
+  ![Capture 40a](https://user-images.githubusercontent.com/92916632/149030907-d50d69ba-78ab-4520-8baa-f46b30d83497.PNG)
+  ![Capture 40](https://user-images.githubusercontent.com/92916632/149029283-773c0648-fd72-48c9-9bd0-bcb79b90684a.PNG)
+
            
-  3. Verified that NFS was mounted successfully by running df -h. Made sure that the changes will persist on Web Server after reboot:
+           
+  3. Verified that NFS was mounted successfully by running 
+  
+             df -h. 
+             
+   ![Capture 41 df -h](https://user-images.githubusercontent.com/92916632/149031795-3b8533c7-492e-4ef4-9b9d-89cbec10710d.PNG)
+
+             
+   
+  4. Made sure that the changes will persist on Web Server after reboot:
 
             sudo vi /etc/fstab
+         
             
  
        Added following line
 
             <NFS-Server-Private-IP-Address>:/mnt/apps /var/www nfs defaults 0 0
             
+ ![Capture 42 fstab](https://user-images.githubusercontent.com/92916632/149031860-4c19f1e9-f752-421f-8aca-550347c4ba44.PNG)
+            
          
-  4.  Installed Remi’s repository, Apache and PHP
+  5.  Installed Remi’s repository, Apache and PHP
 
              sudo yum install httpd -y
              
@@ -375,39 +390,63 @@ Followed the above named procedure which is also illustrated in the screenshot b
              
              sudo setsebool -P httpd_execmem 1
              
-             Repeated steps 1-5 for the other 2 webservers
+  Repeated steps 1-5 for the other 2 webservers
              
- 5.   Verified that Apache files and directories are available on the Web Server in /var/www and also on the NFS server in /mnt/apps. 
+ 6.   Verified that Apache files and directories are available on the Web Server in /var/www and also on the NFS server in /mnt/apps. 
 
        /var/www and /mnt/apps have the same contents.This indicates that NFS is mounted correctly. Screenshot below
   
       
-            Webserver 
+    Webserver 
    ![Capture 43](https://user-images.githubusercontent.com/92916632/147946290-e3b24bf2-a8bb-4923-afb3-2a25ab6e5188.PNG)
       
-            NFS server 
+    NFS server 
               
    ![Capture 44](https://user-images.githubusercontent.com/92916632/147946467-64bc7fc9-a179-4e32-9457-1b4580a8cc81.PNG)
       
- 6.   Located the log folder for Apache on the Web Server and mounted it to NFS server’s export for logs.
+ 7.   Located the log folder for Apache on the Web Server and mounted it to NFS server’s export for logs.
 
            sudo mount -t nfs -o rw,nosuid <NFS-Server-Private-IP-Address>:/mnt/logs /var/log/httpd
            
-      Apache is located in var/log/httpd
+ ![Capture 45](https://user-images.githubusercontent.com/92916632/149034529-94b3ca18-1299-4ae9-94a8-5a8193d3804b.PNG)
+           
+   Apache is located in var/log/httpd
    
    
- 7.   Repeated step No 4 above to make sure the mount point will persist after reboot.
+ 8.   Repeated step No 4 above to make sure the mount point will persist after reboot.
 
              sudo vi /etc/fstab
+             
+   Added the following line
+   
+            <NFS-Server-Private-IP-Address>:/mnt/apps /var/log/httpd nfs defaults 0 0
+   
+              
+  ![Capture 46](https://user-images.githubusercontent.com/92916632/149034737-5dd50629-1244-4d00-b8dc-da743696f947.PNG)
+
              
       
 
           
 
 
-8.    Forked the tooling source code from Darey.io Github Account to my Github account.
+9.    Forked the tooling source code from Darey.io Github Account to my Github account.
 
-9.   Deployed the tooling website’s code to the Webserver. Ensured that the html folder from the repository is deployed to /var/www/html
+      Installed git on webserver
+      
+             sudo yum install git 
+             
+              git init
+              
+ ![Capture git init](https://user-images.githubusercontent.com/92916632/149036835-638cbb06-16bf-423d-af08-6e34a9164ff7.PNG)
+ 
+ 
+         git clone https://github.com/darey-io/tooling.git
+         
+![Capture 47 cloning github](https://user-images.githubusercontent.com/92916632/149037599-cb340748-ba1e-4391-988e-908331e15606.PNG)
+ 
+
+10.   Deployed the tooling website's code to the Webserver. Ensured that the html folder from the repository is deployed to /var/www/html
 
 
       Note 1: Do not forget to open TCP port 80 on the  
