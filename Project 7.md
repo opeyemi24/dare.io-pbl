@@ -434,9 +434,11 @@ Followed the above named procedure which is also illustrated in the screenshot b
 
       Installed git on webserver
       
+            
              sudo yum install git 
              
-              git init
+             
+                 git init
               
  ![Capture git init](https://user-images.githubusercontent.com/92916632/149036835-638cbb06-16bf-423d-af08-6e34a9164ff7.PNG)
  
