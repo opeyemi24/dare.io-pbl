@@ -2,8 +2,12 @@
 # WEB SOLUTION WITH WORDPRESS
 
 # TASK - To prepare a storage infrastructure on two Linux servers and implement a basic web solution using WordPress
+
+# Configure storage subsystem for Web and Database servers based on Linux OS
      
-# To also ensure that the disks used to store files on the Linux servers were adequately partitioned and managed through  programs such as gdisk and LVM respectively.
+# To ensure that the disks used to store files on the Linux servers were adequately partitioned and managed through  programs such as gdisk and LVM respectively.
+
+# Install WordPress and connect it to a remote MySQL database server
  
  
  
