@@ -263,12 +263,13 @@ Followed the above named procedure which is also illustrated in the screenshot b
   
   
   
+  
   STEP 2 : CONFIGURED THE DATABASE SERVER 
   
  
  1.    Installed mysql server 
   
-            sudo apt udate 
+            sudo apt update 
 
             sudo apt install mysql-server -y
             
@@ -279,9 +280,137 @@ Followed the above named procedure which is also illustrated in the screenshot b
              
              create database tooling;
              
-  3.    Created a database user and name it webaccess
+  ![Capture 34b](https://user-images.githubusercontent.com/92916632/147887673-807df7e7-4353-4993-83ca-8d6235b70e1c.PNG)
+             
+  3.    Created a database user and named it webaccess
 
-        
+              create user 'webaccess'@'webserver subnet cidr' identified by 'password';
+              
+  
+   ![Capture 35 create user](https://user-images.githubusercontent.com/92916632/147887750-2bd74bf1-b933-4c84-852b-3870376ae34a.PNG)
+              
+  
+  4.  Granted permission to webaccess user on tooling database to do anything only from the webservers subnet cidr
+
+              grant all privileges on tooling.* to 'webacess'@'webserver subnet cidr'
+     
+   
+   ![Capture 35 granted privileges](https://user-images.githubusercontent.com/92916632/147887018-ca0dd663-3cb1-42a2-8af2-9f1403fbbd84.PNG) 
+
+
+   
+
+   5.            flush privileges;
+    
+   
+   ![capture 36 flush databases](https://user-images.githubusercontent.com/92916632/147886990-d408621c-cc89-422e-8c2e-3a8380ab01a5.PNG)
+   
+   6.           Show databases;
+
+  ![Capture 37 show databases](https://user-images.githubusercontent.com/92916632/147914735-41e56ba0-9e49-482e-b2c6-ade40ce8a40f.PNG)
+
+
+
+  STEP 3- Prepared the webservers
+      
+  We need to make sure that our Web Servers can serve the same content from shared storage solutions, in our case – NFS Server and MySQL database.
+      
+  We already know that one DB can be accessed for reads and writes by multiple clients. For storing shared files that our 
+      
+  web Servers will use – we will utilize NFS and  mount previously created Logical Volume lv-apps to the folder where 
+      
+  apache stores files to be served to the users (/var/www).
+      
+  This approach will make our Web Servers stateless, which means we will be able to add new ones or remove them 
+      
+   whenever we need, and the integrity of the data (in the database and on NFS) will be preserved.
+      
+   During the next steps, i did the following:
+      
+   Configured NFS client on all three webservers
+
+   Deployed a tooling application to web servers into a shared NFS folder
+
+   Configured the web servers to work with a single MySQL database
+   
+   1. Installed NFS client on webserver 1
+
+           sudo yum install nfs-utils nfs4-acl-tools -y
+           
+  
+  2. Mounted /var/www/ and target the NFS server’s export for apps
+
+           sudo mkdir /var/www
+
+           sudo mount -t nfs -o rw,nosuid <NFS-Server-Private-IP-Address>:/mnt/apps /var/www
+           
+           
+  3. Verified that NFS was mounted successfully by running df -h. Made sure that the changes will persist on Web Server after reboot:
+
+            sudo vi /etc/fstab
+            
+ 
+       Added following line
+
+            <NFS-Server-Private-IP-Address>:/mnt/apps /var/www nfs defaults 0 0
+            
+         
+  4.  Installed Remi’s repository, Apache and PHP
+
+             sudo yum install httpd -y
+             
+             sudo dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
+             
+             sudo dnf install dnf-utils http://rpms.remirepo.net/enterprise/remi-release-8.rpm
+             
+             sudo dnf module reset php
+             
+             sudo dnf module enable php:remi-7.4
+             
+             sudo dnf install php php-opcache php-gd php-curl php-mysqlnd
+             
+             sudo systemctl start php-fpm
+             
+             sudo systemctl enable php-fpm
+             
+             sudo setsebool -P httpd_execmem 1
+             
+             Repeated steps 1-5 for the other 2 webservers
+             
+ 5.   Verified that Apache files and directories are available on the Web Server in /var/www and also on the NFS server in /mnt/apps. 
+
+       /var/www and /mnt/apps have the same contents.This indicates that NFS is mounted correctly. Screenshot below
+  
+      
+            Webserver 
+   ![Capture 43](https://user-images.githubusercontent.com/92916632/147946290-e3b24bf2-a8bb-4923-afb3-2a25ab6e5188.PNG)
+      
+            NFS server 
+              
+   ![Capture 44](https://user-images.githubusercontent.com/92916632/147946467-64bc7fc9-a179-4e32-9457-1b4580a8cc81.PNG)
+      
+ 6.   Located the log folder for Apache on the Web Server and mounted it to NFS server’s export for logs.
+
+           sudo mount -t nfs -o rw,nosuid <NFS-Server-Private-IP-Address>:/mnt/logs /var/log/httpd
+           
+      Apache is located in var/log/httpd
+   
+   
+ 7.   Repeated step No 4 above to make sure the mount point will persist after reboot.
+
+             sudo vi /etc/fstab
+             
+      
+
+          
+
+
+8.    Forked the tooling source code from Darey.io Github Account to my Github account.
+
+9.   Deployed the tooling website’s code to the Webserver. Ensured that the html folder from the repository is deployed to /var/www/html
+
+
+      Note 1: Do not forget to open TCP port 80 on the  
 
 
  
