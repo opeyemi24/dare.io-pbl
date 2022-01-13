@@ -481,8 +481,36 @@ Followed the above named procedure which is also illustrated in the screenshot b
           sudo systemctl status httpd
           
 ![Capture status of httpd](https://user-images.githubusercontent.com/92916632/149421256-0ac797f1-3ec3-4224-8c5a-24114fcc615b.PNG)
-    
 
+
+13. Updated the website’s configuration to connect to the database. Added the private IP address of the database server, 
+
+     added database username(webaccess) and database password (password)    
+         
+           sudo vi /var/www/html/functions.php
+           
+  ![Capture functions update](https://user-images.githubusercontent.com/92916632/149423909-f4510ce2-3fb2-4994-b90b-d798fd10c259.PNG)
+           
+           
+  esc wq! to save and exit
+  
+
+
+14. Installed mysql on my webserver 
+
+         sudo yum install mysql-y
+  
+  
+ 
+
+15. Applied tooling-db.sql script. From tooling directory, ran the command below
+  
+          mysql -h <databse-private-ip> -u <db-username> -p <db-pasword> < tooling-db.sql
+         
+         
+         
+         
+         
 
           
 
