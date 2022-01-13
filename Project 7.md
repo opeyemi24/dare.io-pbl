@@ -485,7 +485,7 @@ Followed the above named procedure which is also illustrated in the screenshot b
 
 13. Updated the website’s configuration to connect to the database. Added the private IP address of the database server, 
 
-     added database username(webaccess) and database password (password)    
+    added database username(webaccess) and database password (password)    
          
            sudo vi /var/www/html/functions.php
            
