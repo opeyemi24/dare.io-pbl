@@ -445,13 +445,47 @@ Followed the above named procedure which is also illustrated in the screenshot b
  
          git clone https://github.com/darey-io/tooling.git
          
-![Capture 47 cloning github](https://user-images.githubusercontent.com/92916632/149037599-cb340748-ba1e-4391-988e-908331e15606.PNG)
+
+![Capture clone tooling](https://user-images.githubusercontent.com/92916632/149415776-4f505c9b-e23e-4409-8907-7b25a817202c.PNG)
  
 
-10.   Deployed the tooling website's code to the Webserver. Ensured that the html folder from the repository is deployed to /var/www/html
+10.   Deployed the tooling website's code to the Webserver. The html folder from the repository was deployed to /var/www/html
+
+                       cd tooling/
+
+                      sudo cp -R html/. /var/www/html
+                      
+![Capture cd tooling and ls html](https://user-images.githubusercontent.com/92916632/149414212-0680e944-a920-4f9f-a331-d270b51c222e.PNG)
 
 
-      Note 1: Do not forget to open TCP port 80 on the  
+
+11. Opened TCP port 80 on the webserver
+
+![Capture 51 opened http port](https://user-images.githubusercontent.com/92916632/149418668-f9b0e615-6c5d-4595-86e4-297747ed43a0.PNG)
+
+
+12. Disabled selinux 
+
+             sudo setenforce 0
+             
+    
+    open following config file  : sudo vi /etc/sysconfig/selinux and set SELINUX=disabled
+    
+ ![Capture 55 selinux disabled](https://user-images.githubusercontent.com/92916632/149420068-2617ac98-3e9b-4b2b-8844-41170ed3f762.PNG)
+    
+ 
+ restarted httpd
+ 
+          sudo systemctl start httpd
+          
+          sudo systemctl status httpd
+          
+![Capture status of httpd](https://user-images.githubusercontent.com/92916632/149421256-0ac797f1-3ec3-4224-8c5a-24114fcc615b.PNG)
+    
+
+
+          
+
 
 
  
