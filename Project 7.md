@@ -501,21 +501,46 @@ Followed the above named procedure which is also illustrated in the screenshot b
          sudo yum install mysql-y
          
 
-15. Opend mysql port on my database server.  Added webserver's subnet ipv4 cidr to the inbound rule
+15. Opened mysql port on my database server.  Added webserver's subnet ipv4 cidr to the inbound rule
 
 ![Capture 60 subnet webserver cidr](https://user-images.githubusercontent.com/92916632/149620585-285cbe49-cdbd-49bb-b209-0e26a8913bb4.PNG)
 
 
-16.  Changed the bind address of mysql databatase to 0.0.0.0. Ran the command below from the database server
+16.  Changed the bind address of mysql databatase to 0.0.0.0.  Ran the command below from the database server
+
+          sudo vi /etc/mysql/mysql.conf.d/mysqld.cnf 
+
+![Capture 57 changed bind address](https://user-images.githubusercontent.com/92916632/149628784-4c92a8b6-f5a1-45b6-8c70-5e7981f59775.PNG)
+
+
+:wq enter to save and exit
   
   
   
  
 
-15. Applied tooling-db.sql script to my database. From the tooling directory in my webserver, ran the command below
+16. Applied tooling-db.sql script to my database. From the tooling directory in my webserver, ran the command below
   
           mysql -h <databse-private-ip> -u <db-username> -p <db-pasword> < tooling-db.sql
-         
+          
+          mysql -h 172.31.13.108 -u webaccess -p password < tooling-db.sql
+          
+![Capture capture 60  tooling script](https://user-images.githubusercontent.com/92916632/149629776-c25e1ea1-b7fd-4353-84e9-02f099b5ccc2.PNG)
+
+
+17. Disabled the default page of Apache
+
+           sudo mv /etc/httpd/conf.d/welcome.conf /etc/httpd/conf.d/welcome.conf_backup
+           
+
+18.  Opened the website in my browser
+
+             http://<Web-Server-Public-IP-Address>
+             
+ ![Capture home page](https://user-images.githubusercontent.com/92916632/149639421-9658da9f-ac7a-4631-a6a7-8332d61c6821.PNG)
+
+
+
          
          
          
