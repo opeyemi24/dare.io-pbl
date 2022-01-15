@@ -499,11 +499,20 @@ Followed the above named procedure which is also illustrated in the screenshot b
 14. Installed mysql on my webserver 
 
          sudo yum install mysql-y
+         
+
+15. Opend mysql port on my database server.  Added webserver's subnet ipv4 cidr to the inbound rule
+
+![Capture 60 subnet webserver cidr](https://user-images.githubusercontent.com/92916632/149620585-285cbe49-cdbd-49bb-b209-0e26a8913bb4.PNG)
+
+
+16.  Changed the bind address of mysql databatase to 0.0.0.0. Ran the command below from the database server
+  
   
   
  
 
-15. Applied tooling-db.sql script. From tooling directory, ran the command below
+15. Applied tooling-db.sql script to my database. From the tooling directory in my webserver, ran the command below
   
           mysql -h <databse-private-ip> -u <db-username> -p <db-pasword> < tooling-db.sql
          
