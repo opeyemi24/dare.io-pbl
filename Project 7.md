@@ -498,7 +498,7 @@ Followed the above named procedure which is also illustrated in the screenshot b
 
 14. Installed mysql on my webserver 
 
-         sudo yum install mysql-y
+         sudo yum install mysql -y
          
 
 15. Opened mysql port on my database server.  Added webserver's subnet ipv4 cidr to the inbound rule
