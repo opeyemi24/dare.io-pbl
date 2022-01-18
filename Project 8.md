@@ -57,6 +57,8 @@
         ProxyPreserveHost On
         ProxyPass / balancer://mycluster/
         ProxyPassReverse / balancer://mycluster/
+        
+![Capture load factor](https://user-images.githubusercontent.com/92916632/150034170-8a4b849c-c2a8-4a87-bea0-f1f2d5a9b530.PNG)
  
  Restarted apache server
  
@@ -66,9 +68,14 @@
 
             http://<Load-Balancer-Public-IP-Address
             
-   5. Opened two ssh consoles for both Web Servers and run following command:
+   5. Opened two ssh consoles for  web Servers 1 and webserver 2 and ran following command:
 
             sudo tail -f /var/log/httpd/access_log
+            
+  ![Capture get request 1](https://user-images.githubusercontent.com/92916632/150034900-3c8befbc-7c6a-4ec2-95aa-924605ff9963.PNG)
+  
+  
+  ![Capture get request 2](https://user-images.githubusercontent.com/92916632/150035116-71108312-592e-4b4a-80bf-25d80644d8bc.PNG)
  
           
           
