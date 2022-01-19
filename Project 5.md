@@ -130,7 +130,7 @@ Flush privileges:
  
              sudo mysql  -u remote_user -h private ip address of mysql server  -p 
  
- -u signifies user i.e username for mysql server, -h signifies host, -p signifies password prompt
+ -u signifies user i.e username for mysql server, -h signifies host, -p signifies password 
  
  requested for password, and i entered the password : password
  
