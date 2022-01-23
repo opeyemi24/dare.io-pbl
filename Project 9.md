@@ -77,7 +77,7 @@ From my browser, i accessed :
 ![Capture 7 add webhooks](https://user-images.githubusercontent.com/92916632/150678029-a4cd0984-fd37-4123-91fd-f87da62285c5.PNG)
 
 
-Added webhooks. Added jenkins server public IP address
+Added webhooks.  Added jenkins server public IP address
 
 
 ![Capture 8 add web hooks](https://user-images.githubusercontent.com/92916632/150677953-59b7c071-e599-4fb5-ad76-20583c8af88a.PNG)
