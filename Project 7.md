@@ -411,7 +411,7 @@ Followed the above named procedure which is also illustrated in the screenshot b
            
  ![Capture 45](https://user-images.githubusercontent.com/92916632/149034529-94b3ca18-1299-4ae9-94a8-5a8193d3804b.PNG)
            
-   Apache is located in var/log/httpd
+   Apache log folder is located in var/log/httpd
    
    
  8.   Repeated step No 4 above to make sure the mount point will persist after reboot.
