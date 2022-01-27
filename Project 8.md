@@ -1,7 +1,7 @@
 
 # LOAD BALANCER SOLUTION WITH APACHE
 
-# Task -  Deploy and configure an Apache load balancer for tooling website solution
+# Task - Configure and deploy Apache as a load balancer for tooling website solution
 
 # To ensure that users can be served by web servers through the load balancer.
       
@@ -101,17 +101,18 @@ saved and exited :wq!
 
             sudo tail -f /var/log/httpd/access_log
             
-   Screenshot showing http get requests from webserver 1 and 2 
+   Screenshot showing http get requests from webserver 1 
             
   ![Capture get request 1](https://user-images.githubusercontent.com/92916632/150034900-3c8befbc-7c6a-4ec2-95aa-924605ff9963.PNG)
   
+  Screenshot showing http get requests from webserver 2 
   
   ![Capture get request 2](https://user-images.githubusercontent.com/92916632/150035116-71108312-592e-4b4a-80bf-25d80644d8bc.PNG)
   
   
  Refreshed my browser page http://<Load-Balancer-Public-IP-Address several times to ensure that both servers receive HTTP GET 
     
- requests from my load balancers.
+ requests from my load balancers. New records appeared in each server’s log file. 
  
  
  The number of requests to each server will be approximately the same since we set loadfactor to the same value for 
