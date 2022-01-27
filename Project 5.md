@@ -3,7 +3,7 @@
 
 STEP 1 : Created and configured two Linux-based virtual servers (EC2 instances in AWS).
 
-Server A name - 'mysql server'
+Server A name - 'mysql db-server'
 
 Server B name - `mysql client'
 
