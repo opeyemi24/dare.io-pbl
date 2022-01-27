@@ -49,7 +49,7 @@ STEP 2 : On mysql server, i installed myqsl server software with the command :
 ![Capture 6 edit inbound rule](https://user-images.githubusercontent.com/92916632/145629904-932ca6f6-cc45-4469-9341-d8471ef2b171.PNG) 
 
 
-To obtain the client's private IP address, we can either copy directly from the AWS console or run the command:
+To obtain the client's private IP address, we can either copy directly from the AWS console or run the command below:
 
            ip addr show  
 
