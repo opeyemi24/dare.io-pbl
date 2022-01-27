@@ -1,6 +1,8 @@
 
  # DEVOPS TOOLING WEBSITE SOLUTION
  
+ # Task : Web solution for a DevOps team using LAMP stack with remote Database and NFS servers.
+ 
  In this project i implemented a solution that consists of the following components:
  
  1. infrastructure: AWS
@@ -397,11 +399,10 @@ Followed the above named procedure which is also illustrated in the screenshot b
        /var/www and /mnt/apps have the same contents.This indicates that NFS is mounted correctly. Screenshot below
   
       
-    Webserver 
+  Contents of /var/www/ 
    ![Capture 43](https://user-images.githubusercontent.com/92916632/147946290-e3b24bf2-a8bb-4923-afb3-2a25ab6e5188.PNG)
       
-    NFS server 
-              
+   Contents of /mnt/app             
    ![Capture 44](https://user-images.githubusercontent.com/92916632/147946467-64bc7fc9-a179-4e32-9457-1b4580a8cc81.PNG)
       
  7.   Located the log folder for Apache on the Web Server and mounted it to NFS server’s export for logs.
