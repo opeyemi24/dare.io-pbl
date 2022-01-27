@@ -1,7 +1,7 @@
 
 # WEB SOLUTION WITH WORDPRESS
 
-# TASK - To prepare a storage infrastructure on two Linux servers and implement a basic web solution using WordPress
+# TASK - To prepare a storage infrastructure on two Linux servers and implement a full scale web solution using WordPress
 
 # Configure storage subsystem for Web and Database servers based on Linux OS
      
