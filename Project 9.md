@@ -72,7 +72,7 @@ From my browser, i accessed :
  Step 2 – Configure Jenkins to retrieve source codes from GitHub using Webhooks
  
 
-1. Enabled webhooks in my GitHub repository settings
+1. Enabled webhooks in my tooling gitHub repository settings
 
 ![Capture 7 add webhooks](https://user-images.githubusercontent.com/92916632/150678029-a4cd0984-fd37-4123-91fd-f87da62285c5.PNG)
 
