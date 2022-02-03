@@ -1,7 +1,7 @@
 
 # Nginx Load Balancing Web Solution with secured HTTPS connection with periodically updated SSL/TLS certificates.
 
-# Task -  Register a new domain name
+# Task -  Register a new domain name (toolingysf.ga)
      
  #     - Configure Nginx as a Load Balancer
      
@@ -86,7 +86,7 @@ The process above ensures that the domain name, load balancer and route 53 have 
   
   ![Capture 14 status of nginx](https://user-images.githubusercontent.com/92916632/151845960-c1170e07-c8ca-4718-87ba-2f74d320051e.PNG)
   
- 19. Created a load balancer config file in Nginx. Added the private IP address of webserver 1, webserver 2, and the newly created domain name
+ 10. Created a load balancer config file in Nginx. Added the private IP address of webserver 1, webserver 2, and the newly created domain name
 
     
             sudo vi /etc/nginx/sites-available/load_balancer.conf
@@ -98,7 +98,7 @@ The process above ensures that the domain name, load balancer and route 53 have 
 saved and exit using :wq!
 
 
-20. Restarted Nginx and made sure the service is up and running
+11. Restarted Nginx and made sure the service is up and running
 
             sudo systemctl restart nginx
 
@@ -107,20 +107,21 @@ saved and exit using :wq!
 ![Capture 14 status of nginx](https://user-images.githubusercontent.com/92916632/151890931-a3042391-b56a-40e6-8fa5-75e798af82dc.PNG)
   
    
- 20. Removed the default site-enabled file
+ 12. Removed the default site-enabled file
    
              sudo rm -f /etc/nginx/sites-enabled/default
 
 ![Capture 18 remove dafault site-available page](https://user-images.githubusercontent.com/92916632/151866652-4248a47f-393b-4bcc-8591-c27d3a253ed4.PNG)
 
- 21. Checked to see if Nginx was successfully configured
+
+13. Checked to see if Nginx was successfully configured
 
              sudo nginx -t 
 
 ![Capture 19 syntax ok](https://user-images.githubusercontent.com/92916632/151870567-70f42f12-bc29-4631-95f8-68bab7464bae.PNG)
  
 
-22. Linked the load balancer config file to the site-enabled file
+14. Linked the load balancer config file to the site-enabled file
      
            cd /etc/nginx/sites-enabled/
  
@@ -139,14 +140,14 @@ saved and exit using :wq!
             
   ![Capture 22 link betwwn site enabled and config file](https://user-images.githubusercontent.com/92916632/151874453-b73da9b9-0cd1-4f4f-b254-95d1644a53ef.PNG)
   
- 23. Reloaded nginx 
+ 15. Reloaded nginx 
   
          sudo systemctl reload nginx         
  
 ![Capture 22 reload nginx](https://user-images.githubusercontent.com/92916632/151881817-a2bfd908-9fdf-4fd8-818e-364a0747e00e.PNG) 
 
 
-24. Checked that my Web Servers can be reached from my browser using new domain name using HTTP protocol – http://toolingysf.ga
+16. Checked that my Web Servers can be reached from my browser using new domain name using HTTP protocol – http://toolingysf.ga
 
 ![Capture tooling webpage](https://user-images.githubusercontent.com/92916632/152041004-09daa304-b0f7-409c-9c39-5b57a99da865.PNG)
 
