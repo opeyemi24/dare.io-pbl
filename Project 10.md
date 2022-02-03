@@ -1,5 +1,5 @@
 
-# Nginx Load Balancing Web Solution with secured HTTPS connection with periodically updated SSL/TLS certificates.
+# Nginx load balancing web solution with secured HTTPS connection with periodically updated SSL/TLS certificates.
 
 # Task -  Register a new domain name (toolingysf.ga)
      
