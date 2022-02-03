@@ -1,11 +1,13 @@
 
-# LOAD BALANCER SOLUTION WITH NGINX WEBSERVER & SS/TLS
+# Nginx Load Balancing Web Solution with secured HTTPS connection with periodically updated SSL/TLS certificates.
 
 # Task -  Register a new domain name
      
  #     - Configure Nginx as a Load Balancer
      
 #       - Secure the website using SSL/TLS encryption
+
+#      - Periodical renewal of SSL/TLS certificate
 
 
 - Created an EC2 VM based on Ubuntu Server 20.04 LTS and named it Nginx LB 
@@ -195,11 +197,12 @@ PART 2 CONFIGURED SECURED CONNECTION USING SSL/TLS CERTIFICATES
 ![Capture 29 sc showing secured site](https://user-images.githubusercontent.com/92916632/152245248-ea502b42-f198-4487-88c7-95b2e669fc96.PNG)
 
 
-6.  Set up periodical renewal of  SSL/TLS certificate
+6.  Set up periodical renewal of  SSL/TLS certificate. Configured a cronjob to run the command twice a day. 
 
           crontab -e
           
   ![Capture 30 crontab](https://user-images.githubusercontent.com/92916632/152246806-c313e462-8a85-4478-99eb-d86f4bc06577.PNG)
+  
   
   Added the following line:
   
