@@ -147,7 +147,7 @@ saved and exit using :wq!
 ![Capture 22 reload nginx](https://user-images.githubusercontent.com/92916632/151881817-a2bfd908-9fdf-4fd8-818e-364a0747e00e.PNG) 
 
 
-16. Checked that my Web Servers can be reached from my browser using new domain name using HTTP protocol – http://toolingysf.ga
+16. Checked that my web servers can be reached from my browser using new domain name using HTTP protocol – http://toolingysf.ga
 
 ![Capture tooling webpage](https://user-images.githubusercontent.com/92916632/152041004-09daa304-b0f7-409c-9c39-5b57a99da865.PNG)
 
