@@ -96,7 +96,7 @@ Step 2 – Prepared my  development environment using Visual Studio Code
 
 ![Capture 17 create play books directory](https://user-images.githubusercontent.com/92916632/153507591-22ff0a20-38e9-42c8-9c4c-13710fb5efad.PNG)
 
-- Within the playbooks folder, create my first playbook and named it common.yml
+- Within the playbooks folder, created my first playbook and named it common.yml
 
 ![Capture 19 created common file](https://user-images.githubusercontent.com/92916632/153509185-9bb8bc74-7158-4068-8533-537e96dd9727.PNG)
 
