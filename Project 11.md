@@ -107,15 +107,173 @@ Within the inventory folder, created an inventory file (.yml) for each environme
 
 ![Capture 20 inventory](https://user-images.githubusercontent.com/92916632/153509809-7af718a7-ae30-4bc6-b55d-c9573fc4f414.PNG)
 
+                               
+
+Step 4 – Set up an Ansible Inventory
+
+
+-    Imported my key into ssh-agent:
+    
+           eval `ssh-agent -s`
+           
+           
+          ssh-add richard-ec2.pem
+          
+ 
+-   Confirmed the key has been added with the command below
+           
+           ssh-add -l
+           
+           
+ -   ssh into my Jenkins-Ansible server using ssh-agent
+    
+          ssh -A ubuntu@public-ip
+          
+          
+   The essence of the process above is to ensure that ansible server will be able to access other intances using the same pem key 
+   
+   
+   - Updated the inventory/dev.yml file with this snippet of code:
+
+         [nfs]
+         <NFS-Server-Private-IP-Address> ansible_ssh_user='ec2-user'
+
+         [webservers]
+         <Web-Server1-Private-IP-Address> ansible_ssh_user='ec2-user'
+         <Web-Server2-Private-IP-Address> ansible_ssh_user='ec2-user'
+
+          [db]
+          <Database-Private-IP-Address> ansible_ssh_user='ec2-user' 
+
+          [lb]
+          <Load-Balancer-Private-IP-Address> ansible_ssh_user='ubuntu'
+          
+ ![Capture 34 edit dev yml file](https://user-images.githubusercontent.com/92916632/154165730-ea42f084-759a-4c0b-8b06-271b0dcfa4b1.PNG)
+
+    
+   
+   
+   
+   Step 5 – Create a Common Playbook
+   
+    
+ Updated the playbooks/common.yml file with following code:
+           
+   -  Edited the common.yml file with the following configuration
+    
+    ---
+    - name: Update web, NFS and DB servers
+    hosts: webservers, nfs, db, lb
+    remote_user: ec2-user
+    become: yes
+    become_user: root
+    tasks:
+      - name: ensure wireshark is at latest version
+          yum:
+          name: wireshark
+          state: latest         
+  
+    - name: update LB server
+       hosts: lb
+       remote_user: ubuntu
+       become: yes
+       become_user: root
+    tasks:
+      - name: Update apt repo
+        apt: 
+          update_cache: yes
+
+    - name: ensure wireshark is at the latest version
+      apt:
+        name: wireshark
+        state: latest
+        
+        
+ ![Capture 33 edit common file](https://user-images.githubusercontent.com/92916632/154163633-e3f5eaf4-c329-44b2-b3fc-7ef80ee48313.PNG)
+
+   
+   
+   Step 6 – Update GIT with the latest code
+   
+   Committed the codes into gitbub 
+   
+   
+   - Checked git status
+   
+              git status
+              
+ ![Capture 27 git status](https://user-images.githubusercontent.com/92916632/154054425-a42bc706-137d-4701-9f39-7480409929d3.PNG)
+ 
+  
+ -  Added all untracked files that need to be comitted 
+  
+               git add .
+ ![Capture 28 git add](https://user-images.githubusercontent.com/92916632/154055284-9f664d0e-ce26-46cc-9c14-fceb4d39a698.PNG)
+
+               
+  - Added commit message 
+              
+              git commit -m "commit message"
+              
+  ![Capture 29 git commit](https://user-images.githubusercontent.com/92916632/154059299-5c43b4ca-0944-40a8-9c98-1249cd2ac48a.PNG)
+  
+  
+  - Push changes to the remote branch 
+   
+              git push origin prj-11
+              
+   ![Capture 30 git push origin](https://user-images.githubusercontent.com/92916632/154062899-6469b90b-c693-40d8-801b-38864860bca1.PNG)
+
+
+  - Created a pull request 
+
+    ![Capture 20 pull request](https://user-images.githubusercontent.com/92916632/154063339-508872b4-f7b4-4355-9b0a-6bfd640a6cfb.PNG)
+    
+    
+    
+  - Merge pull request 
+
+    ![Capture 23 merge pull request](https://user-images.githubusercontent.com/92916632/154066610-8e78c014-93dc-43a8-9b9e-7a618c6f32f0.PNG)
+    
+    ![Capture 24 pull request successfully merged](https://user-images.githubusercontent.com/92916632/154067496-4398ae76-a9bd-4eb8-b870-e32c6bbccf7b.PNG)
+    
+ -  Checked out to main branch 
+    
+                git checkout main 
+                
+    ![Capture 31 git checkout main](https://user-images.githubusercontent.com/92916632/154110450-2d0cdcd0-12c0-4016-bbd4-5fa41159393b.PNG)
+    
+    
+   -  Git pull to update what we have in project-11 branch to the main branch 
+  
+             git pull 
+
+   ![Capture 32 git pull](https://user-images.githubusercontent.com/92916632/154112693-d39f6aeb-234d-434b-89fe-c806705a266c.PNG)
+   
+   Verified that Jenkins has automatically saved all the files(built artifacts) to /var/lib/jenkins/jobs/ansible/builds/<build_number>/archive/ directory
+    on Jenkins-Ansible server.
+   
+   ![Capture 25 build successful on jenkins](https://user-images.githubusercontent.com/92916632/154164220-b259791e-0c81-42a5-9c68-49b5f15cb94f.PNG)
+   
+   ![Capture 26 verify jenkins build](https://user-images.githubusercontent.com/92916632/154164251-8a7efed8-df0c-4b77-bf6d-91fdba2b7e0a.PNG)
+   
+   ![Capture 35 verified jenkins server](https://user-images.githubusercontent.com/92916632/154167354-a46098e3-0ef3-435d-9911-a0b2383ac225.PNG)
+
+   ![Capture 36 jenkins server](https://user-images.githubusercontent.com/92916632/154167403-fb5205aa-211c-447f-97b9-6c798f3482b0.PNG)
+
+ 
 
 
 
-           
-           
-           
-           
- Step 4 – Set up an Ansible Inventory
 
+
+
+ 
+              
+     
+   
+   
+   
  
 
 
