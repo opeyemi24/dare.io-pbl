@@ -116,21 +116,44 @@ Step 4 – Set up an Ansible Inventory
     
            eval `ssh-agent -s`
            
-           
-          ssh-add richard-ec2.pem
+![eval ssh](https://user-images.githubusercontent.com/92916632/155029014-6c9df3d2-44e4-4646-9b86-714c0aff5db9.PNG)
+
+        
+   Added key 
           
+          ssh-add -k richard-ec2.pem 
+
+![Capture ssh add-k](https://user-images.githubusercontent.com/92916632/155029866-1490026d-adf1-4a19-946b-73c8feac9d54.PNG)
+
+     
  
--   Confirmed the key has been added with the command below
+  Confirmed the key has been added with the command below
            
            ssh-add -l
            
+ ![Capture ssh add l](https://user-images.githubusercontent.com/92916632/155029259-c0b58d1d-6498-417c-afdc-6823478c01fd.PNG)
+ 
            
- -   ssh into my Jenkins-Ansible server using ssh-agent
+           
+  ssh into my Jenkins-Ansible server using ssh-agent
     
           ssh -A ubuntu@public-ip
           
+    
+![Capture ssh ubuntu](https://user-images.githubusercontent.com/92916632/155030066-cc6102ea-fd9b-4010-bda6-3bfdc1eb9929.PNG)
+
+
+From Jenkins-ansible server, i SSH into NFS server to  verify that ansible server can access other servers using the same pem key
+ 
+         ssh ec2-user@NFS-server private IP address 
+         
+        
+![Capture ssh into nfs server](https://user-images.githubusercontent.com/92916632/155031311-5ca0d7e5-ff78-4d3b-b745-bf25c8240026.PNG)
+
+
           
-   The essence of the process above is to ensure that ansible server will be able to access other intances using the same pem key 
+          
+   The essence of the process above is to ensure that ansible server can access other instances/servers using the same pem key 
    
    
    - Updated the inventory/dev.yml file with this snippet of code:
