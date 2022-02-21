@@ -101,7 +101,7 @@ Step 2 – Prepared my  development environment using Visual Studio Code
 ![Capture 19 created common file](https://user-images.githubusercontent.com/92916632/153509185-9bb8bc74-7158-4068-8533-537e96dd9727.PNG)
 
 
-- Created a directory and named it inventory – it will be used to keep our hosts organised.
+- Created a directory and named it inventory  – it will be used to keep our hosts organised.
 
 Within the inventory folder, created an inventory file (.yml) for each environment (Development, Staging Testing and Production) dev, staging, uat, and prod respectively.
 
