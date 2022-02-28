@@ -39,7 +39,9 @@
  ![Capture 3d attach vol 3](https://user-images.githubusercontent.com/92916632/146151917-c0a7e6ca-95be-473c-802f-648fe0cbe818.PNG) 
  
 
-4.  To confirm that the newly created devices have been attached, i ran the command : lsblk
+4.  To confirm that the newly created devices have been attached, i ran :      
+    
+          lsblk
  
  The names of the the newly created block devices are xvdf, xvdg, xvdh as shown in the screenshot below 
  
@@ -51,7 +53,9 @@
   ![Capture 8](https://user-images.githubusercontent.com/92916632/146231535-4350eb20-ce8f-464c-8392-ddee2c1306fd.PNG)
   
   
-5. To see all mounts and free space on my server, i ran df -h 
+5. To see all mounts and free space on my server, i ran : 
+ 
+          df -h 
   
    Screenshot showing that the 3 newly added devices have not been mounted
   ![Capture 9](https://user-images.githubusercontent.com/92916632/146231757-f7ebeba3-f6b0-4c71-8926-d2c141cd42ab.PNG)
@@ -124,7 +128,8 @@
   
  12.  Verified that my physical volume has been created by running the following command  : 
   
-        sudo pvs
+            sudo pvs
+  
   ![Capture 15 confirm physical volume](https://user-images.githubusercontent.com/92916632/146273030-c5181b09-9c28-4bc9-8d5b-a2bb60d2d0b3.PNG)
   
  
@@ -215,13 +220,13 @@
       
 - Copied the UUID of the device. 
 
+![InkedCapture 31_LI](https://user-images.githubusercontent.com/92916632/146574056-91dae0ed-456b-41ce-ba70-7e80638e631a.jpg)
+
+
 - Pasted on a notepad. 
 
 - Removed the leading quotes & edited the ending quotes of the UUID 
    
-![InkedCapture 31_LI](https://user-images.githubusercontent.com/92916632/146574056-91dae0ed-456b-41ce-ba70-7e80638e631a.jpg)
-
-
 ![Capture 35 editing UUID](https://user-images.githubusercontent.com/92916632/146582988-5663a25a-e321-488d-ba68-3558296e4dc1.PNG)
   
   
@@ -528,7 +533,7 @@
 ![Capture 17 extracted the zip file](https://user-images.githubusercontent.com/92916632/148658090-b67525db-56bd-4903-ab21-ce453b06e87e.PNG)
            
           
-  After extraction, an exta folder called wordpress was created
+  After extraction, an extra folder called wordpress was created
   
   ![Capture  extra folder](https://user-images.githubusercontent.com/92916632/148658730-e74b8e85-363c-47c8-b138-abc9a91be962.PNG)
  
@@ -689,7 +694,7 @@ entered the password : password
 ![Capture log into mysql](https://user-images.githubusercontent.com/92916632/148781451-f8026c1f-6d0d-4fe2-9ce1-63821c308b79.PNG)
 
 
-Successfully executed SHOW DATABASES;
+Successfully executed show databases;
 
            show databases;
            
