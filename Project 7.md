@@ -31,7 +31,7 @@ STEP 1 : Prepared the webserver
 
 3. Created 3 volumes in the same availability zone as my nfs server each of 10G 
    
-   Screenshot showing the creation of volumes 
+    Screenshot showing the creation of volumes 
    
   ![Capture 3 created volumes](https://user-images.githubusercontent.com/92916632/147659725-06064768-c4d3-43c2-8cb9-b12af86d0c7d.PNG)
    
