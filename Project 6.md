@@ -252,7 +252,9 @@
   ![Capture 34](https://user-images.githubusercontent.com/92916632/146445651-06e8c0b7-8231-46b0-936b-3180cb9a290b.PNG)
   
   
- 27.  Verified my setup by running : df -h
+ 27.  Verified my setup by running : 
+         
+           df -h
    ![Capture 33 ii df-h](https://user-images.githubusercontent.com/92916632/146446176-89cab909-bec7-4182-8f4a-24931832cf8e.PNG)
    
    
@@ -309,14 +311,14 @@
  
  8. For the creation of partition on the second disk, i ran the following command :
   
-        sudo gdisk /dev/xvdg
+           sudo gdisk /dev/xvdg
   
    Followed the above named procedure which is also illustrated in the screenshot below
   ![Capture 4](https://user-images.githubusercontent.com/92916632/146545572-0a805947-2adf-4254-a236-e5afc2f91add.PNG)
   
  9.  For the creation of partition on the third disk, i ran the following command :
    
-        sudo gdisk /dev/xvdh
+           sudo gdisk /dev/xvdh
   
   Followed the above named procedure which is also illustrated in the screenshot below
   ![Capture 5](https://user-images.githubusercontent.com/92916632/146546075-e067fdd7-c0e1-4166-8869-0733485edf38.PNG)
@@ -429,15 +431,17 @@
   
 22.  Tested the configuration and reloaded the daemon
   
-        sudo mount -a
+           sudo mount -a
       
-        sudo systemctl daemon-reload
+           sudo systemctl daemon-reload
       
  ![Capture 19](https://user-images.githubusercontent.com/92916632/146643754-c1ec0c5b-2a44-43b9-8e2d-20ebfa944b39.PNG)
 
       
       
-23.  Verified my setup by running : df -h
+23.  Verified my setup by running : 
+        
+            df -h
  
  ![Capture 20](https://user-images.githubusercontent.com/92916632/146643796-b9495d46-df71-4fa3-bb74-8584515bf46b.PNG)
  
