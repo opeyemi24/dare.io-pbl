@@ -5,15 +5,16 @@
 
 # To ensure that users can be served by web servers through the load balancer.
       
- STEP 1  Created an Ubuntu Server 20.04 EC2 instance and named it apache-load balancer 
+ STEP 1  Created an Ubuntu Server 20.04 EC2 instance  to serve as load balancer server and named it apache-lb server 
  
-![Capture apache lb](https://user-images.githubusercontent.com/92916632/150131246-96a95657-7f7a-40c1-bc2d-39dc886d57eb.PNG)
+![Capture 2 Apache lb](https://user-images.githubusercontent.com/92916632/155987918-ad6213e4-3126-419d-8326-f792516f40bc.PNG)
  
- STEP 2  Opened TCP port 80 on Project-8-apache-lb by creating an Inbound Rule in Security Group.
+
+ STEP 2  Opened TCP port 80 on apache LB by creating an inbound rule in the security group.
  
 ![Capture TCP 80](https://user-images.githubusercontent.com/92916632/150133289-7e80ac96-41a8-496b-b445-96e7f6787636.PNG)
 
- STEP  3 Installed Apache load balancer on apache-lb server and configure it to point traffic coming to LB to both Web Servers:
+ STEP  3 Installed Apache load balancer on apache-lb server and configured it to point traffic coming to load balancer to both Web Servers:
 
    Install apache2
    
