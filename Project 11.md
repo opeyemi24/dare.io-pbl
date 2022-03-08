@@ -288,23 +288,37 @@ From Jenkins-ansible server, i SSH into NFS server to  verify that ansible serve
    
    Step 7   Installed OpenSSH on windows 
    
-  To install OpenSSH using PowerShell, i ran PowerShell as an Administrator
+ - To install OpenSSH using PowerShell, i ran PowerShell as an Administrator
    
-  Installed OpenSSH using PowerShell with the follwing command 
+   - Installed OpenSSH using PowerShell with the follwing command 
    
           Get-WindowsCapability -Online | Where-Object Name -like 'OpenSSH*'
           
+  ![Capture 1](https://user-images.githubusercontent.com/92916632/157339524-591906cc-a750-4063-9faa-400eef437409.PNG)
+
           
-  Installed the OpenSSH Client
+          
+   - Installed the OpenSSH Client
          
-          Add-WindowsCapability -Online -Name OpenSSH.Client~~~~0.0.1.0
+           Add-WindowsCapability -Online -Name OpenSSH.Client~~~~0.0.1.0
           
-  Installed the OpenSSH Server
+  ![Capture 2](https://user-images.githubusercontent.com/92916632/157345372-2dcef742-631a-4a23-8123-865854ce6e48.PNG)
+
+
+
+          
+ -  Installed the OpenSSH Server
             
           Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0
           
+ ![Capture 3](https://user-images.githubusercontent.com/92916632/157345616-f58a14d0-549e-4732-af3f-2870dc7dda38.PNG)
+
+ 
+
+
           
-  Started the sshd service
+          
+-  Started the sshd service
           
            Start-Service sshd
            
@@ -322,9 +336,6 @@ From Jenkins-ansible server, i SSH into NFS server to  verify that ansible serve
             Start-Service sshd
             
             
-- User key generation
-
-          ssh-keygen -t ed25519
           
         
   Configured it to be automatically started 
@@ -342,6 +353,9 @@ From Jenkins-ansible server, i SSH into NFS server to  verify that ansible serve
  Added my pem key into ssh-agent. Added the path to the pem key
  
         ssh-add "C:\Users\USER\Downloads\richard-ec2.pem"
+        
+![Capture path to pem key](https://user-images.githubusercontent.com/92916632/157344792-5304dc49-3781-4ed2-a7e6-5144578f90c7.PNG)
+
           
 
 
