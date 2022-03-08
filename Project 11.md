@@ -18,12 +18,12 @@ Step 1 INSTALLED AND CONFIGURED ANSIBLE ON EC2 INSTANCE
         
 - Configured Jenkins build job to save my repository content every time i change it  
 
-   - Create a new Freestyle project ansible in Jenkins and point it to your ‘ansible-config-mgt’ repository.
+   - Created a new freestyle project ansible in Jenkins and pointed it to my ‘ansible-config-mgt’ repository.
   
   ![Capture 2 create freestyle project](https://user-images.githubusercontent.com/92916632/153218713-71a16132-43ba-4329-8381-0045d360ee29.PNG)
 
 
-   - Configure Webhook in GitHub and set webhook to trigger ansible build. 
+   - Configured Webhook in GitHub and set webhook to trigger ansible build. 
 
 ![Capture 5 webhook](https://user-images.githubusercontent.com/92916632/153220096-e838f0c4-5bdc-4042-ba93-e143144a73e1.PNG)
 
@@ -283,6 +283,70 @@ From Jenkins-ansible server, i SSH into NFS server to  verify that ansible serve
    ![Capture 35 verified jenkins server](https://user-images.githubusercontent.com/92916632/154167354-a46098e3-0ef3-435d-9911-a0b2383ac225.PNG)
 
    ![Capture 36 jenkins server](https://user-images.githubusercontent.com/92916632/154167403-fb5205aa-211c-447f-97b9-6c798f3482b0.PNG)
+   
+   
+   
+   Step 7   Installed OpenSSH on windows 
+   
+  To install OpenSSH using PowerShell, i ran PowerShell as an Administrator
+   
+  Installed OpenSSH using PowerShell with the follwing command 
+   
+          Get-WindowsCapability -Online | Where-Object Name -like 'OpenSSH*'
+          
+          
+  Installed the OpenSSH Client
+         
+          Add-WindowsCapability -Online -Name OpenSSH.Client~~~~0.0.1.0
+          
+  Installed the OpenSSH Server
+            
+          Add-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0
+          
+          
+  Started the sshd service
+          
+           Start-Service sshd
+           
+           Set-Service -Name sshd -StartupType 'Automatic' 
+           
+ 
+- Host key generation
+ 
+   - Set the sshd service to be started automatically
+ 
+            Get-Service -Name sshd | Set-Service -StartupType Automatic
+            
+    started the sshd service
+    
+            Start-Service sshd
+            
+            
+- User key generation
+
+          ssh-keygen -t ed25519
+          
+        
+  Configured it to be automatically started 
+  
+        
+         Get-Service ssh-agent | Set-Service -StartupType Automatic
+         
+        
+ Started the service
+
+        
+        Start-Service ssh-agent
+        
+ 
+ Added my pem key into ssh-agent. Added the path to the pem key
+ 
+        ssh-add "C:\Users\USER\Downloads\richard-ec2.pem"
+          
+
+
+  
+  Step 8  Run first Ansible test
 
  
 
