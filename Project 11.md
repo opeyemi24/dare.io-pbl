@@ -325,32 +325,32 @@ From Jenkins-ansible server, i SSH into NFS server to  verify that ansible serve
            Set-Service -Name sshd -StartupType 'Automatic' 
            
  
-- Host key generation
+
  
    - Set the sshd service to be started automatically
  
             Get-Service -Name sshd | Set-Service -StartupType Automatic
             
-    started the sshd service
+  -  Started the sshd service
     
             Start-Service sshd
             
             
           
         
-  Configured it to be automatically started 
+-  Configured it to be automatically started 
   
         
          Get-Service ssh-agent | Set-Service -StartupType Automatic
          
         
- Started the service
+- Started the service
 
         
         Start-Service ssh-agent
         
  
- Added my pem key into ssh-agent. Added the path to the pem key
+- Added my pem key into ssh-agent. Added the path to the pem key
  
         ssh-add "C:\Users\USER\Downloads\richard-ec2.pem"
         
@@ -359,8 +359,7 @@ From Jenkins-ansible server, i SSH into NFS server to  verify that ansible serve
           
 
 
-  
-  Step 8  Run first Ansible test
+Step 8  Run first Ansible test
 
  
 
