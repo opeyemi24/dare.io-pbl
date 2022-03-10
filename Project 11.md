@@ -336,7 +336,7 @@ Step 8  Run first Ansible test
 
 
 
--  Edited the SSH config file as follow: 
+-  Edited and saved the SSH config file as follow: 
  
  
        # The bastion host
