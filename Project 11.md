@@ -359,6 +359,7 @@ From Jenkins-ansible server, i SSH into NFS server to  verify that ansible serve
           
 
 
+
 Step 8  Run first Ansible test
 
 
@@ -366,8 +367,11 @@ Step 8  Run first Ansible test
 
         ssh-add -l
         
+![Capture confirm pem key added](https://user-images.githubusercontent.com/92916632/157711988-4c75218d-2508-4904-93eb-e02718ed2f95.PNG)
+ 
+        
 
-- From the host server( ansible-jenkins), I SSH into NFS server to verify that servers using the same pem key can connect to each other
+- From the host server( ansible-jenkins), I SSH into NFS server to verify that ansible server can access other servers using the same pem key
 
   ![image](https://user-images.githubusercontent.com/92916632/157560534-ff02867b-7d17-4251-ac65-188a94abbb59.png)
 
@@ -404,9 +408,16 @@ Step 8  Run first Ansible test
 - Ran ansible-playbook command and verified that my playbook actually works:
  
  
-      ansible-playbook -i /var/lib/jenkins/jobs/ansible/builds/<build-number>/archive/inventory/dev.yml /var/lib/jenkins/jobs/ansible/builds/<build-   
+      ansible-playbook -i /var/lib/jenkins/jobs/ansible/builds/<build-number>/archive/Inventory/dev.yml /var/lib/jenkins/jobs/ansible/builds/<build-   
       
       number>/archive/playbooks/common.yml
+      
+ 
+ ![SC 1 run ansible plabbok](https://user-images.githubusercontent.com/92916632/157726100-788142b7-598f-4410-a02c-ac1777875930.PNG)
+ 
+ ![SC 2 run ansible playbook](https://user-images.githubusercontent.com/92916632/157726197-5e3954f6-b835-420c-b702-96e5d591c3c5.PNG)
+
+
       
       
 - Logged in to all the servers to check if wireshark has been installed 
