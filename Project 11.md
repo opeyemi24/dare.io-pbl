@@ -361,6 +361,66 @@ From Jenkins-ansible server, i SSH into NFS server to  verify that ansible serve
 
 Step 8  Run first Ansible test
 
+
+- Confirm that pem key has been added 
+
+        ssh-add -l
+        
+
+- From the host server( ansible-jenkins), I SSH into NFS server to verify that servers using the same pem key can connect to each other
+
+  ![image](https://user-images.githubusercontent.com/92916632/157560534-ff02867b-7d17-4251-ac65-188a94abbb59.png)
+
+
+
+
+-  Edited the SSH config file as follow: 
+ 
+ 
+       # The bastion host
+       Host 18.217.205.184
+       HostName 18.217.205.184
+       ForwardAgent yes
+       User ubuntu
+
+       Host Bastion
+       HostName 18.217.205.184
+       User ubuntu
+       IdentityFile C:/Users/USER/Downloads/richard-ec2.pem
+       ForwardAgent yes
+ 
+        
+        
+ - Connected to the host(Jenkins-Ansible) server on VS code. 
+ 
+ 
+ - To ensure that ansible does not check my host key when connecting i ran : 
+ 
+ 
+        export $ANSIBLE_HOST_KEY_CHECKING=False
+ 
+ 
+ 
+- Ran ansible-playbook command and verified that my playbook actually works:
+ 
+ 
+      ansible-playbook -i /var/lib/jenkins/jobs/ansible/builds/<build-number>/archive/inventory/dev.yml /var/lib/jenkins/jobs/ansible/builds/<build-   
+      
+      number>/archive/playbooks/common.yml
+      
+      
+- Logged in to all the servers to check if wireshark has been installed 
+
+          wireshark --version
+          
+   ![Capture wireshark version nfs server](https://user-images.githubusercontent.com/92916632/157557905-81abf024-8404-4d3f-9d7b-dac463d5c0c1.PNG)
+   
+   ![Capture wireshark version wb server](https://user-images.githubusercontent.com/92916632/157561722-c22184e2-d07e-4f0b-9139-33e282f50e9d.PNG)
+
+
+        
+        
+        
  
 
 
