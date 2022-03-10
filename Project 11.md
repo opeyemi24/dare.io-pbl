@@ -24,6 +24,8 @@ Step 1 INSTALLED AND CONFIGURED ANSIBLE ON EC2 INSTANCE
 
 
    - Configured Webhook in GitHub and set webhook to trigger ansible build. 
+  
+   - Added the public IP address of jenkins-asnible server to webhook
 
 ![Capture 5 webhook](https://user-images.githubusercontent.com/92916632/153220096-e838f0c4-5bdc-4042-ba93-e143144a73e1.PNG)
 
@@ -111,50 +113,6 @@ Within the inventory folder, created an inventory file (.yml) for each environme
 
 Step 4 – Set up an Ansible Inventory
 
-
--    Imported my key into ssh-agent:
-    
-           eval `ssh-agent -s`
-           
-![eval ssh](https://user-images.githubusercontent.com/92916632/155029014-6c9df3d2-44e4-4646-9b86-714c0aff5db9.PNG)
-
-        
-   Added key 
-          
-          ssh-add -k richard-ec2.pem 
-
-![Capture ssh add-k](https://user-images.githubusercontent.com/92916632/155029866-1490026d-adf1-4a19-946b-73c8feac9d54.PNG)
-
-     
- 
-  Confirmed the key has been added with the command below
-           
-           ssh-add -l
-           
- ![Capture ssh add l](https://user-images.githubusercontent.com/92916632/155029259-c0b58d1d-6498-417c-afdc-6823478c01fd.PNG)
- 
-           
-           
-  ssh into my Jenkins-Ansible server using ssh-agent
-    
-          ssh -A ubuntu@public-ip
-          
-    
-![Capture ssh ubuntu](https://user-images.githubusercontent.com/92916632/155030066-cc6102ea-fd9b-4010-bda6-3bfdc1eb9929.PNG)
-
-
-From Jenkins-ansible server, i SSH into NFS server to  verify that ansible server can access other servers using the same pem key
- 
-         ssh ec2-user@NFS-server private IP address 
-         
-        
-![Capture ssh into nfs server](https://user-images.githubusercontent.com/92916632/155031311-5ca0d7e5-ff78-4d3b-b745-bf25c8240026.PNG)
-
-
-          
-          
-   The essence of the process above is to ensure that ansible server can access other instances/servers using the same pem key 
-   
    
    - Updated the inventory/dev.yml file with this snippet of code:
 
@@ -177,7 +135,7 @@ From Jenkins-ansible server, i SSH into NFS server to  verify that ansible serve
    
    
    
-   Step 5 – Create a Common Playbook
+   Step 5 – Created a Common Playbook
    
     
  Updated the playbooks/common.yml file with following code:
@@ -273,7 +231,7 @@ From Jenkins-ansible server, i SSH into NFS server to  verify that ansible serve
 
    ![Capture 32 git pull](https://user-images.githubusercontent.com/92916632/154112693-d39f6aeb-234d-434b-89fe-c806705a266c.PNG)
    
-   Verified that Jenkins has automatically saved all the files(built artifacts) to /var/lib/jenkins/jobs/ansible/builds/<build_number>/archive/ directory
+   - Verified that Jenkins has automatically saved all the files(built artifacts) to /var/lib/jenkins/jobs/ansible/builds/<build_number>/archive/ directory
     on Jenkins-Ansible server.
    
    ![Capture 25 build successful on jenkins](https://user-images.githubusercontent.com/92916632/154164220-b259791e-0c81-42a5-9c68-49b5f15cb94f.PNG)
@@ -392,6 +350,11 @@ Step 8  Run first Ansible test
        User ubuntu
        IdentityFile C:/Users/USER/Downloads/richard-ec2.pem
        ForwardAgent yes
+       
+       
+     *   Host - public IP address of host server(jenkins-Ansible)
+       
+      * Hostname - public IP address of host server(jenkins-Ansible)
  
         
         
@@ -405,7 +368,7 @@ Step 8  Run first Ansible test
  
  
  
-- Ran ansible-playbook command and verified that my playbook actually works:
+- Ran ansible-playbook command on VS code 
  
  
       ansible-playbook -i /var/lib/jenkins/jobs/ansible/builds/<build-number>/archive/Inventory/dev.yml /var/lib/jenkins/jobs/ansible/builds/<build-   
@@ -414,13 +377,12 @@ Step 8  Run first Ansible test
       
  
  ![SC 1 run ansible plabbok](https://user-images.githubusercontent.com/92916632/157726100-788142b7-598f-4410-a02c-ac1777875930.PNG)
- 
  ![SC 2 run ansible playbook](https://user-images.githubusercontent.com/92916632/157726197-5e3954f6-b835-420c-b702-96e5d591c3c5.PNG)
 
 
       
       
-- Logged in to all the servers to check if wireshark has been installed 
+- Logged in to all the servers to verify that wireshark has been installed 
 
           wireshark --version
           
