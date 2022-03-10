@@ -340,16 +340,19 @@ Step 8  Run first Ansible test
  
  
        # The bastion host
-       Host 18.217.205.184
-       HostName 18.217.205.184
+       Host 18.218.47.55
+       HostName 18.218.47.55
        ForwardAgent yes
        User ubuntu
 
        Host Bastion
-       HostName 18.217.205.184
+       HostName 18.218.47.55
        User ubuntu
        IdentityFile C:/Users/USER/Downloads/richard-ec2.pem
        ForwardAgent yes
+       
+  ![Capture 4 ssh config file](https://user-images.githubusercontent.com/92916632/157764981-7fdcc5cc-0d9b-4536-bc86-e262facd387a.PNG)
+
        
        
      *   Host - public IP address of host server(jenkins-Ansible)
