@@ -25,7 +25,7 @@ Step 1 INSTALLED AND CONFIGURED ANSIBLE ON EC2 INSTANCE
 
    - Configured Webhook in GitHub and set webhook to trigger ansible build. 
   
-   - Added the public IP address of jenkins-asnible server to webhook
+   - Added the public IP address of jenkins-ansible server to webhook
 
 ![Capture 5 webhook](https://user-images.githubusercontent.com/92916632/153220096-e838f0c4-5bdc-4042-ba93-e143144a73e1.PNG)
 
