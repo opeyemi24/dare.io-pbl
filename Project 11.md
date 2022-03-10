@@ -361,7 +361,7 @@ Step 8  Run first Ansible test
  
         
         
- - Connected to the host(Jenkins-Ansible) server on VS code. 
+ - Connected to the host server (Jenkins-Ansible)  on VS code. 
  
  
  - To ensure that ansible does not check my host key when connecting i ran : 
