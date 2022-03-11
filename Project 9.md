@@ -91,6 +91,19 @@ Added webhooks.   Added jenkins server public IP address
 
 
 
+To connect my GitHub repository, you will need to provide its URL, you can copy from the repository itself
+
+![Capture 10 repository url](https://user-images.githubusercontent.com/92916632/157853240-7677e61a-a73e-4d05-9bd2-4186779e8f81.PNG)
+
+
+In configuration of your Jenkins freestyle project choose Git repository, provide there the link to your Tooling GitHub repository and credentials (user/password) so Jenkins could access files in the repository.
+
+![Capture add credentials and save](https://user-images.githubusercontent.com/92916632/157853980-06b55292-cd6b-401f-a5b1-98d19c17ec44.PNG)
+
+
+
+
+
 
  
  
