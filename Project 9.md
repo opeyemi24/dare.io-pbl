@@ -101,6 +101,91 @@ In configuration of your Jenkins freestyle project choose Git repository, provid
 ![Capture add credentials and save](https://user-images.githubusercontent.com/92916632/157853980-06b55292-cd6b-401f-a5b1-98d19c17ec44.PNG)
 
 
+![Capture configure global security](https://user-images.githubusercontent.com/92916632/157860419-6ee9223d-2470-4164-a16a-1d32464de7d6.PNG)
+
+Enabled proxy compatibility and saved 
+
+![Capture enable proxy compabitibility](https://user-images.githubusercontent.com/92916632/157860460-c53364a8-8b8e-4fa0-a78f-dcae7bcc8fbe.PNG)
+
+
+Add credentials  and save 
+ 
+![Capture add credentials and save](https://user-images.githubusercontent.com/92916632/157861647-da53dd4a-b8a6-4d4e-bdeb-9c679c25c933.PNG)
+
+
+![Capture add credentials](https://user-images.githubusercontent.com/92916632/157861699-aec784b9-b887-4503-87d4-cd98a2f4d21a.PNG)
+
+selected the credentials created and saved
+
+![Capture credentials created](https://user-images.githubusercontent.com/92916632/157862628-e654bb52-b913-42f0-b0ee-84c59d488954.PNG)
+
+
+Ran a build manaually by clicking build now 
+
+
+![Capture build noww](https://user-images.githubusercontent.com/92916632/157863914-406e550b-e85c-4f82-805a-0b9ef6d740ff.PNG)
+
+
+Verified the console output 
+
+![Capture build- console output](https://user-images.githubusercontent.com/92916632/157863095-fa5abaa6-79c1-4a18-ba2a-71ecb9dc777a.PNG)
+
+
+Step 3 Click "Configure" your job/project and add these two configurations
+
+    Configure triggering the job from GitHub webhook:
+
+  
+  ![Capture build triggers](https://user-images.githubusercontent.com/92916632/157864567-657acc45-78c5-425c-b682-abd7cc22986a.PNG)
+  
+  
+   Configure "Post-build Actions" to archive all the files – files resulted from a build are called "artifacts".
+   
+ Clicked post build actions, archive the artifacts, added **  and saved 
+ 
+    
+![Capture archive the artifacts](https://user-images.githubusercontent.com/92916632/157866129-4f8fda6f-74f5-4ce8-8eb4-fe4324647891.PNG)
+
+
+make some change in any file in your GitHub repository (e.g. README.MD file) and push the changes to the master branch.
+
+
+![Capture added new line to readme file](https://user-images.githubusercontent.com/92916632/157866907-b44444e5-8c28-449c-93cc-22a703365c60.PNG)
+
+A new build was launched automatically (by webhook) and we see its results – artifacts, saved on Jenkins server.
+
+
+![Capture console output  2a](https://user-images.githubusercontent.com/92916632/157868075-3d9fc171-d003-42dc-8ce5-6ec270d05f06.PNG)
+
+
+Console output
+
+![Capture console output 2b](https://user-images.githubusercontent.com/92916632/157868250-cba78f83-54aa-4a63-963b-aa7fde5c9ec2.PNG)
+
+Screenshot showing the artifacts generated as a result of the latest build 
+
+
+![Capture built artifacts](https://user-images.githubusercontent.com/92916632/157869084-274684e0-d19c-49e8-9de4-91a3682ec26f.PNG)
+
+
+
+
+ CONFIGURE JENKINS TO COPY FILES TO NFS SERVER VIA SSH
+ 
+ On main dashboard select "Manage Jenkins" and choose "Configure System" menu item.
+ 
+ Scroll down to Publish over SSH plugin configuration section and configure it to be able to connect to your NFS server:
+
+
+
+
+
+
+
+
+
+
+
 
 
 
