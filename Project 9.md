@@ -170,12 +170,123 @@ Screenshot showing the artifacts generated as a result of the latest build
 
 
 
- CONFIGURE JENKINS TO COPY FILES TO NFS SERVER VIA SSH
+Step 4  Configured jenkins to copy files to NFS server via ssh
  
- On main dashboard select "Manage Jenkins" and choose "Configure System" menu item.
+ Now we have our artifacts saved locally on Jenkins server, the next step is to copy them to our /mnt/apps directory in the NFS server 
  
- Scroll down to Publish over SSH plugin configuration section and configure it to be able to connect to your NFS server:
+ On main dashboard selected "Manage Jenkins" and choose "Configure System" menu item.
+ 
+ Scrolled down to Publish over SSH plugin configuration section and configure it to be able to connect to your NFS server
+ 
+1. Installed "Publish Over SSH" plugin.
 
+   On main dashboard select "Manage Jenkins" and choose "Manage Plugins" menu item
+   
+   On "Available" tab search for "Publish Over SSH" plugin and install it
+   
+ 
+ ![Capture 30 publish over ssh](https://user-images.githubusercontent.com/92916632/158681272-dac142c6-8728-47a0-bcae-abb8e95b3eb7.PNG)
+
+   
+
+2. Configured the job/project to copy artifacts over to NFS server
+
+    On main dashboard selected "Manage Jenkins" and chose "Configure System" menu item.
+    
+ 
+ Scrolled down to Publish over SSH plugin configuration section and configured it to be able to connect to my NFS server:
+ 
+ 
+1.  Provided a private key (content of the AWS .pem key used to connect to NFS server via SSH )
+
+
+![Capture 31 AWS private key](https://user-images.githubusercontent.com/92916632/158682881-ef14ad4a-7084-4712-b3aa-ff9c100c3be5.PNG)
+
+
+2. name  - NFS  
+
+3. Hostname –  private IP address of  NFS server
+
+4. Username – ec2-user (since NFS server is based on EC2 with RHEL 8)
+
+5. Remote directory – /mnt/apps since our Web Servers use it as a mounting point to retrieve files from the NFS server
+
+
+
+  Tested the configuration and made sure the connection returns Success. Ensured that TCP port 22 on NFS server is open to receive SSH connections.
+  
+  saved the configuration
+  
+  ![Capture 32 test configuration](https://user-images.githubusercontent.com/92916632/158684354-da5b4e60-c1b0-4f80-9ef9-da26ffbd2eea.PNG)
+
+  
+  
+ Opened my jenkins job/project configuration page and clicked add "Post-build Action", clicked send build artifacts over ssh 
+ 
+ 
+ ![Capture 33 post build actions](https://user-images.githubusercontent.com/92916632/158698309-cf59e913-1fbd-498b-b626-7b08be78f083.PNG)
+ 
+ ![Capture 34 post build actions](https://user-images.githubusercontent.com/92916632/158698929-4d549499-f743-482b-be90-0a6774056be9.PNG)
+
+
+ 
+ 
+Configured it to send all files produced by the build into the previously defined remote directory (/mnt/apps)
+
+In this case we want to copy all files and directories – so we use **.
+
+Saved the configuration
+
+![Capture 35 source files](https://user-images.githubusercontent.com/92916632/158699426-ee266c55-1b73-47f3-b634-d428796fce3d.PNG)
+
+
+
+Edited the README.MD file in my  gitHub tooling repository.
+
+![Capture 38 edited read me file](https://user-images.githubusercontent.com/92916632/158704868-fef032ee-1871-4d6c-822a-fa810a03c085.PNG)
+
+
+Webhook triggered a new job but it was unsuccessful as shown in the console output  screenshot below 
+
+![Capture 36 build error](https://user-images.githubusercontent.com/92916632/158705267-67095985-80c3-4b41-8d68-fcd4aa774c64.PNG)
+
+ 
+ I set up permission that allows the remote directory  /mnt/apps/ to  be readable, writeable and executeable
+ 
+       sudo chown -R nobody: /mnt/apps
+       
+       sudo chmod -R 777 /mnt/apps
+
+ ![Capture 39 change permissions](https://user-images.githubusercontent.com/92916632/158706215-ab2d0afb-048f-4fa2-b731-17af4179301d.PNG)
+
+
+ Ran a new build and it was successful 
+ 
+ ![Capture 40 successful build](https://user-images.githubusercontent.com/92916632/158706702-58bdceac-92c7-4f6a-8206-931bb4663a77.PNG)
+
+
+ 
+
+ To check that the files in /mnt/apps have been updated, i connected via SSH to the NFS server and checked the contents of /mnt/apps directory  
+ 
+         cd /mnt/apps
+         
+          ll 
+          
+ ![Capture 41 check the contents of remote directory](https://user-images.githubusercontent.com/92916632/158707654-347623af-f2eb-4ba2-a9b1-a84934903c73.PNG)
+
+      
+      
+ Also checked the contents of the README.MD file to confirm the changes i had previously made in my gitHub tooling repository
+      
+        cat /mnt/apps/README.md
+        
+  
+![Capture 42 checked the contents of readme](https://user-images.githubusercontent.com/92916632/158707830-0c4f495f-7264-4a57-82ea-a88536cc7302.PNG)
+
+
+ 
+ 
 
 
 
