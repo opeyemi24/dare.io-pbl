@@ -26,7 +26,7 @@ Step 1 – Install Jenkins server
 ![image](https://user-images.githubusercontent.com/92916632/150677076-108d226d-3961-441c-9b2d-e2c4bff15bcd.png)
 
        
-  Made sure Jenkins is up and running
+- Made sure Jenkins is up and running
   
         sudo systemctl status jenkins
         
@@ -35,24 +35,27 @@ Step 1 – Install Jenkins server
         
  4. Opened TCP port 8080. By default Jenkins server uses TCP port 8080
 
+![image](https://user-images.githubusercontent.com/92916632/158980694-189e2e0b-578a-492a-a615-8ec37af4ede4.png)
+
+
 
 
 
 5. Performed initial Jenkins setup
 
 
-From my browser, i accessed :
+- From my browser, i accessed :
 
           http://<Jenkins-Server-Public-IP-Address-or-Public-DNS-Name>:8080
   
 
-  I was prompted to provide a default admin password
+- I was prompted to provide a default admin password
   
  ![Capture jenkins home page](https://user-images.githubusercontent.com/92916632/150677479-0e0167dd-1075-4331-8edb-6d1e4cdba5bc.PNG) 
   
 
   
-  Retrieved it from my server:
+ -  Retrieved password from my server:
   
          sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 
@@ -62,7 +65,7 @@ From my browser, i accessed :
 
 
  
- Was prompted to choose plugings to install – I chose suggested plugins.
+- Was prompted to choose plugings to install – I chose suggested plugins.
  
  ![Capture 3 suggested plug ins](https://user-images.githubusercontent.com/92916632/150677349-00e378d9-4b74-476e-bdd0-845612c45ac6.PNG)
 
@@ -72,12 +75,12 @@ From my browser, i accessed :
  Step 2 – Configure Jenkins to retrieve source codes from GitHub using Webhooks
  
 
-1. Enabled webhooks in my tooling gitHub repository settings
+1. Enabled webhooks in my tooling gitHub repository settings with following process : 
+
+Settings - webhooks - add webhooks - paste jenkins server public ip address - choose application/json - just push the event - add webhook
 
 ![Capture 7 add webhooks](https://user-images.githubusercontent.com/92916632/150678029-a4cd0984-fd37-4123-91fd-f87da62285c5.PNG)
 
-
-Added webhooks.   Added jenkins server public IP address
 
 
 ![Capture 8 add web hooks](https://user-images.githubusercontent.com/92916632/150677953-59b7c071-e599-4fb5-ad76-20583c8af88a.PNG)
@@ -85,61 +88,74 @@ Added webhooks.   Added jenkins server public IP address
 
 
 
-2. From Jenkins web console, clicked "New Item" and created a "Freestyle project"
+
+2. From Jenkins web console, clicked "New Item" and created a "Freestyle project", named it project 9 and saved 
 
 ![Capture 9 free style project](https://user-images.githubusercontent.com/92916632/150678616-b0b4abd1-b222-42c4-88ff-c4e05dde96fa.PNG)
 
 
 
-To connect my GitHub repository, you will need to provide its URL, you can copy from the repository itself
-
-![Capture 10 repository url](https://user-images.githubusercontent.com/92916632/157853240-7677e61a-a73e-4d05-9bd2-4186779e8f81.PNG)
+- Connected my gitHub repository to jenkins. Copied the github repository url 
 
 
-In configuration of your Jenkins freestyle project choose Git repository, provide there the link to your Tooling GitHub repository and credentials (user/password) so Jenkins could access files in the repository.
+![Capture 10 repository url](https://user-images.githubusercontent.com/92916632/158991055-6aabce44-919d-4ae8-9936-7ed2c77edcc2.PNG)
 
-![Capture add credentials and save](https://user-images.githubusercontent.com/92916632/157853980-06b55292-cd6b-401f-a5b1-98d19c17ec44.PNG)
 
+
+
+ In the configuration of my jenkins freestyle project, chose git repository, pasted the github repository url and saved. 
+ 
+ ![image](https://user-images.githubusercontent.com/92916632/158990583-982e4951-120e-4d65-8092-a6fe113f3d9d.png)
+
+ 
+
+- Configure global security
 
 ![Capture configure global security](https://user-images.githubusercontent.com/92916632/157860419-6ee9223d-2470-4164-a16a-1d32464de7d6.PNG)
 
-Enabled proxy compatibility and saved 
+ 
+ 
+
+- Enabled proxy compatibility and saved 
 
 ![Capture enable proxy compabitibility](https://user-images.githubusercontent.com/92916632/157860460-c53364a8-8b8e-4fa0-a78f-dcae7bcc8fbe.PNG)
 
 
-Add credentials  and save 
+- Added credentials (username and password for github repository)
  
 ![Capture add credentials and save](https://user-images.githubusercontent.com/92916632/157861647-da53dd4a-b8a6-4d4e-bdeb-9c679c25c933.PNG)
 
 
 ![Capture add credentials](https://user-images.githubusercontent.com/92916632/157861699-aec784b9-b887-4503-87d4-cd98a2f4d21a.PNG)
 
-selected the credentials created and saved
+
+- select the credentials created and save
 
 ![Capture credentials created](https://user-images.githubusercontent.com/92916632/157862628-e654bb52-b913-42f0-b0ee-84c59d488954.PNG)
 
 
-Ran a build manaually by clicking build now 
+- Ran a build manaually by clicking build now 
 
 
 ![Capture build noww](https://user-images.githubusercontent.com/92916632/157863914-406e550b-e85c-4f82-805a-0b9ef6d740ff.PNG)
 
 
-Verified the console output 
+- Verified the console output 
 
 ![Capture build- console output](https://user-images.githubusercontent.com/92916632/157863095-fa5abaa6-79c1-4a18-ba2a-71ecb9dc777a.PNG)
 
 
-Step 3 Click "Configure" your job/project and add these two configurations
 
-    Configure triggering the job from GitHub webhook:
+
+Step 3 Click "Configure" your job/project and add these two configurations : 
+
+1. Configure triggering the job from GitHub webhook:
 
   
   ![Capture build triggers](https://user-images.githubusercontent.com/92916632/157864567-657acc45-78c5-425c-b682-abd7cc22986a.PNG)
   
   
-   Configure "Post-build Actions" to archive all the files – files resulted from a build are called "artifacts".
+  2. Configure "Post-build Actions" to archive all the files – files resulted from a build are called "artifacts".
    
  Clicked post build actions, archive the artifacts, added **  and saved 
  
@@ -147,20 +163,21 @@ Step 3 Click "Configure" your job/project and add these two configurations
 ![Capture archive the artifacts](https://user-images.githubusercontent.com/92916632/157866129-4f8fda6f-74f5-4ce8-8eb4-fe4324647891.PNG)
 
 
-make some change in any file in your GitHub repository (e.g. README.MD file) and push the changes to the master branch.
+- Make some changes to any file in your GitHub repository (e.g. README.MD file) and push the changes to the master branch.
 
 
 ![Capture added new line to readme file](https://user-images.githubusercontent.com/92916632/157866907-b44444e5-8c28-449c-93cc-22a703365c60.PNG)
 
-A new build was launched automatically (by webhook) and we see its results – artifacts, saved on Jenkins server.
+- A new build was launched automatically (by webhook) and we see its results – artifacts, saved on Jenkins server.
 
 
 ![Capture console output  2a](https://user-images.githubusercontent.com/92916632/157868075-3d9fc171-d003-42dc-8ce5-6ec270d05f06.PNG)
 
 
-Console output
+- Console output
 
 ![Capture console output 2b](https://user-images.githubusercontent.com/92916632/157868250-cba78f83-54aa-4a63-963b-aa7fde5c9ec2.PNG)
+
 
 Screenshot showing the artifacts generated as a result of the latest build 
 
@@ -172,17 +189,14 @@ Screenshot showing the artifacts generated as a result of the latest build
 
 Step 4  Configured jenkins to copy files to NFS server via ssh
  
- Now we have our artifacts saved locally on Jenkins server, the next step is to copy them to our /mnt/apps directory in the NFS server 
+ Now we have our artifacts saved locally on Jenkins server, the next step is to copy them to our /mnt/apps directory in the NFS server. 
  
- On main dashboard selected "Manage Jenkins" and choose "Configure System" menu item.
  
- Scrolled down to Publish over SSH plugin configuration section and configure it to be able to connect to your NFS server
- 
-1. Installed "Publish Over SSH" plugin.
+1. Installed "Publish Over SSH" plugin : 
 
-   On main dashboard select "Manage Jenkins" and choose "Manage Plugins" menu item
+   On main dashboard selected "Manage Jenkins" and choose "Manage Plugins" menu item
    
-   On "Available" tab search for "Publish Over SSH" plugin and install it
+   On "Available" tab searched for "Publish Over SSH" plugin and installed it
    
  
  ![Capture 30 publish over ssh](https://user-images.githubusercontent.com/92916632/158681272-dac142c6-8728-47a0-bcae-abb8e95b3eb7.PNG)
@@ -207,21 +221,21 @@ Step 4  Configured jenkins to copy files to NFS server via ssh
 
 3. Hostname –  private IP address of  NFS server
 
-4. Username – ec2-user (since NFS server is based on EC2 with RHEL 8)
+4. Username – ec2-user (since NFS server is based on ec2 with rhel 8)
 
-5. Remote directory – /mnt/apps since our Web Servers use it as a mounting point to retrieve files from the NFS server
+5. Remote directory – /mnt/apps since our web servers use it as a mounting point to retrieve files from the NFS server
 
-
-
-  Tested the configuration and made sure the connection returns Success. Ensured that TCP port 22 on NFS server is open to receive SSH connections.
+   Ensured that TCP port 22 on NFS server is open to receive SSH connections.
   
-  saved the configuration
+
+-  Tested the configuration and made sure the connection returns success. saved the configuration
   
+   
   ![Capture 32 test configuration](https://user-images.githubusercontent.com/92916632/158684354-da5b4e60-c1b0-4f80-9ef9-da26ffbd2eea.PNG)
 
   
   
- Opened my jenkins job/project configuration page and clicked add "Post-build Action", clicked send build artifacts over ssh 
+- Opened my jenkins job/project configuration page and clicked add "Post-build Action", clicked send build artifacts over ssh 
  
  
  ![Capture 33 post build actions](https://user-images.githubusercontent.com/92916632/158698309-cf59e913-1fbd-498b-b626-7b08be78f083.PNG)
@@ -230,8 +244,7 @@ Step 4  Configured jenkins to copy files to NFS server via ssh
 
 
  
- 
-Configured it to send all files produced by the build into the previously defined remote directory (/mnt/apps)
+ - Configured it to send all files produced by the build into the previously defined remote directory (/mnt/apps)
 
 In this case we want to copy all files and directories – so we use **.
 
@@ -241,17 +254,19 @@ Saved the configuration
 
 
 
-Edited the README.MD file in my  gitHub tooling repository.
+- Edited the README.MD file in my  gitHub tooling repository, commited the file 
 
 ![Capture 38 edited read me file](https://user-images.githubusercontent.com/92916632/158704868-fef032ee-1871-4d6c-822a-fa810a03c085.PNG)
 
 
-Webhook triggered a new job but it was unsuccessful as shown in the console output  screenshot below 
+- Webhook triggered a new job but it was unsuccessful as shown in the console output  screenshot below 
+
+Error message : persmission denied 
 
 ![Capture 36 build error](https://user-images.githubusercontent.com/92916632/158705267-67095985-80c3-4b41-8d68-fcd4aa774c64.PNG)
 
  
- I set up permission that allows the remote directory  /mnt/apps/ to  be readable, writeable and executeable
+- I set up permission that allows the remote directory  /mnt/apps/ to  be readable, writeable and executeable
  
        sudo chown -R nobody: /mnt/apps
        
@@ -260,14 +275,14 @@ Webhook triggered a new job but it was unsuccessful as shown in the console outp
  ![Capture 39 change permissions](https://user-images.githubusercontent.com/92916632/158706215-ab2d0afb-048f-4fa2-b731-17af4179301d.PNG)
 
 
- Ran a new build and it was successful 
+- Ran a new build and it was successful 
  
  ![Capture 40 successful build](https://user-images.githubusercontent.com/92916632/158706702-58bdceac-92c7-4f6a-8206-931bb4663a77.PNG)
 
 
  
 
- To check that the files in /mnt/apps have been updated, i connected via SSH to the NFS server and checked the contents of /mnt/apps directory  
+- To check that the files in /mnt/apps have been updated, i connected via SSH to the NFS server and checked the contents of /mnt/apps directory  
  
          cd /mnt/apps
          
@@ -277,7 +292,7 @@ Webhook triggered a new job but it was unsuccessful as shown in the console outp
 
       
       
- Also checked the contents of the README.MD file to confirm the changes i had previously made in my gitHub tooling repository
+- Also checked the contents of the README.MD file to confirm the changes i had previously made in my gitHub tooling repository
       
         cat /mnt/apps/README.md
         
