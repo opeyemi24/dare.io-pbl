@@ -254,14 +254,14 @@ Saved the configuration
 
 
 
-- Edited the README.MD file in my  gitHub tooling repository, commited the file 
+- Edited the README.MD file in my  gitHub tooling repository, commited the changes 
 
 ![Capture 38 edited read me file](https://user-images.githubusercontent.com/92916632/158704868-fef032ee-1871-4d6c-822a-fa810a03c085.PNG)
 
 
 - Webhook triggered a new job but it was unsuccessful as shown in the console output  screenshot below 
 
-Error message : persmission denied 
+  Error message : Exception when publishing, exception message (persmission denied) 
 
 ![Capture 36 build error](https://user-images.githubusercontent.com/92916632/158705267-67095985-80c3-4b41-8d68-fcd4aa774c64.PNG)
 
