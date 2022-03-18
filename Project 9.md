@@ -163,7 +163,7 @@ Step 3 Click "Configure" your job/project and add these two configurations :
 ![Capture archive the artifacts](https://user-images.githubusercontent.com/92916632/157866129-4f8fda6f-74f5-4ce8-8eb4-fe4324647891.PNG)
 
 
-- Make some changes to any file in your GitHub repository (e.g. README.MD file) and push the changes to the master branch.
+- Test the configuration by making some changes to any file in your GitHub repository (e.g. README.MD file) and push the changes to the master branch.
 
 
 ![Capture added new line to readme file](https://user-images.githubusercontent.com/92916632/157866907-b44444e5-8c28-449c-93cc-22a703365c60.PNG)
@@ -254,7 +254,7 @@ Saved the configuration
 
 
 
-- Edited the README.MD file in my  gitHub tooling repository, commited the changes 
+- Tested the configuration by Editing the README.MD file in my gitHub tooling repository, commited the changes 
 
 ![Capture 38 edited read me file](https://user-images.githubusercontent.com/92916632/158704868-fef032ee-1871-4d6c-822a-fa810a03c085.PNG)
 
