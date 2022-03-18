@@ -44,7 +44,7 @@ Step 1 INSTALLED AND CONFIGURED ANSIBLE ON EC2 INSTANCE
 
  ![Capture 8  jenkins only for main branch](https://user-images.githubusercontent.com/92916632/153236574-0435a403-c78e-43f4-81cf-75c8f8f28c86.PNG)
  
- - Tested the configuration by editing the README.MD file on github and verifying that builds starts automatically in Jenkins
+ - Tested the configuration by editing the README.md file on github and verifying that builds starts automatically in Jenkins
  
  ![Capture 10 test successful](https://user-images.githubusercontent.com/92916632/153239920-ad0e38ea-8ea3-46aa-be8b-a3df21c4684e.PNG)
 
