@@ -23,16 +23,21 @@ Step 1 INSTALLED AND CONFIGURED ANSIBLE ON EC2 INSTANCE
   ![Capture 2 create freestyle project](https://user-images.githubusercontent.com/92916632/153218713-71a16132-43ba-4329-8381-0045d360ee29.PNG)
 
 
-   - Configured Webhook in GitHub and set webhook to trigger ansible build. 
-  
-   - Added the public IP address of jenkins-ansible server to webhook
+   - Configured Webhook in GitHub. Added the public IP address of jenkins-ansible server
+
+   - set webhook to trigger ansible build. 
+
+   - Connected my gitHub repository to jenkins by copying the github repository url and pasting it to jenkins 
 
 ![Capture 5 webhook](https://user-images.githubusercontent.com/92916632/153220096-e838f0c4-5bdc-4042-ba93-e143144a73e1.PNG)
+
+![Capture 4 build triggers](https://user-images.githubusercontent.com/92916632/153219519-5b7ae9a3-b03a-4b1a-9a8e-36d5aa5b45f3.PNG)
+
 
 
 ![Capture 3 source code management](https://user-images.githubusercontent.com/92916632/153219433-1e30bf5f-8a06-4abe-b6ad-7c5295a7ed7e.PNG)
 
-![Capture 4 build triggers](https://user-images.githubusercontent.com/92916632/153219519-5b7ae9a3-b03a-4b1a-9a8e-36d5aa5b45f3.PNG)
+
 
 - Configure a Post-build job to save all (**) files
 
