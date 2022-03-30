@@ -5,7 +5,16 @@
 
 Step 1 – Install Jenkins server
 
+- Using the same architecture and configuration from project 8 
+
+![Capture sc 1](https://user-images.githubusercontent.com/92916632/160853031-65d9738b-dc4f-4744-86e2-6a8901f7af99.PNG)
+
+
+
 1. Created an AWS EC2 server based on Ubuntu Server 20.04 LTS and name it "Jenkins"
+
+![Capture sc 3](https://user-images.githubusercontent.com/92916632/160853640-11e49504-4744-443b-bb45-1087a2958b1f.PNG)
+
 
 2. Installed JDK (since Jenkins is a Java-based application)
 
