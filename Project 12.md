@@ -8,7 +8,7 @@ Step 1 – Jenkins job enhancement
 
             sudo mkdir /home/ubuntu/ansible-config-artifact
             
- 2. Change permissions to this directory, so Jenkins could save files there –
+ 2. Change permissions to this directory, so Jenkins could save files there 
 
            sudo chmod -R 0777 /home/ubuntu/ansible-config-artifact
              
