@@ -331,6 +331,10 @@ Step 8  Run first Ansible test
         ssh-add -l
         
 ![Capture confirm pem key added](https://user-images.githubusercontent.com/92916632/157711988-4c75218d-2508-4904-93eb-e02718ed2f95.PNG)
+
+- Ran eval ssh agent 
+
+       eval `ssh-agent -s`
  
         
 
