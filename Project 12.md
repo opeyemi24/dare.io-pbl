@@ -11,8 +11,17 @@ Step 1 – Jenkins job enhancement
  2. Change permissions to this directory, so Jenkins could save files there 
 
            sudo chmod -R 0777 /home/ubuntu/ansible-config-artifact
+           
+ 
+  3. Created an explore page for the newly created directory. From VS code, clicked open, open folder, chose the newly created directory.
+
+![Capture open folder](https://user-images.githubusercontent.com/92916632/169154997-4209225b-c86e-443b-ac0b-8528f7334205.PNG)
+
+  
+  
+  
              
- 3. From Jenkins web console -> Manage Jenkins -> Manage Plugins -> on Available tab search for Copy Artifact and install this plugin without restarting Jenkins
+ 4. From Jenkins web console -> Manage Jenkins -> Manage Plugins -> on Available tab search for Copy Artifact and install this plugin without restarting Jenkins
 
   ![image](https://user-images.githubusercontent.com/92916632/161092590-5d869d41-9b81-401c-aa33-5ac75ef91f64.png)
 
@@ -59,8 +68,138 @@ The main idea of save_artifacts project is to save artifacts into /home/ubuntu/a
 
 
 
+STEP 2 : Refactor Ansible code by importing other playbooks into site.yml
 
 
+
+1.  Within playbooks folder, created a new file and name it site.yml 
+         
+ 
+ ![Create a new file called site yml](https://user-images.githubusercontent.com/92916632/169409393-fc72c7ff-d94e-480a-ac5f-20b15ad9c170.PNG)
+ 
+  
+  
+         
+2. Created a new folder in root of the repository and name it static-assignments. The static-assignments folder is where all other children playbooks will be stored.
+     
+     
+3.  Moved common.yml file into the newly created static-assignments folder.
+ 
+![Capture static assignments](https://user-images.githubusercontent.com/92916632/169410461-4299afb6-0764-4f94-80e3-543432a77eb2.PNG)
+
+     
+     
+4. Inside site.yml file, imported common.yml playbook.
+ 
+```
+--- 
+- hosts: all
+- import_playbook: ../static-assignments/common.yml
+
+```
+
+![Capture site](https://user-images.githubusercontent.com/92916632/169605665-5106c11b-5631-4d3f-9b71-6ef8ad73d5d7.PNG)
+
+
+Folder structure looks like this : 
+
+![Capture folder structure](https://user-images.githubusercontent.com/92916632/169607776-c120aae1-7afd-4320-840a-a672281bdbc2.PNG)
+
+
+Created another playbook under static-assignments and named it common-del.yml. The purpose of this is to remove previously installed wireshark.
+
+![Capture del playbook](https://user-images.githubusercontent.com/92916632/169642014-0dd96247-5114-4e9d-9229-1ba13a60899f.PNG)
+
+
+Included the script below in common-del.yml
+
+```
+
+---
+- name: update web, nfs and db servers
+  hosts: webservers, nfs, db
+  remote_user: ec2-user
+  become: yes
+  become_user: root
+  tasks:
+  - name: delete wireshark
+    yum:
+      name: wireshark
+      state: removed
+
+- name: update LB server
+  hosts: lb
+  remote_user: ubuntu
+  become: yes
+  become_user: root
+  tasks:
+  - name: delete wireshark
+    apt:
+      name: wireshark-qt
+      state: absent
+      autoremove: yes
+      purge: yes
+      autoclean: yes     
+ ```
+
+![Capture delete wireshark](https://user-images.githubusercontent.com/92916632/169642532-2aebcfee-c32d-47d7-ad3c-d60fe239094d.PNG)
+
+Edited site.yml to point to the common-del.yml file instead of common.yml
+
+```
+--- 
+- hosts: all
+- import_playbook: ../static-assignments/common-del.yml
+
+``` 
+
+![Capture update common-del](https://user-images.githubusercontent.com/92916632/169644103-48cd479a-0171-49aa-b34c-54e65aaad42a.PNG)
+
+
+Updated the changes on vs code : clicked source control, update, commit and then push 
+
+A new build was triggered. Confirmed the changes on github
+
+![Capture changes in git hub](https://user-images.githubusercontent.com/92916632/169914281-54707635-d2eb-4bfe-8298-a34bb8bae614.PNG)
+
+
+Switched to ansible-config artifact to confirm that changes made were effected on artifact. clicked new folder, then selected the artifact-config directory
+
+![Capture ansibe config artifact](https://user-images.githubusercontent.com/92916632/169918706-74de90b2-c449-42e3-a45f-0b0156846999.PNG)
+
+ 
+ To ensure that ansible does not check my host key when connecting i ran :
+ 
+      export $ANSIBLE_HOST_KEY_CHECKING=False
+ 
+
+From my ansible server, I ran Inventory/dev.yml against Playbooks/site.yml
+
+    ansible-playbook -i /home/ubuntu/ansible-config-artifact/Inventory/dev.yml /home/ubuntu/ansible-config-artifact/Playbooks/site.yml
+    
+    
+![image](https://user-images.githubusercontent.com/92916632/170641898-1dafe06c-55ee-4231-ab8c-5d66ccdee18e.png)
+
+
+Verified that wireshark has been removed on host servers
+
+![image](https://user-images.githubusercontent.com/92916632/170643502-16cfbe45-b665-4a82-9cf4-b60d5b0c2748.png)
+
+![Capture verified that wireshark was removedd](https://user-images.githubusercontent.com/92916632/170644798-cbc6a26c-4449-4b42-859c-594c12b9cf9b.PNG)
+
+
+
+
+
+
+
+
+
+
+
+        
+ 
+    
 
 
 
