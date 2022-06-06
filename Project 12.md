@@ -4,6 +4,7 @@
 
 Step 1 – Jenkins job enhancement
 
+
  1. Go to your Jenkins-Ansible server and create a new directory called ansible-config-artifact – we will store there all artifacts after each build.
 
             sudo mkdir /home/ubuntu/ansible-config-artifact
