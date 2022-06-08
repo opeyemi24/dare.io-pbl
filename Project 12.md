@@ -190,6 +190,107 @@ Verified that wireshark has been removed on host servers
 
 
 
+Step 3 – Configure UAT Webservers with a role ‘Webserver’
+
+Launched 2 fresh EC2 instances using RHEL 8. we will use them as our uat servers. Gave them names accordingly – Web1-UAT and Web2-UAT.
+
+![Capture web uat](https://user-images.githubusercontent.com/92916632/172461707-c12ff3bd-ea0e-4160-83e9-edb840799f7d.PNG)
+
+ 
+ Created a new branch called refactor 
+ 
+      git checkout -b refactor
+   
+   ![Capture refactor branch](https://user-images.githubusercontent.com/92916632/172673258-cc06e4ae-c420-4430-8962-1c39a126a556.PNG)
+
+
+
+Created the roles directory called webserver. The roles folder structure looks like this : 
+
+         └── webserver
+    ├── README.md
+    ├── defaults
+    │   └── main.yml
+    ├── handlers
+    │   └── main.yml
+    ├── meta
+    │   └── main.yml
+    ├── tasks
+    │   └── main.yml
+    └── templates
+
+
+![Capture roles folder](https://user-images.githubusercontent.com/92916632/172674954-f52204ee-3ec5-47e4-b62c-004e85bf13b5.PNG) 
+
+
+Updated my inventory ansible-config-mgt/inventory/uat.yml file with the private IP addresses of my 2 UAT Web servers
+
+![Capture uat webservers](https://user-images.githubusercontent.com/92916632/172702967-5ebd9055-08cb-4067-a79d-a5c25cc3881b.PNG)
+
+  From my ansible server , I opened   /etc/ansible/ansible.cfg file, uncommented roles_path string and provided a full path to 
+  my roles directory :  roles_path    = /home/ubuntu/ansible-config-artifact/roles
+
+     sudo vi /etc/ansible/ansible.cfg
+     
+  ![Capture 20 roles path](https://user-images.githubusercontent.com/92916632/172706493-0d7298d8-bd50-45c5-897c-657f27e5d3cd.PNG)
+  
+  saved and exited using esc : wq! and enter
+  
+  
+  From Tasks directory, and within the main.yml file, I wrote configuration tasks to do the following:
+  
+- Install and configure Apache (httpd service)
+
+- Clone Tooling website from GitHub https://github.com/<your-name>/tooling.git.
+
+- Ensure the tooling website code is deployed to /var/www/html on each of 2 UAT Web servers.
+
+- Make sure httpd service is started
+  
+ 
+ The main.yml file consists of following tasks:
+ 
+  ```
+  
+  ---
+- name: install apache
+  become: true
+  ansible.builtin.yum:
+    name: "httpd"
+    state: present
+
+- name: install git
+  become: true
+  ansible.builtin.yum:
+    name: "git"
+    state: present
+
+- name: clone a repo
+  become: true
+  ansible.builtin.git:
+    repo: https://github.com/<your-name>/tooling.git
+    dest: /var/www/html
+    force: yes
+
+- name: copy html content to one level up
+  become: true
+  command: cp -r /var/www/html/html/ /var/www/
+
+- name: Start service httpd, if not started
+  become: true
+  ansible.builtin.service:
+    name: httpd
+    state: started
+
+- name: recursively remove /var/www/html/html/ directory
+  become: true
+  ansible.builtin.file:
+    path: /var/www/html/html
+    state: absent
+    
+   ```
+![Capture 25 task](https://user-images.githubusercontent.com/92916632/172719195-4bb76551-83a1-4ccb-8519-89b8d3403540.PNG)
+
 
 
 
