@@ -268,7 +268,7 @@ Updated my inventory ansible-config-mgt/inventory/uat.yml file with the private 
 - name: clone a repo
   become: true
   ansible.builtin.git:
-    repo: https://github.com/<your-name>/tooling.git
+    repo: https://github.com/opeyemi24/tooling.git
     dest: /var/www/html
     force: yes
 
@@ -290,6 +290,80 @@ Updated my inventory ansible-config-mgt/inventory/uat.yml file with the private 
     
    ```
 ![Capture 25 task](https://user-images.githubusercontent.com/92916632/172719195-4bb76551-83a1-4ccb-8519-89b8d3403540.PNG)
+ 
+ Step 4 – Reference ‘Webserver’ role
+ 
+ Within the static-assignments folder, created a new file for uat-webservers called uat-webservers.yml. This is where we will reference the role.
+ 
+ Pasted the script below
+  
+ ``` 
+---
+- hosts: uat-webservers
+  roles:
+     - webserver 
+  ```
+ 
+ ![Capture 26 Uat webserver](https://user-images.githubusercontent.com/92916632/172723522-14475957-348a-40c1-a4a1-f5d963639cfe.PNG)
+ 
+ Since site.yml is our entry point then we need to refer uat-webservers.yml role inside site.yml.
+ 
+ So, we should have this in site.yml
+ 
+ ```
+ ---
+- hosts: all
+- import_playbook: ../static-assignments/common.yml
+
+- hosts: uat-webservers
+- import_playbook: ../static-assignments/uat-webservers.yml
+ 
+ ```
+ ![site](https://user-images.githubusercontent.com/92916632/172735225-c2eaeade-0dfe-4e82-9910-bb6c538336f5.PNG)
+
+ 
+ 
+Step 5 – Commit & Test
+ 
+ Commit changes : click Source control, add commit message, commit, push 
+ 
+ ![Capture 30 source control](https://user-images.githubusercontent.com/92916632/172728540-51b80fa2-5515-463d-99f7-23b17c1d8387.PNG)
+
+ 
+ Merge with master branch on github : Compare and pull request, create pull request, merge pull request, confirm merge
+ 
+![Capture 31 compare and pull request](https://user-images.githubusercontent.com/92916632/172730646-ea1732eb-62d4-46f8-9d4f-8d6127ba7587.PNG)
+ 
+
+![Capture 32 create pull request](https://user-images.githubusercontent.com/92916632/172730812-f7c2db7a-1e21-4789-a9c7-93e2f4c28028.PNG)
+ 
+
+![Capture 33 merge pull request](https://user-images.githubusercontent.com/92916632/172730860-96e9863d-0789-4054-9d0b-41448f545425.PNG)
+ 
+ 
+ 
+ Ran the playbook against UAT Inventory to deploy the scripts to the UAT web servers:
+ 
+ ```
+ ansible-playbook -i /home/ubuntu/ansible-config-artifact/Inventory/uat.yml /home/ubuntu/ansible-config-artifact/Playbooks/site.yml
+ 
+ ```
+ 
+ ![Capture playbook 1](https://user-images.githubusercontent.com/92916632/172735916-feac9900-e1a2-422f-a51a-7c063b8cc502.PNG)
+  ![Capture playbook 2](https://user-images.githubusercontent.com/92916632/172735946-01fce91b-48f1-44c2-8335-4755def86103.PNG)
+
+
+ 
+ 
+ Navigated to the UAT webserver's Public IP and confirmed that it shows the tooling page:
+ 
+ ![Capture tooling website](https://user-images.githubusercontent.com/92916632/172732468-f57c535a-6caf-45f0-91ff-f605e0b9f022.PNG)
+
+
+ 
+
+ 
+ 
 
 
 
