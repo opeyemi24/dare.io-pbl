@@ -293,9 +293,9 @@ Updated my inventory ansible-config-mgt/inventory/uat.yml file with the private 
  
  Step 4 – Reference ‘Webserver’ role
  
- Within the static-assignments folder, created a new file for uat-webservers called uat-webservers.yml. This is where we will reference the role.
+ Within the static-assignments folder, created a new file for uat-webservers called uat-webservers.yml .This is where we will reference the role
  
- Pasted the script below
+ Pasted the script below inside the uat-web servers.yml file
   
  ``` 
 ---
@@ -306,7 +306,7 @@ Updated my inventory ansible-config-mgt/inventory/uat.yml file with the private 
  
  ![Capture 26 Uat webserver](https://user-images.githubusercontent.com/92916632/172723522-14475957-348a-40c1-a4a1-f5d963639cfe.PNG)
  
- Since site.yml is our entry point then we need to refer uat-webservers.yml role inside site.yml.
+ Since site.yml is our entry point then we need to refer uat-webservers.yml role inside site.yml
  
  So, we should have this in site.yml
  
